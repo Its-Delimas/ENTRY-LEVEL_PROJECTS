@@ -3,7 +3,7 @@ import { useState } from "react";
 import MovieCard from "./components/MovieCard";
 import SearchBar from "./components/SearchBar";
 
-// hard coded data for UI mockup
+// hard coded data for UI ~ mock data
 const ALL_MOVIES = [
   {
     id: 1,
@@ -49,22 +49,42 @@ const ALL_MOVIES = [
 function App() {
   const [query, setQuery] = useState("");
 
+  const filteredMovies =
+    query.trim() === ""
+      ? ALL_MOVIES
+      : ALL_MOVIES.filter((movie) => {
+          movie.title.toLowerCase().includes(query.toLowerCase);
+        });
+
   return (
     <>
       <h1>MovieVault 🎬</h1>
-      <MovieCard
-        title="inception"
-        year="2010"
-        description="Thief who steals corporate technology through dream Technology "
-        poster="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
-      />
 
-      <MovieCard
-        title="Interstellar"
-        year="2014"
-        description="A team of explorers travel through a wormhole in space."
-        poster="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
-      />
+      {query && (
+        <p style={{ color: "#888" }}>
+          Showing {filteredMovies.length} result
+          {filteredMovies.length !== 1 ? "s" : ""} for "{query}"
+        </p>
+      )}
+
+      <SearchBar onSearch={setQuery} />
+
+      {filteredMovies.length === 0 ? (
+        <p style={{ color: "#888", marginTop: "2rem" }}>
+          No Movies found for {query}
+        </p>
+      ) : (
+        filteredMovies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            title={movie.title}
+            year={movie.year}
+            description={movie.description}
+            poster={movie.poster}
+            rating={movie.rating}
+          />
+        ))
+      )}
     </>
   );
 }

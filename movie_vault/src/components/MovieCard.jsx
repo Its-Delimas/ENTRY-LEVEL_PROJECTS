@@ -1,7 +1,8 @@
-function MovieCard({ title, year, description, poster }) {
+function MovieCard({ title, year, description, poster, rating }) {
   return (
     <div
       style={{
+        background: "#c30f45",
         borderRadius: "8px",
         padding: "1rem",
         width: "200px",
@@ -16,8 +17,20 @@ function MovieCard({ title, year, description, poster }) {
         alt={title}
         style={{ width: "100%", borderRadius: "4px" }}
       />
+
       <h3 style={{ marginTop: "0.5rem" }}>{title}</h3>
-      <p style={{ color: "#ee0039", fontSize: "0.9rem" }}>{year}</p>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "0.3rem",
+        }}
+      >
+        <p style={{ color: "#231123", fontSize: "0.9rem" }}>{year}</p>
+        <p style={{ color: "#f5c518", fontSize: "0.9rem" }}> {rating}</p>
+      </div>
+
       <p style={{ fontSize: "0.85rem", marginTop: "0.5rem" }}>{description}</p>
     </div>
   );

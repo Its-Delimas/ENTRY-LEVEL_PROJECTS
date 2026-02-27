@@ -1,3 +1,9 @@
+:root {
+  --main-bg-color:#F7f4f3;
+  --main-text-color:#5B2333;
+}
+  
+
 *{
   margin:0;
   padding:0;
@@ -6,7 +12,7 @@
 
 body {
   font-family: sans-serif;
-  background: #66001F;
-  color: #FEFCEF;
+  background: #ffffff;
+  color: #000000;
   padding: 2rem;
 }
