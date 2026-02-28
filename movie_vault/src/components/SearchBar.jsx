@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function SearchBar({ onSearch }) {
+export default function SearchBar({ onSearch }) {
   const [searchText, setSearchText] = useState("");
 
   function handleChange(e) {
@@ -47,5 +47,3 @@ function SearchBar({ onSearch }) {
     </form>
   );
 }
-
-export default SearchBar;
