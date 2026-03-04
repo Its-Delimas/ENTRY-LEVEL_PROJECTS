@@ -1,0 +1,80 @@
+/* src/components/Navbar.module.css */
+
+.navbar {
+  position: fixed;           /* stays at top while scrolling */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-xl);
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.9) 0%,
+    rgba(0,0,0,0) 100%
+  );
+  backdrop-filter: blur(12px);  /* frosted glass effect */
+  z-index: 100;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.logo {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--color-text-primary);
+}
+
+.logo span {
+  color: var(--color-accent);  /* DELI is white, VAULT is red */
+}
+
+.links {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.link {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+  letter-spacing: 0.5px;
+}
+
+.link:hover, .active {
+  color: var(--color-text-primary);
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.loginBtn {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.loginBtn:hover {
+  color: var(--color-text-primary);
+}
+
+.registerBtn {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  background: var(--color-accent);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast);
+}
+
+.registerBtn:hover {
+  background: var(--color-accent-hover);
+}
