@@ -2,10 +2,6 @@
 
 import axios from 'axios';
 
-console.log('Token : ',import.meta.env.VITE_TMDB_TOKEN)
-
-// TMDB uses Bearer token auth — sent in the header
-// not as a URL parameter like OMDB did
 const tmdb = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
   headers: {
@@ -14,9 +10,7 @@ const tmdb = axios.create({
   },
 });
 
-// TMDB image URLs need a base path prepended
-// w500 = 500px wide — good for cards
-// original = full resolution — good for hero/backdrop
+
 export const IMG_BASE    = 'https://image.tmdb.org/t/p/w500';
 export const IMG_ORIGINAL = 'https://image.tmdb.org/t/p/original';
 
