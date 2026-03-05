@@ -5,13 +5,13 @@ import Button from "../components/ui/Button";
 import styles from "./Auth.module.css";
 
 export default function Login() {
-  const Navigate = useNavigate(""); //lest us redirect programmatically
+  const navigate = useNavigate(""); //lest us redirect programmatically
 
   // states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // validation
   function validate() {
@@ -19,7 +19,7 @@ export default function Login() {
 
     if (!email.trim()) {
       err.email = "Email is Required";
-    } else if (!/\s+@\s+\.\s+/.test(email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       err.email = "Enter a valid email address";
     }
 
@@ -68,13 +68,13 @@ export default function Login() {
           <div className={styles.generalError}>🚩{error.general}</div>
         )}
 
-        <div styles={styles.form}>
+        <div className={styles.form}>
           <Input
             label="Email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeHolder="johnDoe@gmail.com"
+            placeholder="johnDoe@gmail.com"
             error={error.email}
             icon="✉"
           />

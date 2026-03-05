@@ -22,8 +22,8 @@ export default function Register() {
     }
     if (!email.trim()) {
       err.email = "Email is required";
-    } else if (!/\s+@\s+\.\s+/.test(email)) {
-      err.email = "Invalid Email address";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      err.email = "Invalid Email Address";
     }
 
     if (!password) {

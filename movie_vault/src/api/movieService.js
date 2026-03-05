@@ -2,6 +2,8 @@
 
 import axios from 'axios';
 
+console.log('Token : ',import.meta.env.VITE_TMDB_TOKEN)
+
 // TMDB uses Bearer token auth — sent in the header
 // not as a URL parameter like OMDB did
 const tmdb = axios.create({
