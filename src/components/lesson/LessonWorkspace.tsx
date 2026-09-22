@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Play } from "lucide-react";
 import type { Lesson } from "@/lib/lessons/rainfall-yield";
 import { usePyodideWorker, type ReviewResult } from "@/hooks/usePyodideWorker";
-import { markMissionComplete } from "@/lib/progress";
+import { markMissionComplete, recordActivityToday } from "@/lib/progress";
 import Logo from "@/components/landing/Logo";
 import CodeEditor from "./CodeEditor";
 import OutputPanel from "./OutputPanel";
@@ -46,7 +46,8 @@ export default function LessonWorkspace({ lesson }: { lesson: Lesson }) {
     completed.size === lesson.practice.checklist.length;
 
   async function handleExampleRun() {
-    await run(lesson.example.code);
+    const result = await run(lesson.example.code);
+    if (result.ok) recordActivityToday();
   }
 
   async function handlePracticeRun() {
@@ -57,6 +58,7 @@ export default function LessonWorkspace({ lesson }: { lesson: Lesson }) {
       setLastError(result.error ?? "Something went wrong.");
       return;
     }
+    recordActivityToday();
     const results = await review(lesson.reviewChecks);
     setReviewResults(results);
     // Unlock the Review step but let the student choose when to see it —

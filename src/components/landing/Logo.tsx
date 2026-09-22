@@ -11,8 +11,12 @@ function Mark({ size = 28 }: { size?: number }) {
     >
       <rect width="32" height="32" rx="9" fill="var(--color-ink)" />
       <path
-        d="M16 6.5 L18.4 13.6 L25.5 16 L18.4 18.4 L16 25.5 L13.6 18.4 L6.5 16 L13.6 13.6 Z"
-        fill="var(--color-lime)"
+        d="M9.5 23.5 L9.5 8.5 L22.5 23.5 L22.5 8.5"
+        stroke="var(--color-lime)"
+        strokeWidth="4.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
       />
     </svg>
   );
