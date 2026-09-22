@@ -18,8 +18,25 @@ function getPyodide() {
   return pyodideReadyPromise;
 }
 
+let lastNamespace = null;
+
+function compare(actual, op, value) {
+  switch (op) {
+    case ">=":
+      return actual >= value;
+    case ">":
+      return actual > value;
+    case "<=":
+      return actual <= value;
+    case "<":
+      return actual < value;
+    default:
+      return false;
+  }
+}
+
 self.onmessage = async (event) => {
-  const { type, code, runId } = event.data;
+  const { type, code, runId, checks } = event.data;
 
   if (type === "init") {
     try {
@@ -34,14 +51,39 @@ self.onmessage = async (event) => {
   if (type === "run") {
     try {
       const pyodide = await getPyodide();
+      // Fresh globals per run: a re-run (or switching stages) never sees
+      // variables left over from a previous or different run.
+      const ns = pyodide.toPy({});
       postMessage({ type: "run-start", runId });
-      await pyodide.runPythonAsync(code);
+      await pyodide.runPythonAsync(code, { globals: ns });
+      lastNamespace = ns;
       postMessage({ type: "run-end", runId, ok: true });
     } catch (err) {
       postMessage({
         type: "run-end",
         runId,
         ok: false,
+        error: String(err && err.message ? err.message : err),
+      });
+    }
+    return;
+  }
+
+  if (type === "review") {
+    try {
+      const results = checks.map((check) => {
+        const raw = lastNamespace ? lastNamespace.get(check.variable) : undefined;
+        const actual = typeof raw === "number" ? raw : Number(raw);
+        const hasValue = raw !== undefined && !Number.isNaN(actual);
+        const passed = hasValue && compare(actual, check.op, check.value);
+        return { id: check.id, passed, actual: hasValue ? actual : null };
+      });
+      postMessage({ type: "review-result", runId, results });
+    } catch (err) {
+      postMessage({
+        type: "review-result",
+        runId,
+        results: [],
         error: String(err && err.message ? err.message : err),
       });
     }
