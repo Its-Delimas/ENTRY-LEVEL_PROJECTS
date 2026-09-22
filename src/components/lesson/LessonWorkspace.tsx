@@ -1,9 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import { Play, PartyPopper } from "lucide-react";
 import type { Lesson } from "@/lib/lessons/rainfall-yield";
 import { usePyodideWorker } from "@/hooks/usePyodideWorker";
+import Logo from "@/components/landing/Logo";
 import CodeEditor from "./CodeEditor";
 import OutputPanel from "./OutputPanel";
 import MissionChecklist from "./MissionChecklist";
@@ -31,39 +32,40 @@ export default function LessonWorkspace({ lesson }: { lesson: Lesson }) {
   const missionComplete = completed.size === lesson.checklist.length;
 
   return (
-    <div className="flex min-h-screen flex-col bg-beige">
-      <header className="flex items-center justify-between border-b border-navy/10 bg-white px-6 py-4">
-        <Link href="/" className="font-display text-lg font-semibold text-navy">
-          Nurulabs
-        </Link>
-        <span className="eyebrow text-teal">
+    <div className="flex min-h-screen flex-col bg-cream">
+      <header className="flex items-center justify-between border-b border-ink/10 bg-white px-6 py-4">
+        <Logo />
+        <span className="eyebrow text-lime-deep">
           Mission {lesson.missionNumber} · {lesson.subject}
         </span>
       </header>
 
       <div className="grid flex-1 md:grid-cols-[minmax(0,360px)_1fr]">
-        <aside className="border-b border-navy/10 bg-white p-6 md:border-r md:border-b-0">
-          <p className="eyebrow text-teal">Lesson</p>
-          <h1 className="mt-2 font-display text-2xl font-semibold text-navy">
+        <aside className="border-b border-ink/10 bg-white p-6 md:border-r md:border-b-0">
+          <p className="eyebrow text-lime-deep">Lesson</p>
+          <h1 className="mt-2 font-display text-2xl font-semibold text-ink">
             {lesson.title}
           </h1>
-          <p className="mt-3 text-sm leading-relaxed text-navy/70">
+          <p className="mt-3 text-sm leading-relaxed text-ink/65">
             {lesson.intro}
           </p>
 
           <div className="mt-6">
-            <p className="eyebrow mb-3 text-navy/50">Mission checklist</p>
+            <p className="eyebrow mb-3 text-ink/40">Mission checklist</p>
             <MissionChecklist steps={lesson.checklist} completed={completed} />
           </div>
 
           {missionComplete && (
-            <div className="mt-6 rounded-md border border-teal/30 bg-teal/10 p-4 text-sm text-navy">
-              <p className="font-semibold">Mission complete.</p>
-              <p className="mt-1 text-navy/70">
-                You trained a real model on real data. Try changing the
-                train/test split or adding a farm to see how the result
-                shifts.
-              </p>
+            <div className="mt-6 flex items-start gap-2.5 rounded-2xl border border-lime-deep/20 bg-lime-soft p-4 text-sm text-ink">
+              <PartyPopper size={18} className="mt-0.5 shrink-0 text-lime-deep" />
+              <div>
+                <p className="font-semibold">Mission complete.</p>
+                <p className="mt-1 text-ink/65">
+                  You trained a real model on real data. Try changing the
+                  train/test split or adding a farm to see how the result
+                  shifts.
+                </p>
+              </div>
             </div>
           )}
 
@@ -76,7 +78,7 @@ export default function LessonWorkspace({ lesson }: { lesson: Lesson }) {
           </div>
         </aside>
 
-        <div className="grid grid-rows-[1fr_auto] bg-[#1e293b] md:grid-rows-[1fr_220px]">
+        <div className="grid grid-rows-[1fr_auto] bg-ink md:grid-rows-[1fr_220px]">
           <div className="min-h-[320px]">
             <CodeEditor value={code} onChange={setCode} />
           </div>
@@ -122,9 +124,10 @@ function RunButton({
       type="button"
       onClick={onRun}
       disabled={disabled}
-      className="rounded-md bg-teal px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-teal/80 disabled:cursor-not-allowed disabled:opacity-40"
+      className="inline-flex items-center gap-1.5 rounded-full bg-lime px-4 py-1.5 text-xs font-semibold text-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
     >
-      {running ? "Running…" : "▶ Run"}
+      <Play size={12} fill="currentColor" />
+      {running ? "Running…" : "Run"}
     </button>
   );
 }

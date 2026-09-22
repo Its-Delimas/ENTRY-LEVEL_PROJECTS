@@ -1,16 +1,24 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Flower2, Network, ImageIcon, ClipboardCheck } from "lucide-react";
+
 const missions = [
   {
     number: "01",
+    icon: Flower2,
     title: "Teach a computer to classify flowers",
     body: "Load a dataset, explore it, split it, train your first model — and see exactly what 'training' means.",
   },
   {
     number: "15",
+    icon: Network,
     title: "Build a neural network",
     body: "Move from a single line to layers and weights. You'll debug a model that isn't learning, on purpose.",
   },
   {
     number: "30",
+    icon: ImageIcon,
     title: "Build an image classifier",
     body: "Go from 'I don't understand what training means' to 'I trained a model myself,' on a dataset you chose.",
   },
@@ -18,34 +26,65 @@ const missions = [
 
 export default function Missions() {
   return (
-    <section id="missions" className="mx-auto max-w-6xl px-6 py-24">
-      <p className="eyebrow text-teal">A path, not a playlist</p>
-      <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold leading-tight text-navy md:text-4xl">
+    <section id="missions" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.5 }}
+        className="eyebrow text-lime-deep"
+      >
+        A path, not a playlist
+      </motion.p>
+      <motion.h2
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.5, delay: 0.05 }}
+        className="mt-4 max-w-2xl font-display text-3xl font-semibold leading-tight text-ink md:text-4xl"
+      >
         Every mission builds on the last one.
-      </h2>
+      </motion.h2>
 
       <div className="mt-14 grid gap-6 md:grid-cols-3">
-        {missions.map((mission) => (
-          <div
+        {missions.map((mission, i) => (
+          <motion.div
             key={mission.number}
-            className="rounded-lg border border-navy/15 bg-white p-6"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            whileHover={{ y: -6 }}
+            className="group rounded-3xl border border-ink/10 bg-white p-7 shadow-[0_1px_0_rgba(0,0,0,0.03)] transition-shadow hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.18)]"
           >
-            <span className="font-display text-3xl font-semibold text-skyblue">
-              {mission.number}
-            </span>
-            <h3 className="mt-4 font-display text-lg font-semibold text-navy">
+            <div className="flex items-center justify-between">
+              <span className="font-display text-3xl font-semibold text-ink/15 transition-colors group-hover:text-lime-deep">
+                {mission.number}
+              </span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cream text-ink transition-colors group-hover:bg-lime">
+                <mission.icon size={18} />
+              </div>
+            </div>
+            <h3 className="mt-5 font-display text-lg font-semibold text-ink">
               {mission.title}
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-navy/65">
+            <p className="mt-3 text-sm leading-relaxed text-ink/55">
               {mission.body}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      <div className="mt-10 rounded-lg bg-beige/80 border border-navy/10 p-6">
-        <p className="text-sm leading-relaxed text-navy/75">
-          <span className="font-semibold text-navy">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="mt-10 flex items-start gap-3 rounded-2xl border border-lime-deep/15 bg-lime-soft p-6"
+      >
+        <ClipboardCheck size={20} className="mt-0.5 shrink-0 text-lime-deep" />
+        <p className="text-sm leading-relaxed text-ink/75">
+          <span className="font-semibold text-ink">
             Automatic mission checks:
           </span>{" "}
           submit your code and Nurulabs runs hidden tests against it —
@@ -53,7 +92,7 @@ export default function Missions() {
           a mission is actually complete, not just that a video finished
           playing.
         </p>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -12,9 +12,9 @@ export default function OutputPanel({
   return (
     <div className="flex h-full flex-col">
       <div className="border-b border-white/10 px-4 py-2">
-        <span className="eyebrow text-skyblue">Output</span>
+        <span className="eyebrow text-lime">Output</span>
       </div>
-      <pre className="flex-1 overflow-auto p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-skyblue">
+      <pre className="flex-1 overflow-auto p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-white/75">
         {running && !output && "Running…"}
         {output}
         {error && (

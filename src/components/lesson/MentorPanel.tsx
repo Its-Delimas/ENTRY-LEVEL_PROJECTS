@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Bot } from "lucide-react";
 import type { ErrorHint } from "@/lib/lessons/rainfall-yield";
 
 interface MentorPanelProps {
@@ -40,22 +41,25 @@ export default function MentorPanel({
   }
 
   return (
-    <div className="rounded-lg border border-navy/15 bg-white p-5">
+    <div className="rounded-2xl border border-ink/10 bg-white p-5">
       <div className="flex items-center justify-between">
-        <p className="eyebrow text-teal">Mentor</p>
+        <div className="flex items-center gap-1.5">
+          <Bot size={14} className="text-lime-deep" />
+          <p className="eyebrow text-lime-deep">Mentor</p>
+        </div>
         {errorHint && (
-          <span className="rounded-md bg-teal/15 px-2 py-0.5 text-xs font-semibold text-teal">
+          <span className="rounded-full bg-lime-soft px-2.5 py-0.5 text-xs font-semibold text-lime-deep">
             responding to your error
           </span>
         )}
       </div>
 
       {activeHint ? (
-        <p className="mt-3 text-sm leading-relaxed text-navy/80">
+        <p className="mt-3 text-sm leading-relaxed text-ink/80">
           {activeHint}
         </p>
       ) : (
-        <p className="mt-3 text-sm leading-relaxed text-navy/50">
+        <p className="mt-3 text-sm leading-relaxed text-ink/45">
           Stuck? Your mentor won&apos;t hand you the answer, but it will
           point you at what to look at.
         </p>
@@ -64,7 +68,7 @@ export default function MentorPanel({
       <button
         type="button"
         onClick={handleClick}
-        className="mt-4 rounded-md border border-navy/20 px-4 py-2 text-xs font-semibold text-navy transition-colors hover:border-navy"
+        className="mt-4 rounded-full border border-ink/15 px-4 py-2 text-xs font-semibold text-ink transition-colors hover:border-ink"
       >
         {errorHint
           ? "Dismiss"
