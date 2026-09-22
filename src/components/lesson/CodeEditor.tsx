@@ -6,10 +6,15 @@ import { oneDark } from "@codemirror/theme-one-dark";
 
 interface CodeEditorProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
+  readOnly?: boolean;
 }
 
-export default function CodeEditor({ value, onChange }: CodeEditorProps) {
+export default function CodeEditor({
+  value,
+  onChange,
+  readOnly = false,
+}: CodeEditorProps) {
   return (
     <CodeMirror
       value={value}
@@ -17,10 +22,12 @@ export default function CodeEditor({ value, onChange }: CodeEditorProps) {
       theme={oneDark}
       extensions={[python()]}
       onChange={onChange}
+      readOnly={readOnly}
+      editable={!readOnly}
       basicSetup={{
         lineNumbers: true,
         foldGutter: false,
-        highlightActiveLine: true,
+        highlightActiveLine: !readOnly,
       }}
       className="h-full text-sm [&_.cm-editor]:h-full [&_.cm-scroller]:font-mono"
     />

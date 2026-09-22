@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { ReviewCheck } from "@/lib/lessons/rainfall-yield";
 
 export type PyodideStatus = "loading" | "ready" | "error";
 
@@ -9,17 +10,34 @@ interface RunResult {
   error?: string;
 }
 
+export interface ReviewResult {
+  id: string;
+  passed: boolean;
+  actual: number | null;
+}
+
 interface WorkerMessage {
-  type: "ready" | "init-error" | "stdout" | "stderr" | "run-start" | "run-end";
+  type:
+    | "ready"
+    | "init-error"
+    | "stdout"
+    | "stderr"
+    | "run-start"
+    | "run-end"
+    | "review-result";
   data?: string;
   error?: string;
   ok?: boolean;
   runId?: number;
+  results?: ReviewResult[];
 }
 
 export function usePyodideWorker() {
   const workerRef = useRef<Worker | null>(null);
   const runResolverRef = useRef<((result: RunResult) => void) | null>(null);
+  const reviewResolverRef = useRef<
+    ((results: ReviewResult[]) => void) | null
+  >(null);
   const runIdRef = useRef(0);
 
   const [status, setStatus] = useState<PyodideStatus>("loading");
@@ -48,6 +66,10 @@ export function usePyodideWorker() {
           runResolverRef.current?.({ ok: !!msg.ok, error: msg.error });
           runResolverRef.current = null;
           break;
+        case "review-result":
+          reviewResolverRef.current?.(msg.results ?? []);
+          reviewResolverRef.current = null;
+          break;
       }
     };
 
@@ -75,5 +97,20 @@ export function usePyodideWorker() {
     });
   }, []);
 
-  return { status, output, running, run };
+  const review = useCallback((checks: ReviewCheck[]) => {
+    return new Promise<ReviewResult[]>((resolve) => {
+      if (!workerRef.current) {
+        resolve([]);
+        return;
+      }
+      reviewResolverRef.current = resolve;
+      workerRef.current.postMessage({
+        type: "review",
+        checks,
+        runId: runIdRef.current,
+      });
+    });
+  }, []);
+
+  return { status, output, running, run, review };
 }

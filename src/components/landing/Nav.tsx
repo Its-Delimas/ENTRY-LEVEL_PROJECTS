@@ -8,6 +8,7 @@ const links = [
   { href: "#how-it-works", label: "How it works" },
   { href: "#missions", label: "Missions" },
   { href: "#projects", label: "Projects" },
+  { href: "/dashboard", label: "Dashboard" },
 ];
 
 export default function Nav() {
