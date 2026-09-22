@@ -35,7 +35,7 @@ export default function Hero() {
             variants={fadeUp}
             className="eyebrow text-lime-deep"
           >
-            AI &amp; ML education, built for Africa
+            The AI &amp; ML Academy Lab
           </motion.p>
 
           <motion.h1
@@ -73,10 +73,10 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-6 max-w-lg text-lg leading-relaxed text-ink/60"
           >
-            No 25-minute videos. No multiple-choice quizzes. Nurulabs puts
-            a real code editor in front of you from lesson one, so you
-            train actual models on problems that matter here — crop
-            yields, traffic, mobile money, rainfall.
+            No 25-minute videos. No multiple-choice quizzes. Nurulabs is a
+            hands-on lab: you get a real code editor from lesson one, you
+            write the code yourself, and you get reviewed on what you
+            actually built.
           </motion.p>
 
           <motion.div

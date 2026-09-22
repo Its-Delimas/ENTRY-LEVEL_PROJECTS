@@ -21,9 +21,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nurulabs — Learn AI & ML by building it",
+  title: "Nurulabs — The AI & ML Academy Lab",
   description:
-    "Affordable, hands-on AI and ML education for African students. Write real code, train real models, guided by an AI mentor that teaches instead of answering.",
+    "A hands-on academy lab for African students: write real code, train real models, and get reviewed by a mentor that hints instead of answering.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
