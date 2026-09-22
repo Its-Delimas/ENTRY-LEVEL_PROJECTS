@@ -1,28 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MousePointerClick, AlertTriangle, Lightbulb, CheckCircle2 } from "lucide-react";
+import { BookOpen, Code2, PenLine, ClipboardCheck } from "lucide-react";
 
 const steps = [
   {
-    icon: MousePointerClick,
-    label: "Attempt",
-    body: "You start writing code immediately — no lecture required first.",
+    icon: BookOpen,
+    label: "Learn",
+    body: "A short, plain-language explanation of the concept. No code yet — just what you're about to build and why.",
   },
   {
-    icon: AlertTriangle,
-    label: "Struggle",
-    body: "You hit an error, a bad result, a model that won't learn. That's expected.",
+    icon: Code2,
+    label: "Example",
+    body: "A fully worked demo on its own small dataset. Read it, run it, see the pattern before you touch the real exercise.",
   },
   {
-    icon: Lightbulb,
-    label: "Hint",
-    body: "Your mentor points at the concept you're missing — never the fix itself.",
+    icon: PenLine,
+    label: "Practice",
+    body: "A new dataset with the real exercise left as TODOs. Nothing is pre-solved. Your mentor hints — it never hands you the fix.",
   },
   {
-    icon: CheckCircle2,
-    label: "Understand",
-    body: "You implement it yourself, run it, and the idea actually sticks.",
+    icon: ClipboardCheck,
+    label: "Review",
+    body: "Hidden checks grade your own code — accuracy, sanity checks — so you know it actually worked, not just that it ran.",
   },
 ];
 
@@ -55,9 +55,8 @@ export default function HowItWorks() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mt-5 max-w-2xl text-white/55"
         >
-          Most platforms teach AI with videos and quizzes. Nurulabs puts a
-          real, running Python environment next to every lesson. You read a
-          short explanation, then you write the code that makes it true.
+          Every mission is the same four stages, in this order — this is
+          exactly what you&apos;ll click through, not a metaphor for it.
         </motion.p>
 
         <div className="relative mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -75,7 +74,7 @@ export default function HowItWorks() {
                 <step.icon size={20} strokeWidth={2} />
               </div>
               <h3 className="mt-5 font-display text-lg font-semibold">
-                {step.label}
+                {i + 1}. {step.label}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-white/55">
                 {step.body}

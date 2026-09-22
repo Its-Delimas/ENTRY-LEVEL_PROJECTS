@@ -2,6 +2,7 @@ import Nav from "@/components/landing/Nav";
 import Hero from "@/components/landing/Hero";
 import HowItWorks from "@/components/landing/HowItWorks";
 import Missions from "@/components/landing/Missions";
+import TracksDashboard from "@/components/landing/TracksDashboard";
 import LocalProjects from "@/components/landing/LocalProjects";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/landing/Footer";
@@ -14,6 +15,7 @@ export default function Home() {
         <Hero />
         <HowItWorks />
         <Missions />
+        <TracksDashboard />
         <LocalProjects />
         <CTA />
       </main>

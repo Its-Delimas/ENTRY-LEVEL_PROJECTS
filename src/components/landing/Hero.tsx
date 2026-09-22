@@ -1,14 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 const checklist = [
   { label: "Data loading", done: true },
-  { label: "Exploring data", done: true },
+  { label: "Splitting train/test", done: true },
   { label: "Training model", done: false },
   { label: "Evaluating model", done: false },
 ];
+
+const stages = [
+  { label: "Learn", state: "done" },
+  { label: "Example", state: "done" },
+  { label: "Practice", state: "current" },
+  { label: "Review", state: "locked" },
+] as const;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -35,7 +42,7 @@ export default function Hero() {
             variants={fadeUp}
             className="eyebrow text-lime-deep"
           >
-            The AI &amp; ML Academy Lab
+            Africa&apos;s hands-on tech academy lab
           </motion.p>
 
           <motion.h1
@@ -74,9 +81,9 @@ export default function Hero() {
             className="mt-6 max-w-lg text-lg leading-relaxed text-ink/60"
           >
             No 25-minute videos. No multiple-choice quizzes. Nurulabs is a
-            hands-on lab: you get a real code editor from lesson one, you
-            write the code yourself, and you get reviewed on what you
-            actually built.
+            hands-on lab — you write real code, train a real model, and get
+            reviewed on what you actually built. AI &amp; Machine Learning
+            is where we&apos;re starting; more tracks are on the way.
           </motion.p>
 
           <motion.div
@@ -125,20 +132,42 @@ function LessonPreviewCard() {
     <div className="overflow-hidden rounded-2xl border border-ink/10 bg-ink">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
         <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
         </div>
-        <span className="eyebrow text-lime">Python · ML</span>
+        <span className="font-mono text-xs text-white/40">practice.py</span>
+        <span className="eyebrow text-lime">Python</span>
       </div>
+
+      <div className="flex items-center gap-1 border-b border-white/10 px-4 py-2.5">
+        {stages.map((stage, i) => (
+          <div key={stage.label} className="flex items-center gap-1">
+            {i > 0 && <span className="h-px w-3 bg-white/15" aria-hidden />}
+            <span
+              className={`flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold ${
+                stage.state === "current"
+                  ? "bg-lime text-ink"
+                  : stage.state === "done"
+                    ? "text-lime"
+                    : "text-white/30"
+              }`}
+            >
+              {stage.state === "done" && <Check size={9} strokeWidth={3} />}
+              {stage.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
       <div className="grid grid-cols-2 divide-x divide-white/10 text-sm">
         <div className="p-5">
-          <p className="eyebrow text-lime">Lesson</p>
+          <p className="eyebrow text-lime">Mission 01</p>
           <p className="mt-2 font-display text-base font-semibold text-white">
             Rainfall &amp; Crop Yield
           </p>
           <p className="mt-2 text-white/50">
-            Today you&apos;ll build your first ML model.
+            Fill in the TODOs — nothing here is pre-solved.
           </p>
           <ul className="mt-5 space-y-2">
             {checklist.map((item, i) => (
@@ -162,19 +191,18 @@ function LessonPreviewCard() {
         <div className="flex flex-col">
           <pre className="flex-1 overflow-hidden p-5 font-mono text-xs leading-relaxed">
             <code>
-              <span className="text-lime">import</span>
-              <span className="text-white/80"> numpy </span>
-              <span className="text-lime">as</span>
-              <span className="text-white/80"> np</span>
-              {"\n\n"}
-              <span className="text-white/50">rainfall</span>
-              <span className="text-white/80"> = [120, 160, 200, 260]</span>
+              <span className="text-white/50"># TODO: fit a line to the data</span>
               {"\n"}
-              <span className="text-white/50">yield_</span>
-              <span className="text-white/80"> = [8, 11, 15, 19]</span>
+              <span className="text-lime">def</span>
+              <span className="text-white/80"> fit_line(x, y):</span>
+              {"\n"}
+              <span className="text-white/80">    pass </span>
+              <span className="text-white/50"># replace this</span>
               {"\n\n"}
-              <span className="text-white/50">model</span>
-              <span className="text-white/80"> = fit(rainfall, yield_)</span>
+              <span className="text-white/50">slope</span>
+              <span className="text-white/80">, </span>
+              <span className="text-white/50">intercept</span>
+              <span className="text-white/80"> = fit_line(X_train, y_train)</span>
             </code>
           </pre>
           <div className="border-t border-white/10 p-3.5">
