@@ -15,7 +15,7 @@ export default function CTA() {
       >
         <p className="eyebrow text-lime">Affordable by design</p>
         <h2 className="mx-auto mt-4 max-w-xl font-display text-3xl font-semibold leading-tight md:text-4xl">
-          Real AI education, priced for African students.
+          Real hands-on AI training, priced for African students.
         </h2>
         <p className="mx-auto mt-5 max-w-lg text-white/60">
           The first mission is free — no card, no signup wall. Write real

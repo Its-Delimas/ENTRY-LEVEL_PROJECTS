@@ -7,20 +7,23 @@ const missions = [
   {
     number: "01",
     icon: Flower2,
-    title: "Teach a computer to classify flowers",
-    body: "Load a dataset, explore it, split it, train your first model — and see exactly what 'training' means.",
+    title: "Rainfall & Crop Yield",
+    body: "Load data, explore it, split it, train your first model — and see exactly what 'training' means. Live today.",
+    live: true,
   },
   {
     number: "15",
     icon: Network,
     title: "Build a neural network",
     body: "Move from a single line to layers and weights. You'll debug a model that isn't learning, on purpose.",
+    live: false,
   },
   {
     number: "30",
     icon: ImageIcon,
     title: "Build an image classifier",
     body: "Go from 'I don't understand what training means' to 'I trained a model myself,' on a dataset you chose.",
+    live: false,
   },
 ];
 
@@ -45,6 +48,17 @@ export default function Missions() {
       >
         Every mission builds on the last one.
       </motion.h2>
+      <motion.p
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="mt-4 max-w-2xl text-ink/55"
+      >
+        We&apos;re starting with the AI &amp; Machine Learning track. Mission
+        01 is live today — the rest of this track is what we&apos;re
+        building next.
+      </motion.p>
 
       <div className="mt-14 grid gap-6 md:grid-cols-3">
         {missions.map((mission, i) => (
@@ -65,9 +79,20 @@ export default function Missions() {
                 <mission.icon size={18} />
               </div>
             </div>
-            <h3 className="mt-5 font-display text-lg font-semibold text-ink">
-              {mission.title}
-            </h3>
+            <div className="mt-5 flex items-center gap-2">
+              <h3 className="font-display text-lg font-semibold text-ink">
+                {mission.title}
+              </h3>
+              {mission.live ? (
+                <span className="rounded-md bg-lime-soft px-2 py-0.5 text-[11px] font-semibold text-lime-deep">
+                  Live
+                </span>
+              ) : (
+                <span className="rounded-md bg-cream px-2 py-0.5 text-[11px] font-semibold text-ink/40">
+                  Coming soon
+                </span>
+              )}
+            </div>
             <p className="mt-3 text-sm leading-relaxed text-ink/55">
               {mission.body}
             </p>

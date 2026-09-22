@@ -47,7 +47,7 @@ export default function LocalProjects() {
           transition={{ duration: 0.5 }}
           className="eyebrow text-lime-deep"
         >
-          Not another Titanic dataset
+          On the roadmap
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -56,7 +56,7 @@ export default function LocalProjects() {
           transition={{ duration: 0.5, delay: 0.05 }}
           className="mt-4 max-w-2xl font-display text-3xl font-semibold leading-tight text-ink md:text-4xl"
         >
-          Projects pulled from problems around you.
+          Not another Titanic dataset.
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -65,12 +65,14 @@ export default function LocalProjects() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mt-5 max-w-2xl text-ink/55"
         >
-          Every mission track ends in a project built on data and problems
-          that are actually relevant to Kenyan and African students — not
-          another dataset of iris flowers or Titanic passengers.
+          Mission 01 is real and live today. As the AI &amp; ML track grows
+          past it, this is the direction we&apos;re building in: problems
+          that are actually relevant to Kenyan and African students, not
+          another dataset of iris flowers or Titanic passengers. None of
+          these exist yet — they&apos;re the plan, not the product.
         </motion.p>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
@@ -78,16 +80,20 @@ export default function LocalProjects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: (i % 3) * 0.08 }}
-              whileHover={{ y: -4 }}
-              className="group rounded-2xl border border-ink/8 bg-white p-6 transition-colors hover:border-lime-deep/25"
+              className="bg-white/60 p-6"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-lime transition-colors group-hover:bg-lime group-hover:text-ink">
-                <project.icon size={18} />
+              <div className="flex items-center justify-between">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-ink/50">
+                  <project.icon size={18} />
+                </div>
+                <span className="rounded-md bg-white px-2 py-0.5 text-[11px] font-semibold text-ink/40">
+                  Planned
+                </span>
               </div>
-              <h3 className="mt-4 font-display text-base font-semibold text-ink">
+              <h3 className="mt-4 font-display text-base font-semibold text-ink/70">
                 {project.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink/55">
+              <p className="mt-2 text-sm leading-relaxed text-ink/45">
                 {project.body}
               </p>
             </motion.div>
