@@ -26,7 +26,7 @@ export default function Nav() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
       className={`sticky top-0 z-50 transition-colors ${
-        scrolled ? "glass border-b border-ink/10" : "border-b border-transparent"
+        scrolled ? "nav-scrolled" : "border-b border-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -47,7 +47,7 @@ export default function Nav() {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper"
+          className="rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-paper"
         >
           Try a mission free
         </motion.a>

@@ -124,7 +124,7 @@ function RunButton({
       type="button"
       onClick={onRun}
       disabled={disabled}
-      className="inline-flex items-center gap-1.5 rounded-full bg-lime px-4 py-1.5 text-xs font-semibold text-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
+      className="inline-flex items-center gap-1.5 rounded-md bg-lime px-4 py-1.5 text-xs font-semibold text-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
     >
       <Play size={12} fill="currentColor" />
       {running ? "Running…" : "Run"}

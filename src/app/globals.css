@@ -50,48 +50,8 @@ body {
   color: var(--color-ink);
 }
 
-/* iOS-style frosted glass surface */
-.glass {
-  background: color-mix(in srgb, var(--color-paper) 72%, transparent);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  backdrop-filter: blur(20px) saturate(160%);
-}
-
-/* Fine dot-grid texture used behind hero/CTA sections */
-.dot-grid {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--color-ink) 12%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 22px 22px;
-}
-
-.dot-grid-inverted {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--color-paper) 14%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 22px 22px;
-}
-
-@keyframes pulse-glow {
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.85;
-    transform: scale(1.06);
-  }
-}
-
-.glow-blob {
-  animation: pulse-glow 7s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .glow-blob {
-    animation: none;
-  }
+/* Sticky nav surface once scrolled — solid, not a frosted/blurred effect */
+.nav-scrolled {
+  background: var(--color-paper);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
 }

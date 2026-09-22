@@ -48,7 +48,7 @@ export default function MentorPanel({
           <p className="eyebrow text-lime-deep">Mentor</p>
         </div>
         {errorHint && (
-          <span className="rounded-full bg-lime-soft px-2.5 py-0.5 text-xs font-semibold text-lime-deep">
+          <span className="rounded-md bg-lime-soft px-2.5 py-0.5 text-xs font-semibold text-lime-deep">
             responding to your error
           </span>
         )}
@@ -68,7 +68,7 @@ export default function MentorPanel({
       <button
         type="button"
         onClick={handleClick}
-        className="mt-4 rounded-full border border-ink/15 px-4 py-2 text-xs font-semibold text-ink transition-colors hover:border-ink"
+        className="mt-4 rounded-md border border-ink/15 px-4 py-2 text-xs font-semibold text-ink transition-colors hover:border-ink"
       >
         {errorHint
           ? "Dismiss"

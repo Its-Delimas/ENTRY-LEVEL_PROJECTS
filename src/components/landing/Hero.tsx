@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const checklist = [
   { label: "Data loading", done: true },
@@ -25,109 +25,96 @@ const fadeUp = {
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="dot-grid pointer-events-none absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,black,transparent)]" />
+    <section className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+      <div className="grid gap-14 md:grid-cols-2 md:items-center">
+        <div>
+          <motion.p
+            custom={0}
+            initial="hidden"
+            animate="show"
+            variants={fadeUp}
+            className="eyebrow text-lime-deep"
+          >
+            AI &amp; ML education, built for Africa
+          </motion.p>
 
-      <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <div className="grid gap-14 md:grid-cols-2 md:items-center">
-          <div>
-            <motion.div
-              custom={0}
-              initial="hidden"
-              animate="show"
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-cream px-3.5 py-1.5"
-            >
-              <Sparkles size={14} className="text-lime-deep" />
-              <span className="eyebrow text-ink/70">
-                AI &amp; ML education, built for Africa
-              </span>
-            </motion.div>
-
-            <motion.h1
-              custom={1}
-              initial="hidden"
-              animate="show"
-              variants={fadeUp}
-              className="mt-6 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink md:text-6xl"
-            >
-              Learn machine learning by{" "}
-              <span className="relative whitespace-nowrap">
-                actually building it
-                <svg
-                  viewBox="0 0 300 12"
-                  className="absolute -bottom-1 left-0 h-3 w-full text-lime"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M2 9C60 3 240 3 298 9"
-                    stroke="currentColor"
-                    strokeWidth="7"
-                    strokeLinecap="round"
-                    fill="none"
-                  />
-                </svg>
-              </span>
-              .
-            </motion.h1>
-
-            <motion.p
-              custom={2}
-              initial="hidden"
-              animate="show"
-              variants={fadeUp}
-              className="mt-6 max-w-lg text-lg leading-relaxed text-ink/60"
-            >
-              No 25-minute videos. No multiple-choice quizzes. Nurulabs puts
-              a real code editor in front of you from lesson one, so you
-              train actual models on problems that matter here — crop
-              yields, traffic, mobile money, rainfall.
-            </motion.p>
-
-            <motion.div
-              custom={3}
-              initial="hidden"
-              animate="show"
-              variants={fadeUp}
-              className="mt-9 flex flex-wrap items-center gap-4"
-            >
-              <motion.a
-                href="/lesson/rainfall-yield"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3.5 text-sm font-semibold text-ink"
+          <motion.h1
+            custom={1}
+            initial="hidden"
+            animate="show"
+            variants={fadeUp}
+            className="mt-4 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink md:text-6xl"
+          >
+            Learn machine learning by{" "}
+            <span className="relative whitespace-nowrap">
+              actually building it
+              <svg
+                viewBox="0 0 300 12"
+                className="absolute -bottom-1 left-0 h-3 w-full text-lime"
+                preserveAspectRatio="none"
+                aria-hidden="true"
               >
-                Try the first mission — free
-                <ArrowRight size={16} />
-              </motion.a>
-              <motion.a
-                href="#how-it-works"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="rounded-full border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink"
-              >
-                See how it works
-              </motion.a>
-            </motion.div>
-          </div>
+                <path
+                  d="M2 9C60 3 240 3 298 9"
+                  stroke="currentColor"
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+            </span>
+            .
+          </motion.h1>
+
+          <motion.p
+            custom={2}
+            initial="hidden"
+            animate="show"
+            variants={fadeUp}
+            className="mt-6 max-w-lg text-lg leading-relaxed text-ink/60"
+          >
+            No 25-minute videos. No multiple-choice quizzes. Nurulabs puts
+            a real code editor in front of you from lesson one, so you
+            train actual models on problems that matter here — crop
+            yields, traffic, mobile money, rainfall.
+          </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 28, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.15,
-              ease: [0.16, 1, 0.3, 1] as const,
-            }}
-            className="relative"
+            custom={3}
+            initial="hidden"
+            animate="show"
+            variants={fadeUp}
+            className="mt-9 flex flex-wrap items-center gap-4"
           >
-            <div className="glow-blob absolute -inset-10 -z-10 rounded-full bg-lime/30 blur-3xl" />
-            <LessonPreviewCard />
+            <motion.a
+              href="/lesson/rainfall-yield"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3.5 text-sm font-semibold text-white"
+            >
+              Try the first mission — free
+              <ArrowRight size={16} />
+            </motion.a>
+            <motion.a
+              href="#how-it-works"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="rounded-md border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink"
+            >
+              See how it works
+            </motion.a>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] as const }}
+        >
+          <LessonPreviewCard />
+        </motion.div>
       </div>
     </section>
   );
@@ -135,7 +122,7 @@ export default function Hero() {
 
 function LessonPreviewCard() {
   return (
-    <div className="overflow-hidden rounded-3xl border border-ink/10 bg-ink shadow-[0_30px_80px_-30px_rgba(0,0,0,0.4)]">
+    <div className="overflow-hidden rounded-2xl border border-ink/10 bg-ink">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
         <div className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
@@ -159,7 +146,7 @@ function LessonPreviewCard() {
                 key={item.label}
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 + i * 0.15, duration: 0.4 }}
+                transition={{ delay: 0.5 + i * 0.15, duration: 0.4 }}
                 className={`flex items-center gap-2 ${
                   item.done ? "text-white" : "text-white/35"
                 }`}
@@ -191,7 +178,7 @@ function LessonPreviewCard() {
             </code>
           </pre>
           <div className="border-t border-white/10 p-3.5">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-lime px-3.5 py-1.5 text-xs font-semibold text-ink">
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-lime px-3.5 py-1.5 text-xs font-semibold text-ink">
               ▶ Run
             </span>
           </div>
