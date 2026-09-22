@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --color-navy: #2f4156;
+  --color-teal: #567c8d;
+  --color-beige: #f5efeb;
+  --color-skyblue: #c8d9e6;
+  --color-white: #ffffff;
+
+  --background: var(--color-beige);
+  --foreground: var(--color-navy);
+}
+
+@theme inline {
+  --color-navy: var(--color-navy);
+  --color-teal: var(--color-teal);
+  --color-beige: var(--color-beige);
+  --color-skyblue: var(--color-skyblue);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-display: var(--font-lora);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+::selection {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
