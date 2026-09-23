@@ -1,23 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Circle, Lock } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  BookOpen,
+  ClipboardCheck,
+  Code2,
+  ImageIcon,
+  Lock,
+  Network,
+  PenLine,
+  Search,
+  Sprout,
+  X,
+} from "lucide-react";
 import Sidebar from "@/components/dashboard/Sidebar";
-import Logo from "@/components/landing/Logo";
 import GreetingIllustration from "@/components/dashboard/GreetingIllustration";
-import StatTile from "@/components/dashboard/StatTile";
 import StreakCalendar from "@/components/dashboard/StreakCalendar";
+import WeekBars from "@/components/dashboard/WeekBars";
+import Logo from "@/components/landing/Logo";
 import Modal from "@/components/ui/Modal";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { tracks, activeTrack, type Track } from "@/lib/tracks";
 import { getCompletedMissions, getActivityDates } from "@/lib/progress";
 
+const missionIcons: Record<string, typeof Sprout> = {
+  "01": Sprout,
+  "15": Network,
+  "30": ImageIcon,
+};
+
+const stages = [
+  { label: "Learn", icon: BookOpen },
+  { label: "Example", icon: Code2 },
+  { label: "Practice", icon: PenLine },
+  { label: "Review", icon: ClipboardCheck },
+];
+
 export default function DashboardPage() {
   const [completed, setCompleted] = useState<Set<string> | null>(null);
   const [activeDates, setActiveDates] = useState<Set<string>>(new Set());
   const [lockedTrack, setLockedTrack] = useState<Track | null>(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     // localStorage isn't available during SSR, so progress has to be
@@ -27,22 +53,32 @@ export default function DashboardPage() {
     setActiveDates(getActivityDates());
   }, []);
 
+  const liveMissions = activeTrack.missions.filter((m) => m.slug);
   const doneCount = completed
-    ? activeTrack.missions.filter((m) => m.slug && completed.has(m.slug))
-        .length
+    ? liveMissions.filter((m) => completed.has(m.slug!)).length
     : 0;
-  const trackMissionsWithSlug = activeTrack.missions.filter((m) => m.slug);
-  const trackProgress = trackMissionsWithSlug.length
-    ? (doneCount / trackMissionsWithSlug.length) * 100
+  const trackProgress = liveMissions.length
+    ? (doneCount / liveMissions.length) * 100
     : 0;
-  const nextMission =
-    activeTrack.missions.find(
-      (m) => m.slug && completed && !completed.has(m.slug),
-    ) ?? activeTrack.missions.find((m) => m.slug);
+  const nextMission = liveMissions.find(
+    (m) => completed && !completed.has(m.slug!),
+  );
+  const allLiveDone = completed !== null && !nextMission;
   const comingSoonTracks = tracks.filter((t) => t.status === "coming-soon");
 
+  const filteredMissions = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return activeTrack.missions;
+    return activeTrack.missions.filter(
+      (m) =>
+        m.title.toLowerCase().includes(q) ||
+        m.subject.toLowerCase().includes(q) ||
+        m.number.includes(q),
+    );
+  }, [query]);
+
   return (
-    <div className="flex min-h-screen flex-col bg-cream md:flex-row">
+    <div id="top" className="flex min-h-screen flex-col bg-cream md:flex-row">
       <header className="flex items-center justify-between border-b border-ink/10 bg-white px-6 py-4 md:hidden">
         <Logo />
         <Link href="/" className="text-sm font-medium text-ink/60">
@@ -52,167 +88,263 @@ export default function DashboardPage() {
 
       <Sidebar />
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10 md:px-10">
-        <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
-          <div className="space-y-6">
+      <main className="w-full flex-1 px-6 py-8 md:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <h1 className="font-display text-3xl font-semibold text-ink">
+            Dashboard
+          </h1>
+          <label className="relative block w-full sm:w-72">
+            <span className="sr-only">Search missions</span>
+            <Search
+              size={16}
+              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink/40"
+            />
+            <input
+              type="text"
+              role="searchbox"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search missions"
+              className="w-full rounded-xl border border-ink/10 bg-white py-2.5 pl-10 pr-9 text-sm text-ink placeholder:text-ink/40 focus:border-ink/30 focus:outline-none"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-ink/40 hover:text-ink"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </label>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="min-w-0 space-y-6">
             <motion.section
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="flex items-center justify-between gap-4 rounded-2xl border border-ink/10 bg-white p-6"
+              className="flex items-center justify-between gap-4 rounded-3xl bg-ink p-7 text-white"
             >
               <div>
-                <p className="eyebrow text-lime-deep">Your courses</p>
-                <h1 className="mt-2 font-display text-2xl font-semibold text-ink">
-                  Welcome to Nurulabs
-                </h1>
-                <p className="mt-1 text-sm text-ink/55">
-                  Pick up where you left off, or start something new.
+                <p className="eyebrow text-lime">{activeTrack.shortName} track</p>
+                <h2 className="mt-2 font-display text-2xl font-semibold">
+                  Hands-on, one mission at a time.
+                </h2>
+                <p className="mt-2 max-w-sm text-sm text-white/55">
+                  {allLiveDone
+                    ? "You've finished every live mission. The next ones are being built."
+                    : "Learn it, see it worked out, build it yourself, get reviewed."}
                 </p>
-              </div>
-              <GreetingIllustration />
-            </motion.section>
-
-            <motion.section
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.05 }}
-              className="rounded-2xl border border-ink/10 bg-white p-7"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <p className="eyebrow text-lime-deep">
-                    {activeTrack.shortName}
-                  </p>
-                  <h2 className="mt-2 font-display text-2xl font-semibold text-ink">
-                    {activeTrack.name}
-                  </h2>
-                  <p className="mt-1 max-w-md text-sm text-ink/55">
-                    {activeTrack.description}
-                  </p>
-                </div>
                 {nextMission?.slug && (
                   <Link
                     href={`/lesson/${nextMission.slug}`}
-                    className="inline-flex items-center gap-2 rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white"
+                    className="mt-5 inline-flex items-center gap-2 rounded-md bg-lime px-5 py-2.5 text-sm font-semibold text-ink"
                   >
-                    {doneCount === 0 ? "Start" : "Continue"}
+                    {doneCount === 0 ? "Start Mission" : "Continue"}{" "}
+                    {nextMission.number}
                     <ArrowRight size={14} />
                   </Link>
                 )}
               </div>
+              <div className="hidden sm:block">
+                <GreetingIllustration dark />
+              </div>
+            </motion.section>
 
-              <div className="mt-6">
-                <div className="flex items-center justify-between text-xs text-ink/50">
-                  <span>
+            <section id="missions" className="scroll-mt-6">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <h2 className="font-display text-lg font-semibold text-ink">
+                    {activeTrack.name}
+                  </h2>
+                  <p className="mt-0.5 text-xs text-ink/50">
                     {completed === null
                       ? "Loading progress…"
-                      : `${doneCount} of ${trackMissionsWithSlug.length} missions complete`}
-                  </span>
+                      : `${doneCount} of ${liveMissions.length} live mission${liveMissions.length === 1 ? "" : "s"} complete`}
+                  </p>
                 </div>
-                <div className="mt-2">
+                <div className="w-32">
                   <ProgressBar value={trackProgress} />
                 </div>
               </div>
 
-              <ul className="mt-6 divide-y divide-ink/8 border-t border-ink/8">
-                {activeTrack.missions.map((mission) => {
-                  const isDone = !!(
-                    completed &&
-                    mission.slug &&
-                    completed.has(mission.slug)
-                  );
-                  const isLocked = !mission.slug;
-                  return (
-                    <li
-                      key={mission.number}
-                      className="flex items-center justify-between gap-4 py-3.5"
-                    >
-                      <div className="flex items-center gap-3">
-                        {isDone ? (
-                          <CheckCircle2
-                            size={18}
-                            className="shrink-0 text-lime-deep"
-                          />
-                        ) : isLocked ? (
-                          <Lock size={16} className="shrink-0 text-ink/25" />
-                        ) : (
-                          <Circle size={16} className="shrink-0 text-ink/25" />
-                        )}
-                        <div>
+              <div className="mt-4 space-y-3">
+                <AnimatePresence initial={false}>
+                  {filteredMissions.map((mission) => {
+                    const Icon = missionIcons[mission.number] ?? Sprout;
+                    const isLive = !!mission.slug;
+                    const isDone = !!(
+                      completed &&
+                      mission.slug &&
+                      completed.has(mission.slug)
+                    );
+                    const card = (
+                      <div
+                        className={`flex items-center justify-between gap-4 rounded-2xl p-5 transition-colors ${
+                          isLive
+                            ? "bg-lime-soft hover:bg-lime-soft/70"
+                            : "bg-white/70"
+                        }`}
+                      >
+                        <div className="min-w-0">
                           <p
-                            className={`text-sm font-semibold ${isLocked ? "text-ink/40" : "text-ink"}`}
+                            className={`truncate text-sm font-semibold ${isLive ? "text-ink" : "text-ink/45"}`}
                           >
                             Mission {mission.number} · {mission.title}
                           </p>
-                          <p className="text-xs text-ink/45">
-                            {mission.subject}
+                          <p className="mt-1 text-xs text-ink/50">
+                            <span className="font-semibold text-ink/70">
+                              {mission.subject}
+                            </span>
+                            {" · "}
+                            {isDone
+                              ? "Complete — open to review"
+                              : isLive
+                                ? "Live now"
+                                : "Coming soon"}
                           </p>
                         </div>
-                      </div>
-                      {mission.slug ? (
-                        <Link
-                          href={`/lesson/${mission.slug}`}
-                          className="shrink-0 text-sm font-semibold text-ink/60 hover:text-ink"
+                        <span
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                            isLive ? "bg-lime text-ink" : "bg-cream text-ink/30"
+                          }`}
                         >
-                          {isDone ? "Review" : "Start"}
-                        </Link>
-                      ) : (
-                        <span className="shrink-0 text-xs font-semibold text-ink/30">
-                          Coming soon
+                          {isLive ? <Icon size={18} /> : <Lock size={16} />}
                         </span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </motion.section>
+                      </div>
+                    );
+                    return (
+                      <motion.div
+                        key={mission.number}
+                        layout
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {mission.slug ? (
+                          <Link href={`/lesson/${mission.slug}`} className="block">
+                            {card}
+                          </Link>
+                        ) : (
+                          card
+                        )}
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
 
-            <motion.section
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="rounded-2xl border border-ink/10 bg-white p-6"
-            >
-              <StreakCalendar activeDates={activeDates} />
-            </motion.section>
+                {filteredMissions.length === 0 && (
+                  <div className="rounded-2xl border border-dashed border-ink/15 p-8 text-center">
+                    <p className="text-sm font-semibold text-ink">
+                      No missions match &ldquo;{query}&rdquo;
+                    </p>
+                    <p className="mt-1 text-xs text-ink/50">
+                      Try a mission number, a title, or a subject like
+                      &ldquo;regression&rdquo;.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setQuery("")}
+                      className="mt-4 rounded-md border border-ink/15 px-4 py-2 text-xs font-semibold text-ink"
+                    >
+                      Clear search
+                    </button>
+                  </div>
+                )}
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-ink/10 bg-white p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="font-display text-base font-semibold text-ink">
+                  How every mission runs
+                </h2>
+                <span className="text-xs text-ink/40">4 stages</span>
+              </div>
+              <ol className="mt-5 grid gap-3 sm:grid-cols-4">
+                {stages.map((stage, i) => (
+                  <li
+                    key={stage.label}
+                    className="flex items-center gap-3 rounded-2xl bg-cream p-3.5"
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-ink">
+                      <stage.icon size={16} />
+                    </span>
+                    <span className="text-sm font-semibold text-ink">
+                      <span className="text-ink/35">{i + 1}.</span>{" "}
+                      {stage.label}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </section>
           </div>
 
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-3">
-              <StatTile label="Missions complete" value={doneCount} />
-              <StatTile
-                label="Track progress"
-                value={`${Math.round(trackProgress)}%`}
-              />
-            </div>
+          <div className="min-w-0 space-y-6">
+            <section
+              id="activity"
+              className="scroll-mt-6 rounded-3xl border border-ink/10 bg-white p-6"
+            >
+              <StreakCalendar activeDates={activeDates} />
+            </section>
 
-            <div>
+            <section className="rounded-3xl bg-ink p-6 text-white">
+              <p className="font-display text-base font-semibold">
+                Your progress
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <p className="font-display text-2xl font-semibold">
+                    {doneCount}
+                  </p>
+                  <p className="mt-0.5 text-xs text-white/50">
+                    Missions complete
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-4">
+                  <p className="font-display text-2xl font-semibold">
+                    {Math.round(trackProgress)}%
+                  </p>
+                  <p className="mt-0.5 text-xs text-white/50">Track progress</p>
+                </div>
+              </div>
+              <div className="mt-5 rounded-2xl bg-white/5 p-4">
+                <p className="text-xs text-white/50">Days active this week</p>
+                <div className="mt-3">
+                  <WeekBars activeDates={activeDates} />
+                </div>
+              </div>
+            </section>
+
+            <section>
               <p className="eyebrow text-ink/40">More tracks, coming soon</p>
-              <div className="mt-4 space-y-2">
-                {comingSoonTracks.map((track, i) => (
-                  <motion.button
+              <div className="mt-3 space-y-2">
+                {comingSoonTracks.map((track) => (
+                  <button
                     key={track.slug}
                     type="button"
                     onClick={() => setLockedTrack(track)}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
-                    className="flex w-full items-center gap-3 rounded-xl border border-ink/10 bg-white/60 p-4 text-left transition-colors hover:border-ink/20"
+                    className="flex w-full items-center gap-3 rounded-2xl bg-white/70 p-4 text-left transition-colors hover:bg-white"
                   >
-                    <Lock size={14} className="shrink-0 text-ink/30" />
-                    <div>
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream text-ink/30">
+                      <Lock size={14} />
+                    </span>
+                    <div className="min-w-0">
                       <p className="text-sm font-semibold text-ink/70">
                         {track.name}
                       </p>
-                      <p className="mt-0.5 text-xs text-ink/40">
+                      <p className="truncate text-xs text-ink/40">
                         {track.description}
                       </p>
                     </div>
-                  </motion.button>
+                  </button>
                 ))}
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </main>
