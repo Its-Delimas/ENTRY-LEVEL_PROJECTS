@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Flower2, Network, ImageIcon, ClipboardCheck } from "lucide-react";
+import { Sprout, Network, ImageIcon, ClipboardCheck } from "lucide-react";
 
 const missions = [
   {
     number: "01",
-    icon: Flower2,
+    icon: Sprout,
     title: "Rainfall & Crop Yield",
     body: "Load data, explore it, split it, train your first model — and see exactly what 'training' means. Live today.",
     live: true,
