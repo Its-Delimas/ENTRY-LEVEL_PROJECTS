@@ -10,13 +10,20 @@ function Mark({ size = 28 }: { size?: number }) {
       aria-hidden="true"
     >
       <rect width="32" height="32" rx="9" fill="var(--color-ink)" />
+      {/* rays */}
       <path
-        d="M9.5 23.5 L9.5 8.5 L22.5 23.5 L22.5 8.5"
+        d="M16 6.5 V9.5 M10.8 8.3 L12.6 10.6 M21.2 8.3 L19.4 10.6"
         stroke="var(--color-lime)"
-        strokeWidth="4.2"
+        strokeWidth="1.6"
         strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
+      />
+      {/* sun rising over the horizon */}
+      <path d="M9 21 A7 7 0 0 1 23 21 Z" fill="var(--color-lime)" />
+      <path
+        d="M6.5 21 H25.5"
+        stroke="var(--color-lime)"
+        strokeWidth="1.6"
+        strokeLinecap="round"
       />
     </svg>
   );
