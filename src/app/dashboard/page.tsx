@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
@@ -30,6 +31,12 @@ const missionIcons: Record<string, typeof Sprout> = {
   "01": Sprout,
   "15": Network,
   "30": ImageIcon,
+};
+
+// Only missions with a real, on-topic photo get one — everything else
+// falls back to its subject icon rather than a mismatched stock image.
+const missionThumbnails: Record<string, string> = {
+  "01": "/images/study-session.jpg",
 };
 
 const stages = [
@@ -175,6 +182,7 @@ export default function DashboardPage() {
                 <AnimatePresence initial={false}>
                   {filteredMissions.map((mission) => {
                     const Icon = missionIcons[mission.number] ?? Sprout;
+                    const thumbnail = missionThumbnails[mission.number];
                     const isLive = !!mission.slug;
                     const isDone = !!(
                       completed &&
@@ -208,11 +216,23 @@ export default function DashboardPage() {
                           </p>
                         </div>
                         <span
-                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                          className={`relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl ${
                             isLive ? "bg-lime text-ink" : "bg-cream text-ink/30"
                           }`}
                         >
-                          {isLive ? <Icon size={18} /> : <Lock size={16} />}
+                          {thumbnail ? (
+                            <Image
+                              src={thumbnail}
+                              alt=""
+                              fill
+                              sizes="44px"
+                              className="object-cover"
+                            />
+                          ) : isLive ? (
+                            <Icon size={18} />
+                          ) : (
+                            <Lock size={16} />
+                          )}
                         </span>
                       </div>
                     );
