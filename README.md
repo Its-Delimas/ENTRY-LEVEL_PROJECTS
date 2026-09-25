@@ -12,7 +12,7 @@ reflection in their own words.
 | Track | Level | Status |
 | --- | --- | --- |
 | Python for AI | Beginner | 13 labs + capstone project, live (complete) |
-| AI & Machine Learning | Intermediate | Requires Python for AI (or its placement check); lab 01 live |
+| AI & Machine Learning | Intermediate | Requires Python for AI (or its placement check); Scientific Python module (4 labs) + regression lab live, full 10-module syllabus planned |
 | Data Science, Data Engineering | — | Planned |
 
 Experienced learners can take the Python placement check
@@ -22,9 +22,14 @@ Experienced learners can take the Python placement check
 
 - [Next.js](https://nextjs.org) (App Router) + TypeScript + Tailwind CSS v4
 - [CodeMirror](https://codemirror.net/) for the code editor
-- [Pyodide](https://pyodide.org) (self-hosted in `public/pyodide/`) in a Web
-  Worker for client-side Python. There's no backend. Progress and enrollment
-  are stored in `localStorage`.
+- [Pyodide](https://pyodide.org) in a Web Worker for client-side Python. The
+  core interpreter is self-hosted in `public/pyodide/`; libraries a lab lists
+  in `packages` (NumPy, pandas, matplotlib, scikit-learn…) are fetched on
+  demand from the matching jsDelivr build and cached by the browser. There's
+  no backend. Progress and enrollment are stored in `localStorage`.
+- `public/nl_harness.py` is the Python harness shared by the browser worker and
+  the content validator: it runs learner code, reports structured errors,
+  captures matplotlib charts, and evaluates checks.
 
 ## Getting started
 
@@ -51,6 +56,8 @@ Content lives in `src/lib/curriculum/`:
     evaluated against their namespace after a run. `_stdout` holds printed
     output, `_source` holds their code, and `_with(name=value)` re-runs their
     code with a variable changed, so a check can test logic on other inputs.
+    `_charts` describes each matplotlib chart drawn (title, axis labels, and
+    counts of lines, bars and points).
     `challenge: true` hides the instructions.
   - `explain`: a reflection, checked for key ideas with regex patterns.
 
@@ -65,10 +72,11 @@ history, to escalate hints.
 npm run validate:labs
 ```
 
-This runs every code step's starter code (it must fail the checks) and
-solution (it must pass them), every quiz (the answer must match real output),
-and every reflection's model answer (it must cover its ideas). Run it after
-editing a lab.
+This runs every lab in the real Pyodide runtime (in Node, with the same
+harness as the browser): every code step's starter code must fail its checks
+and its solution must pass them, every quiz answer must match real output,
+and every reflection's model answer must cover its ideas. Run it after
+editing a lab. It needs internet access the first time to fetch packages.
 
 ## Photos
 

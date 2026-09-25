@@ -19,6 +19,10 @@ import TryExcept from "../widgets/TryExcept";
 import JsonExplorer from "../widgets/JsonExplorer";
 import ClassBlueprint from "../widgets/ClassBlueprint";
 import BugHunt from "../widgets/BugHunt";
+import ArrayOps from "../widgets/ArrayOps";
+import DataFrameOps from "../widgets/DataFrameOps";
+import ChartChooser from "../widgets/ChartChooser";
+import CorrelationExplorer from "../widgets/CorrelationExplorer";
 
 const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>> = {
   "variable-boxes": VariableBoxes,
@@ -35,6 +39,10 @@ const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>>
   "json-explorer": JsonExplorer,
   "class-blueprint": ClassBlueprint,
   "bug-hunt": BugHunt,
+  "array-ops": ArrayOps,
+  "dataframe-ops": DataFrameOps,
+  "chart-chooser": ChartChooser,
+  "correlation-explorer": CorrelationExplorer,
 };
 
 /** How much play before the takeaway is revealed. */

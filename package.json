@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate:labs": "tsc src/lib/curriculum/labs/index.ts --outDir .labs-build --module commonjs --target es2020 --skipLibCheck && node -e \"require('fs').writeFileSync('.labs-build/labs.json', JSON.stringify(require('./.labs-build/labs/index.js').allLabs))\" && python3 scripts/validate_labs.py .labs-build/labs.json"
+    "validate:labs": "tsc src/lib/curriculum/labs/index.ts --outDir .labs-build --module commonjs --target es2020 --skipLibCheck && node -e \"require('fs').writeFileSync('.labs-build/labs.json', JSON.stringify(require('./.labs-build/labs/index.js').allLabs))\" && node scripts/validate-labs.mjs"
   },
   "dependencies": {
     "@codemirror/lang-python": "^6.2.1",

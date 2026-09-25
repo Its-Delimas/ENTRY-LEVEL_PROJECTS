@@ -58,6 +58,11 @@ export const errorGuide: Record<string, { title: string; plain: string }> = {
     plain:
       "Inside a function, a variable was read before it was given a value. Make sure it's assigned first.",
   },
+  PackageLoadError: {
+    title: "Couldn't download this lab's libraries",
+    plain:
+      "This lab uses libraries like NumPy or pandas, which are downloaded the first time you run code (then cached). Check your connection and press Run again.",
+  },
   TimeoutError: {
     title: "Your code never finished",
     plain:

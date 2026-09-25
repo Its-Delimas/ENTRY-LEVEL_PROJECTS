@@ -46,7 +46,11 @@ export type WidgetId =
   | "try-except"
   | "json-explorer"
   | "class-blueprint"
-  | "bug-hunt";
+  | "bug-hunt"
+  | "array-ops"
+  | "dataframe-ops"
+  | "chart-chooser"
+  | "correlation-explorer";
 
 export interface ExperimentStep extends BaseStep {
   kind: "experiment";
@@ -71,6 +75,8 @@ export interface CodeCheck {
    * `_stdout` holds printed output, `_source` the code, and
    * `_with(name=value)` re-runs the code with that variable changed and
    * returns the resulting namespace — for testing logic on other inputs.
+   * `_charts` lists each matplotlib chart drawn: title, xlabel, ylabel,
+   * and counts of lines, bars and scatter points.
    */
   expr: string;
   label: string;
@@ -140,6 +146,8 @@ export interface Lab {
   skills: string[];
   /** Files written into the Python sandbox before every run. */
   files?: Record<string, string>;
+  /** Pyodide packages this lab needs (e.g. "numpy", "pandas", "matplotlib"). Loaded on demand. */
+  packages?: string[];
   steps: Step[];
 }
 

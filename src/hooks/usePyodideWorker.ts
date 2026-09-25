@@ -24,15 +24,27 @@ export interface PyError {
 export interface RunResult {
   ok: boolean;
   error?: PyError;
+  /** matplotlib figures produced by the run, as base64 PNGs. */
+  images?: string[];
 }
 
 interface WorkerMessage {
-  type: "ready" | "init-error" | "stdout" | "stderr" | "run-start" | "run-end" | "check-result";
+  type:
+    | "ready"
+    | "init-error"
+    | "stdout"
+    | "stderr"
+    | "run-start"
+    | "run-end"
+    | "check-result"
+    | "packages-loading"
+    | "packages-loaded";
   data?: string;
   ok?: boolean;
   runId?: number;
   error?: PyError;
   results?: boolean[];
+  images?: string[];
 }
 
 /** Code that runs longer than this is almost always an infinite loop. */
@@ -52,10 +64,13 @@ export function usePyodideWorker() {
   const checkResolverRef = useRef<((results: boolean[]) => void) | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const runIdRef = useRef(0);
+  const startTimeoutRef = useRef<(() => void) | null>(null);
 
   const [status, setStatus] = useState<PyodideStatus>("loading");
   const [output, setOutput] = useState("");
   const [running, setRunning] = useState(false);
+  /** Names of packages being downloaded right now, if any. */
+  const [loadingPackages, setLoadingPackages] = useState<string | null>(null);
 
   const startWorker = useCallback(() => {
     const worker = new Worker("/pyodide-worker.js", { type: "module" });
@@ -74,10 +89,21 @@ export function usePyodideWorker() {
         case "stderr":
           setOutput((prev) => (prev ? `${prev}\n${msg.data}` : (msg.data ?? "")));
           break;
+        case "packages-loading":
+          setLoadingPackages(msg.data ?? "");
+          break;
+        case "packages-loaded":
+          setLoadingPackages(null);
+          break;
+        case "run-start":
+          // Only time the code itself — package downloads can take a while.
+          startTimeoutRef.current?.();
+          break;
         case "run-end":
           if (timeoutRef.current) clearTimeout(timeoutRef.current);
           setRunning(false);
-          runResolverRef.current?.({ ok: !!msg.ok, error: msg.error });
+          setLoadingPackages(null);
+          runResolverRef.current?.({ ok: !!msg.ok, error: msg.error, images: msg.images ?? [] });
           runResolverRef.current = null;
           break;
         case "check-result":
@@ -101,7 +127,7 @@ export function usePyodideWorker() {
   }, [startWorker]);
 
   const run = useCallback(
-    (code: string, files?: Record<string, string>) => {
+    (code: string, files?: Record<string, string>, packages?: string[]) => {
       return new Promise<RunResult>((resolve) => {
         if (!workerRef.current) {
           resolve({ ok: false, error: { ...TIMEOUT_ERROR, type: "InternalError", summary: "The Python worker isn't available." } });
@@ -111,17 +137,19 @@ export function usePyodideWorker() {
         setRunning(true);
         runIdRef.current += 1;
         runResolverRef.current = resolve;
-        workerRef.current.postMessage({ type: "run", code, files, runId: runIdRef.current });
+        workerRef.current.postMessage({ type: "run", code, files, packages, runId: runIdRef.current });
 
         // A worker stuck in a loop can't be interrupted, only replaced.
-        timeoutRef.current = setTimeout(() => {
-          workerRef.current?.terminate();
-          setRunning(false);
-          setStatus("loading");
-          runResolverRef.current?.({ ok: false, error: TIMEOUT_ERROR });
-          runResolverRef.current = null;
-          startWorker();
-        }, RUN_TIMEOUT_MS);
+        startTimeoutRef.current = () => {
+          timeoutRef.current = setTimeout(() => {
+            workerRef.current?.terminate();
+            setRunning(false);
+            setStatus("loading");
+            runResolverRef.current?.({ ok: false, error: TIMEOUT_ERROR });
+            runResolverRef.current = null;
+            startWorker();
+          }, RUN_TIMEOUT_MS);
+        };
       });
     },
     [startWorker],
@@ -141,5 +169,10 @@ export function usePyodideWorker() {
 
   const clearOutput = useCallback(() => setOutput(""), []);
 
-  return { status, output, running, run, check, clearOutput };
+  /** Start downloading a lab's packages in the background, before the first run. */
+  const preload = useCallback((packages?: string[]) => {
+    if (packages?.length) workerRef.current?.postMessage({ type: "preload", packages });
+  }, []);
+
+  return { status, output, running, loadingPackages, run, check, preload, clearOutput };
 }

@@ -27,7 +27,8 @@ export interface PythonApi {
   status: PyodideStatus;
   running: boolean;
   output: string;
-  run: (code: string, files?: Record<string, string>) => Promise<RunResult>;
+  loadingPackages: string | null;
+  run: (code: string, files?: Record<string, string>, packages?: string[]) => Promise<RunResult>;
   check: (exprs: string[]) => Promise<boolean[]>;
 }
 
@@ -35,6 +36,7 @@ export default function CodeView({
   step,
   labSlug,
   files,
+  packages,
   savedCode,
   done,
   onComplete,
@@ -43,6 +45,7 @@ export default function CodeView({
   step: CodeStep;
   labSlug: string;
   files?: Record<string, string>;
+  packages?: string[];
   savedCode?: string;
   done: boolean;
   onComplete: () => void;
@@ -63,7 +66,7 @@ export default function CodeView({
   async function handleRun() {
     saveCode(labSlug, step.id, code);
     setRanCode(code);
-    const result = await python.run(code, files);
+    const result = await python.run(code, files, packages);
     setLastRun(result);
     if (!result.ok && result.error) {
       setResults(null);
@@ -262,7 +265,13 @@ export default function CodeView({
                 className="inline-flex items-center gap-1.5 rounded-md bg-lime px-4 py-1.5 text-xs font-semibold text-onlime transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
               >
                 <Play size={11} fill="currentColor" />
-                {python.running ? "Running…" : python.status === "loading" ? "Loading Python…" : "Run"}
+                {python.loadingPackages !== null
+                  ? "Loading libraries…"
+                  : python.running
+                    ? "Running…"
+                    : python.status === "loading"
+                      ? "Loading Python…"
+                      : "Run"}
               </button>
             </div>
           </div>
@@ -271,7 +280,7 @@ export default function CodeView({
             <CodeEditor value={code} onChange={setCode} />
           </div>
 
-          <div className="h-[40%] min-h-40 overflow-y-auto border-t border-white/10">
+          <div className={`${lastRun?.images?.length ? "h-[60%]" : "h-[40%]"} min-h-40 overflow-y-auto border-t border-white/10`}>
             <div className="sticky top-0 flex items-center justify-between bg-code px-4 py-2">
               <span className="eyebrow text-lime">Output</span>
               {python.status === "error" && (
@@ -287,6 +296,19 @@ export default function CodeView({
                   <span className="text-white/30">Press Run to execute your code.</span>
                 )}
               </pre>
+              {python.loadingPackages && (
+                <p className="mt-2 font-mono text-xs text-white/45">
+                  Downloading {python.loadingPackages} — only the first time, then it&apos;s cached.
+                </p>
+              )}
+              {!python.running && lastRun?.images && lastRun.images.length > 0 && (
+                <div className="mt-3 space-y-3">
+                  {lastRun.images.map((src, i) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={i} src={`data:image/png;base64,${src}`} alt={`Chart ${i + 1} from your code`} className="max-w-full rounded-xl bg-white" />
+                  ))}
+                </div>
+              )}
               {!python.running && lastRun && !lastRun.ok && lastRun.error && (
                 <div className="mt-3">
                   <ErrorExplainer error={lastRun.error} code={ranCode} />

@@ -13,19 +13,23 @@ export default function PredictView({
   done,
   onComplete,
   python,
+  packages,
 }: {
   step: PredictStep;
+  packages?: string[];
   done: boolean;
   onComplete: () => void;
   python: {
     status: PyodideStatus;
     running: boolean;
     output: string;
-    run: (code: string) => Promise<unknown>;
+    loadingPackages: string | null;
+    run: (code: string, files?: Record<string, string>, packages?: string[]) => Promise<{ images?: string[] }>;
   };
 }) {
   const [choice, setChoice] = useState<number | null>(done ? step.answer : null);
   const [ran, setRan] = useState(false);
+  const [images, setImages] = useState<string[]>([]);
   const answered = choice !== null;
   const correct = choice === step.answer;
 
@@ -37,7 +41,8 @@ export default function PredictView({
 
   async function runIt() {
     setRan(true);
-    await python.run(step.code);
+    const result = await python.run(step.code, undefined, packages);
+    setImages(result.images ?? []);
   }
 
   return (
@@ -121,7 +126,7 @@ export default function PredictView({
                   className="inline-flex items-center gap-1.5 rounded-md bg-lime px-3.5 py-1.5 text-xs font-semibold text-onlime disabled:opacity-30"
                 >
                   <Play size={11} fill="currentColor" />
-                  {python.status === "loading" ? "Loading Python…" : "Run it"}
+                  {python.loadingPackages !== null ? "Loading libraries…" : python.status === "loading" ? "Loading Python…" : "Run it"}
                 </button>
               </div>
               <pre className="min-h-16 p-4 font-mono text-xs leading-relaxed whitespace-pre-wrap text-white/80">
@@ -129,6 +134,10 @@ export default function PredictView({
                   <span className="text-white/30">Run the code to see what Python actually prints.</span>
                 )}
               </pre>
+              {images.map((src, k) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={k} src={`data:image/png;base64,${src}`} alt="Chart from the code" className="mx-4 mb-4 max-w-[calc(100%-2rem)] rounded-xl bg-white" />
+              ))}
             </div>
           </motion.div>
         )}

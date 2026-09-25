@@ -35,7 +35,7 @@ const FIT = `def fit_line(x, y):
 
 export const rainfallYield: Lab = {
   slug: "rainfall-yield",
-  number: "01",
+  number: "05",
   title: "Rainfall & Crop Yield",
   subject: "Linear Regression",
   summary:

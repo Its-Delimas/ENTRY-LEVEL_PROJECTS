@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Lock, X } from "lucide-react";
@@ -50,6 +50,11 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
   const [showOverview, setShowOverview] = useState(done.size === 0 || firstOpen === -1);
 
   const python = usePyodideWorker();
+  const { preload, status } = python;
+  // Fetch this lab's libraries while the learner reads the first lesson.
+  useEffect(() => {
+    if (status === "ready") preload(lab.packages);
+  }, [status, preload, lab.packages]);
   const step = lab.steps[index];
   const stepDone = done.has(step.id);
   // Concepts are complete as soon as they're read.
@@ -133,13 +138,14 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
               <ExperimentView step={step} done={stepDone} onComplete={complete} />
             )}
             {step.kind === "predict" && (
-              <PredictView step={step} done={stepDone} onComplete={complete} python={python} />
+              <PredictView step={step} done={stepDone} onComplete={complete} python={python} packages={lab.packages} />
             )}
             {step.kind === "code" && (
               <CodeView
                 step={step}
                 labSlug={lab.slug}
                 files={lab.files}
+                packages={lab.packages}
                 savedCode={saved?.code?.[step.id]}
                 done={stepDone}
                 onComplete={complete}

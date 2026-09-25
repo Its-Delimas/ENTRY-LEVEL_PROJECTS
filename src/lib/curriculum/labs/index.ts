@@ -5,6 +5,7 @@ import { pyFunctions, pyDicts, pyFiles } from "./python-data";
 import { pyProjectMarket } from "./python-project";
 import { pyStrings, pyToolkit, pyErrors, pyModules, pyClasses, pyDebugging } from "./python-more";
 import { aiMlLabs } from "./ai-ml";
+import { scientificLabs } from "./ai-scientific";
 
 export const pythonLabs: Lab[] = [
   pyValues,
@@ -23,4 +24,4 @@ export const pythonLabs: Lab[] = [
   pyProjectMarket,
 ];
 
-export const allLabs: Lab[] = [...pythonLabs, ...aiMlLabs];
+export const allLabs: Lab[] = [...pythonLabs, ...scientificLabs, ...aiMlLabs];
