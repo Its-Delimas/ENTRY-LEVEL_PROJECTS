@@ -199,13 +199,7 @@ export const tracks: Track[] = [
         slug: "ml-maths",
         title: "Maths for ML, hands-on",
         summary: "The maths models run on — built with code and sliders, not proofs.",
-        labs: [],
-        planned: [
-          { title: "Vectors & matrices", summary: "Why a prediction is a dot product." },
-          { title: "Statistics that matter", summary: "Spread, distributions, and correlation vs causation." },
-          { title: "Probability & Bayes", summary: "Reasoning about uncertainty, from spam filters to disease tests." },
-          { title: "Gradients & optimisation", summary: "How a model rolls downhill to its best settings." },
-        ],
+        labs: ["math-vectors", "math-stats", "math-probability", "math-gradients"],
         milestone: {
           title: "The maths behind the magic",
           description: "You can read the maths in an ML explanation and see what it does in code.",
@@ -215,15 +209,10 @@ export const tracks: Track[] = [
         slug: "ml-foundations",
         title: "How models learn",
         summary: "What training actually is, and how to test a model honestly.",
-        labs: ["rainfall-yield"],
-        planned: [
-          { title: "Gradient descent from scratch", summary: "Train a model by repeatedly stepping downhill." },
-          { title: "Overfitting & regularisation", summary: "When a model memorises instead of learning — and how to stop it." },
-          { title: "Cross-validation", summary: "Honest scores you can trust." },
-        ],
+        labs: ["rainfall-yield", "gd-scratch", "overfitting", "cross-validation"],
         milestone: {
-          title: "Your first trained model",
-          description: "You can train a model, test it on unseen data, and explain what it learned.",
+          title: "Models you can trust",
+          description: "You can train a model by gradient descent, spot overfitting, and compare models with honest cross-validated scores.",
         },
       },
       {

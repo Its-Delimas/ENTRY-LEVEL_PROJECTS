@@ -65,6 +65,14 @@ def _nl_prepare(packages):
             "grid.alpha": 0.25,
             "font.size": 10,
         })
+    if "scikit-learn" in packages:
+        # The first sklearn import is slow (it pulls in SciPy). Do it while
+        # packages load, so it never counts against the run-time limit.
+        import sklearn.linear_model  # noqa: F401
+        import sklearn.metrics  # noqa: F401
+        import sklearn.model_selection  # noqa: F401
+        import sklearn.pipeline  # noqa: F401
+        import sklearn.preprocessing  # noqa: F401
     if "pandas" in packages:
         import pandas as pd
 

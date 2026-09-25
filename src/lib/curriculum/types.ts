@@ -50,7 +50,14 @@ export type WidgetId =
   | "array-ops"
   | "dataframe-ops"
   | "chart-chooser"
-  | "correlation-explorer";
+  | "correlation-explorer"
+  | "vector-dot"
+  | "distribution-explorer"
+  | "bayes-grid"
+  | "gradient-descent"
+  | "training-loop"
+  | "overfit-poly"
+  | "kfold";
 
 export interface ExperimentStep extends BaseStep {
   kind: "experiment";

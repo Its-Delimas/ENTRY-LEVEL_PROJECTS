@@ -23,6 +23,13 @@ import ArrayOps from "../widgets/ArrayOps";
 import DataFrameOps from "../widgets/DataFrameOps";
 import ChartChooser from "../widgets/ChartChooser";
 import CorrelationExplorer from "../widgets/CorrelationExplorer";
+import VectorDot from "../widgets/VectorDot";
+import DistributionExplorer from "../widgets/DistributionExplorer";
+import BayesGrid from "../widgets/BayesGrid";
+import GradientDescent from "../widgets/GradientDescent";
+import TrainingLoop from "../widgets/TrainingLoop";
+import OverfitPoly from "../widgets/OverfitPoly";
+import KFold from "../widgets/KFold";
 
 const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>> = {
   "variable-boxes": VariableBoxes,
@@ -43,6 +50,13 @@ const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>>
   "dataframe-ops": DataFrameOps,
   "chart-chooser": ChartChooser,
   "correlation-explorer": CorrelationExplorer,
+  "vector-dot": VectorDot,
+  "distribution-explorer": DistributionExplorer,
+  "bayes-grid": BayesGrid,
+  "gradient-descent": GradientDescent,
+  "training-loop": TrainingLoop,
+  "overfit-poly": OverfitPoly,
+  kfold: KFold,
 };
 
 /** How much play before the takeaway is revealed. */
