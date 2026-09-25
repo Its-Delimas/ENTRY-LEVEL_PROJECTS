@@ -2,7 +2,7 @@ import type { Lab } from "../types";
 
 export const pyFunctions: Lab = {
   slug: "py-functions",
-  number: "05",
+  number: "07",
   title: "Functions: Reusable Recipes",
   subject: "def & return",
   summary:
@@ -209,7 +209,7 @@ print(mae([10, 20, 30], [12, 18, 30]))`,
 
 export const pyDicts: Lab = {
   slug: "py-dicts",
-  number: "06",
+  number: "08",
   title: "Dictionaries: Data With Labels",
   subject: "Dicts & records",
   summary:
@@ -462,7 +462,7 @@ Eldoret Main,Uasin Gishu,2025-07,53
 
 export const pyFiles: Lab = {
   slug: "py-files",
-  number: "07",
+  number: "09",
   title: "Reading Real Data",
   subject: "CSV files",
   summary:

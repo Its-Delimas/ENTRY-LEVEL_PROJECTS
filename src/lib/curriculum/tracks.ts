@@ -25,21 +25,31 @@ export const tracks: Track[] = [
       {
         slug: "py-collections",
         title: "Working with many values",
-        summary: "Lists and loops: how code handles a whole dataset, not one number.",
-        labs: ["py-lists", "py-loops"],
+        summary: "Lists, loops, text and the everyday toolkit: how code handles a whole dataset, not one number.",
+        labs: ["py-lists", "py-loops", "py-strings", "py-toolkit"],
         milestone: {
           title: "Code that scales to any amount of data",
-          description: "You can hold a column of data, split it, and total, filter or count it with loops.",
+          description: "You can hold a column of data, clean text, and total, filter, count or sort it — with loops or one-line comprehensions.",
         },
       },
       {
         slug: "py-data",
         title: "Organising code and data",
-        summary: "Functions, dictionaries and files — the shape of real data work.",
-        labs: ["py-functions", "py-dicts", "py-files"],
+        summary: "Functions, dictionaries, files, errors and JSON — the shape of real data work.",
+        labs: ["py-functions", "py-dicts", "py-files", "py-errors", "py-modules"],
         milestone: {
           title: "Real data, from file to answer",
-          description: "You can read a CSV, work with records, and package logic into reusable functions.",
+          description: "You can read CSV and JSON, work with records, survive bad data, and package logic into reusable functions.",
+        },
+      },
+      {
+        slug: "py-engineering",
+        title: "Thinking like a programmer",
+        summary: "Classes, debugging and testing — how to read library code and trust your own.",
+        labs: ["py-classes", "py-debugging"],
+        milestone: {
+          title: "Code you can trust",
+          description: "You can read and write classes like ML libraries use, find bugs methodically, and prove your code works with tests.",
         },
       },
       {
@@ -126,6 +136,34 @@ export const tracks: Track[] = [
         options: ["{'a': 2, 'b': 1}", "{'a': 1, 'b': 1}", "{'a': 2}", "KeyError"],
         answer: 0,
         lab: "py-dicts",
+      },
+      {
+        prompt: "What does this print?",
+        code: `name = "  Otieno "\nprint(name.strip().upper() + "!")`,
+        options: ["OTIENO!", "  OTIENO !", "Otieno!", "otieno!"],
+        answer: 0,
+        lab: "py-strings",
+      },
+      {
+        prompt: "What does this print?",
+        code: `print([n * 10 for n in [1, 5, 2, 8] if n > 2])`,
+        options: ["[50, 80]", "[10, 50, 20, 80]", "[5, 8]", "[50, 20, 80]"],
+        answer: 0,
+        lab: "py-toolkit",
+      },
+      {
+        prompt: "What does this print?",
+        code: `try:\n    value = float("n/a")\nexcept ValueError:\n    value = 0.0\nprint(value)`,
+        options: ["0.0", "n/a", "ValueError", "None"],
+        answer: 0,
+        lab: "py-errors",
+      },
+      {
+        prompt: "What does this print?",
+        code: `class Model:\n    def fit(self, values):\n        self.mean_ = sum(values) / len(values)\n\nm = Model()\nm.fit([2, 4, 6])\nprint(m.mean_)`,
+        options: ["4.0", "12", "[2, 4, 6]", "AttributeError"],
+        answer: 0,
+        lab: "py-classes",
       },
       {
         prompt: "A row read with `csv.DictReader` is `{\"price\": \"62\"}`. Which expression gives the number 124?",

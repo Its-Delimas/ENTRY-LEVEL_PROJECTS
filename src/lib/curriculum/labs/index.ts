@@ -3,6 +3,7 @@ import { pyValues, pyDecisions } from "./python-basics";
 import { pyLists, pyLoops } from "./python-collections";
 import { pyFunctions, pyDicts, pyFiles } from "./python-data";
 import { pyProjectMarket } from "./python-project";
+import { pyStrings, pyToolkit, pyErrors, pyModules, pyClasses, pyDebugging } from "./python-more";
 import { aiMlLabs } from "./ai-ml";
 
 export const pythonLabs: Lab[] = [
@@ -10,9 +11,15 @@ export const pythonLabs: Lab[] = [
   pyDecisions,
   pyLists,
   pyLoops,
+  pyStrings,
+  pyToolkit,
   pyFunctions,
   pyDicts,
   pyFiles,
+  pyErrors,
+  pyModules,
+  pyClasses,
+  pyDebugging,
   pyProjectMarket,
 ];
 

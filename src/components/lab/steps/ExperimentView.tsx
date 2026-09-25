@@ -13,6 +13,12 @@ import FunctionMachine from "../widgets/FunctionMachine";
 import DictLookup from "../widgets/DictLookup";
 import CsvRows from "../widgets/CsvRows";
 import LineFit from "../widgets/LineFit";
+import StringMethods from "../widgets/StringMethods";
+import ComprehensionBuilder from "../widgets/ComprehensionBuilder";
+import TryExcept from "../widgets/TryExcept";
+import JsonExplorer from "../widgets/JsonExplorer";
+import ClassBlueprint from "../widgets/ClassBlueprint";
+import BugHunt from "../widgets/BugHunt";
 
 const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>> = {
   "variable-boxes": VariableBoxes,
@@ -23,6 +29,12 @@ const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>>
   "dict-lookup": DictLookup,
   "csv-rows": CsvRows,
   "line-fit": LineFit,
+  "string-methods": StringMethods,
+  "comprehension-builder": ComprehensionBuilder,
+  "try-except": TryExcept,
+  "json-explorer": JsonExplorer,
+  "class-blueprint": ClassBlueprint,
+  "bug-hunt": BugHunt,
 };
 
 /** How much play before the takeaway is revealed. */

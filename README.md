@@ -11,7 +11,7 @@ reflection in their own words.
 
 | Track | Level | Status |
 | --- | --- | --- |
-| Python for AI | Beginner | 7 labs + capstone project, live |
+| Python for AI | Beginner | 13 labs + capstone project, live (complete) |
 | AI & Machine Learning | Intermediate | Requires Python for AI (or its placement check); lab 01 live |
 | Data Science, Data Engineering | — | Planned |
 

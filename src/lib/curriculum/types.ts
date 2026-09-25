@@ -40,7 +40,13 @@ export type WidgetId =
   | "function-machine"
   | "dict-lookup"
   | "csv-rows"
-  | "line-fit";
+  | "line-fit"
+  | "string-methods"
+  | "comprehension-builder"
+  | "try-except"
+  | "json-explorer"
+  | "class-blueprint"
+  | "bug-hunt";
 
 export interface ExperimentStep extends BaseStep {
   kind: "experiment";
