@@ -55,3 +55,39 @@ body {
   background: var(--color-paper);
   border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
 }
+
+/* Range sliders used by lab experiments: ink track filled with lime up to the thumb */
+.nl-range {
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--color-ink) 0 var(--pct),
+    color-mix(in srgb, var(--color-ink) 12%, transparent) var(--pct) 100%
+  );
+  cursor: pointer;
+}
+.nl-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--color-lime);
+  border: 3px solid var(--color-ink);
+  transition: transform 0.15s;
+}
+.nl-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--color-lime);
+  border: 3px solid var(--color-ink);
+}
+.nl-range:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+.nl-range:focus-visible {
+  outline: 2px solid var(--color-lime-deep);
+  outline-offset: 6px;
+}

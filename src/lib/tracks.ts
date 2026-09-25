@@ -1,4 +1,4 @@
-import { rainfallYieldLesson } from "./lessons/rainfall-yield";
+import { rainfallYield as rainfallYieldLesson } from "./curriculum/labs/ai-ml";
 
 export interface MissionSummary {
   number: string;
@@ -26,7 +26,7 @@ export const tracks: Track[] = [
     status: "active",
     missions: [
       {
-        number: rainfallYieldLesson.missionNumber,
+        number: rainfallYieldLesson.number,
         title: rainfallYieldLesson.title,
         subject: rainfallYieldLesson.subject,
         slug: rainfallYieldLesson.slug,

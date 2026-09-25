@@ -22,7 +22,7 @@ export default function CTA() {
           code and train a real model in the next five minutes.
         </p>
         <motion.a
-          href="/lesson/rainfall-yield"
+          href="/labs/rainfall-yield"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}

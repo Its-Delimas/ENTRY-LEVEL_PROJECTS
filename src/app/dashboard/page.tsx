@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,7 +25,7 @@ import Logo from "@/components/landing/Logo";
 import Modal from "@/components/ui/Modal";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { tracks, activeTrack, type Track } from "@/lib/tracks";
-import { getCompletedMissions, getActivityDates } from "@/lib/progress";
+import { useActivityDates, useProgress } from "@/lib/progress";
 
 const missionIcons: Record<string, typeof Sprout> = {
   "01": Sprout,
@@ -47,18 +47,18 @@ const stages = [
 ];
 
 export default function DashboardPage() {
-  const [completed, setCompleted] = useState<Set<string> | null>(null);
-  const [activeDates, setActiveDates] = useState<Set<string>>(new Set());
+  const progress = useProgress();
+  const activeDates = useActivityDates();
   const [lockedTrack, setLockedTrack] = useState<Track | null>(null);
   const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    // localStorage isn't available during SSR, so progress has to be
-    // read after mount rather than computed during render.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setCompleted(getCompletedMissions());
-    setActiveDates(getActivityDates());
-  }, []);
+  const completed = useMemo(
+    () =>
+      progress
+        ? new Set(Object.keys(progress.labs).filter((k) => progress.labs[k].completedAt))
+        : null,
+    [progress],
+  );
 
   const liveMissions = activeTrack.missions.filter((m) => m.slug);
   const doneCount = completed
@@ -147,7 +147,7 @@ export default function DashboardPage() {
                 </p>
                 {nextMission?.slug && (
                   <Link
-                    href={`/lesson/${nextMission.slug}`}
+                    href={`/labs/${nextMission.slug}`}
                     className="mt-5 inline-flex items-center gap-2 rounded-md bg-lime px-5 py-2.5 text-sm font-semibold text-ink"
                   >
                     {doneCount === 0 ? "Start Mission" : "Continue"}{" "}
@@ -246,7 +246,7 @@ export default function DashboardPage() {
                         transition={{ duration: 0.2 }}
                       >
                         {mission.slug ? (
-                          <Link href={`/lesson/${mission.slug}`} className="block">
+                          <Link href={`/labs/${mission.slug}`} className="block">
                             {card}
                           </Link>
                         ) : (

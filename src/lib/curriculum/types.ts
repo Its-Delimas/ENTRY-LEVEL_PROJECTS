@@ -1,0 +1,159 @@
+/**
+ * The Nurulabs curriculum model.
+ *
+ * A Track is a path (e.g. "Python for AI"), made of Modules, made of Labs.
+ * A Lab is a sequence of Steps, and each step is an *activity*, not a page
+ * of reading: the text is glue between things the learner does.
+ *
+ *   concept    → a short idea, a few sentences, usually with a code sample
+ *   experiment → an interactive widget the learner plays with
+ *   predict    → "what will this code do?" before they run it
+ *   code       → write and run real Python, checked against the namespace
+ *   explain    → put the idea into their own words, checked for key ideas
+ */
+
+export type StepKind = "concept" | "experiment" | "predict" | "code" | "explain";
+
+interface BaseStep {
+  id: string;
+  kind: StepKind;
+  title: string;
+}
+
+export interface ConceptStep extends BaseStep {
+  kind: "concept";
+  /** Short paragraphs. Inline `code` in backticks is rendered as code. */
+  body: string[];
+  /** Optional read-only code sample shown beside the idea. */
+  code?: string;
+  /** One sentence the learner should walk away with. */
+  keyIdea?: string;
+  /** Optional photo under /public/images. */
+  image?: { src: string; alt: string };
+}
+
+export type WidgetId =
+  | "variable-boxes"
+  | "decision-threshold"
+  | "list-explorer"
+  | "loop-stepper"
+  | "function-machine"
+  | "dict-lookup"
+  | "csv-rows"
+  | "line-fit";
+
+export interface ExperimentStep extends BaseStep {
+  kind: "experiment";
+  prompt: string;
+  widget: WidgetId;
+  /** The takeaway, revealed once the learner has played with the widget. */
+  observe: string;
+}
+
+export interface PredictStep extends BaseStep {
+  kind: "predict";
+  prompt: string;
+  code: string;
+  options: string[];
+  answer: number;
+  explanation: string;
+}
+
+export interface CodeCheck {
+  /** A Python expression evaluated in the learner's namespace after a run. `_stdout` holds printed output. */
+  expr: string;
+  label: string;
+  /** Shown by the mentor when this check fails. */
+  failHint: string;
+}
+
+export interface ErrorHint {
+  /** Regex source (case-insensitive) matched against "ErrorType: message". */
+  pattern: string;
+  hint: string;
+}
+
+export interface CodeStep extends BaseStep {
+  kind: "code";
+  /** Challenges state only the objective — no step-by-step instructions. */
+  challenge?: boolean;
+  brief: string;
+  instructions?: string[];
+  starterCode: string;
+  checks: CodeCheck[];
+  /** Progressive hints, from gentle to specific. */
+  hints: string[];
+  errorHints?: ErrorHint[];
+  /** Why it worked — shown on success. */
+  why: string;
+  /** A small follow-up nudge to keep experimenting after success. */
+  tryNext?: string;
+  /** A working solution, only offered after repeated failed attempts. */
+  solution?: string;
+}
+
+export interface ExplainIdea {
+  label: string;
+  /** Regex sources (case-insensitive); any match counts the idea as covered. */
+  patterns: string[];
+  /** A question that nudges toward this idea when it's missing. */
+  nudge: string;
+}
+
+export interface ExplainStep extends BaseStep {
+  kind: "explain";
+  prompt: string;
+  ideas: ExplainIdea[];
+  modelAnswer: string;
+}
+
+export type Step =
+  | ConceptStep
+  | ExperimentStep
+  | PredictStep
+  | CodeStep
+  | ExplainStep;
+
+export interface Lab {
+  slug: string;
+  /** Display number within its track, e.g. "03". */
+  number: string;
+  title: string;
+  subject: string;
+  summary: string;
+  minutes: number;
+  kind: "lab" | "project";
+  /** What the learner can do after finishing — powers the skill map. */
+  skills: string[];
+  /** Files written into the Python sandbox before every run. */
+  files?: Record<string, string>;
+  steps: Step[];
+}
+
+export interface PlannedLab {
+  title: string;
+  summary: string;
+}
+
+export interface Module {
+  slug: string;
+  title: string;
+  summary: string;
+  /** Lab slugs, in order. */
+  labs: string[];
+  /** Labs that are designed but not built yet — shown, never clickable. */
+  planned?: PlannedLab[];
+}
+
+export interface Track {
+  slug: string;
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  status: "active" | "coming-soon";
+  /** Track slugs that must be complete before this one unlocks. */
+  requires?: string[];
+  cover?: { src: string; alt: string };
+  modules: Module[];
+}

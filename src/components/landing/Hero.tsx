@@ -94,7 +94,7 @@ export default function Hero() {
             className="mt-9 flex flex-wrap items-center gap-4"
           >
             <motion.a
-              href="/lesson/rainfall-yield"
+              href="/labs/rainfall-yield"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
