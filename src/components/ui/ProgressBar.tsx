@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 
-export default function ProgressBar({ value }: { value: number }) {
+export default function ProgressBar({ value, dark = false }: { value: number; dark?: boolean }) {
   return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-ink/10">
+    <div className={`h-1.5 w-full overflow-hidden rounded-full ${dark ? "bg-white/10" : "bg-ink/10"}`}>
       <motion.div
         className="h-full rounded-full bg-lime"
         initial={{ width: 0 }}

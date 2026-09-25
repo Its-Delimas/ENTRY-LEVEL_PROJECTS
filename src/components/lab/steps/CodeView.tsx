@@ -90,9 +90,9 @@ export default function CodeView({
   const KindIcon = step.challenge ? Target : Code2;
 
   return (
-    <div className="grid w-full flex-1 lg:grid-cols-[minmax(0,420px)_1fr]">
+    <div className="grid w-full min-w-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
       {/* Brief, checks, mentor */}
-      <aside className="order-2 border-t border-ink/10 bg-white px-6 py-8 lg:order-1 lg:border-t-0 lg:border-r lg:overflow-y-auto">
+      <aside className="min-w-0 border-b border-ink/10 bg-white px-6 py-8 lg:border-r lg:border-b-0">
         <div className="flex items-center gap-2 text-lime-deep">
           <KindIcon size={15} />
           <p className="eyebrow">{step.challenge ? "Challenge" : "Your turn"}</p>
@@ -233,7 +233,7 @@ export default function CodeView({
       </aside>
 
       {/* Editor + output */}
-      <div className="order-1 flex min-h-[560px] flex-col bg-cream p-4 lg:order-2 lg:p-6">
+      <div className="flex min-h-[560px] min-w-0 flex-col bg-cream p-4 lg:sticky lg:top-[57px] lg:self-start lg:h-[calc(100vh-57px-65px)] lg:p-6">
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-ink shadow-[0_24px_60px_-30px_rgba(0,0,0,0.55)]">
           <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
             <div className="flex items-center gap-3">

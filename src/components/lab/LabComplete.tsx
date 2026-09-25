@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Trophy } from "lucide-react";
+import { ArrowRight, Check, Trophy, Unlock } from "lucide-react";
 import type { Lab } from "@/lib/curriculum/types";
-import { nextLabAfter, trackOfLab } from "@/lib/curriculum";
+import { nextLabAfter, trackOfLab, tracks } from "@/lib/curriculum";
 import Logo from "@/components/landing/Logo";
 
 export default function LabComplete({ lab }: { lab: Lab }) {
   const track = trackOfLab(lab.slug);
   const next = nextLabAfter(lab.slug);
+  // Finishing a track's last lab unlocks the tracks that require it.
+  const unlocked = !next && track ? tracks.filter((t) => t.requires?.includes(track.slug)) : [];
 
   return (
     <div className="flex min-h-screen flex-col bg-ink text-white">
@@ -59,6 +61,22 @@ export default function LabComplete({ lab }: { lab: Lab }) {
           </ul>
         </motion.div>
 
+        {unlocked.map((t) => (
+          <motion.div
+            key={t.slug}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mt-6 flex items-center gap-4 rounded-3xl bg-lime p-6 text-ink"
+          >
+            <Unlock size={22} className="shrink-0" />
+            <div>
+              <p className="font-display text-lg font-semibold">You&apos;ve unlocked {t.name}</p>
+              <p className="mt-0.5 text-sm text-ink/70">{t.tagline}</p>
+            </div>
+          </motion.div>
+        ))}
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -73,13 +91,21 @@ export default function LabComplete({ lab }: { lab: Lab }) {
               Next: {next.title}
               <ArrowRight size={16} />
             </Link>
+          ) : unlocked.length ? (
+            <Link
+              href={`/tracks/${unlocked[0].slug}`}
+              className="inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3.5 text-sm font-semibold text-ink"
+            >
+              Start {unlocked[0].name}
+              <ArrowRight size={16} />
+            </Link>
           ) : (
             track && (
               <Link
-                href="/dashboard"
+                href={`/tracks/${track.slug}`}
                 className="inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3.5 text-sm font-semibold text-ink"
               >
-                Back to dashboard
+                See your track
                 <ArrowRight size={16} />
               </Link>
             )

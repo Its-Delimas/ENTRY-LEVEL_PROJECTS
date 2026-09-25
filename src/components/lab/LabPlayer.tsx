@@ -91,7 +91,7 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
             <StepRail steps={lab.steps} current={index} done={done} reachable={reachable} onSelect={setIndex} />
           </div>
           <Link
-            href="/dashboard"
+            href={track ? `/tracks/${track.slug}` : "/dashboard"}
             aria-label="Leave lab"
             className="rounded-lg p-2 text-ink/45 hover:bg-cream hover:text-ink"
           >
@@ -207,7 +207,7 @@ function LockedLab({
               here assumes you can already write Python on your own.
             </p>
             <Link
-              href="/dashboard"
+              href={`/tracks/${access.tracks[0].slug}`}
               className="mt-8 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-white"
             >
               Go to {access.tracks[0].name}
@@ -230,7 +230,7 @@ function LockedLab({
           </>
         )}
         {track && (
-          <Link href="/dashboard" className="mt-4 text-sm font-medium text-ink/50 hover:text-ink">
+          <Link href={`/tracks/${track.slug}`} className="mt-4 text-sm font-medium text-ink/50 hover:text-ink">
             Back to {track.name}
           </Link>
         )}

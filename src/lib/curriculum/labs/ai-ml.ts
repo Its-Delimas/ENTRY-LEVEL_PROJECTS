@@ -42,6 +42,7 @@ export const rainfallYield: Lab = {
     "Predict maize yield from rainfall on smallholder farms in Nakuru County — and see exactly what “training a model” means.",
   minutes: 35,
   kind: "lab",
+  cover: { src: "/images/maize-field.jpg", alt: "A field of young maize under a blue sky" },
   skills: [
     "Explain what training a model actually does",
     "Fit a straight-line model to real data",
@@ -58,6 +59,7 @@ export const rainfallYield: Lab = {
         "A **model** is just a formula that turns what you know (rainfall) into what you want to know (yield). The simplest useful one is a straight line: `yield = slope × rainfall + intercept`.",
         "**Training** means finding the slope and intercept that fit past farms best. Before any code — try doing it by hand.",
       ],
+      image: { src: "/images/highland-farms.jpg", alt: "Green farmland stretching toward the horizon under a cloudy sky" },
       keyIdea: "A model is a formula. Training is choosing its numbers so it fits the data you already have.",
     },
     {

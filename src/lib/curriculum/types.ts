@@ -128,6 +128,8 @@ export interface Lab {
   summary: string;
   minutes: number;
   kind: "lab" | "project";
+  /** Optional photo under /public/images, for cards and headers. */
+  cover?: { src: string; alt: string };
   /** What the learner can do after finishing — powers the skill map. */
   skills: string[];
   /** Files written into the Python sandbox before every run. */

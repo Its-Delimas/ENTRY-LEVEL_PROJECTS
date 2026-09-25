@@ -9,6 +9,7 @@ export const tracks: Track[] = [
     description:
       "Start from zero and finish able to load, clean and analyse a real dataset in Python — the foundation every lab in the AI & ML track builds on.",
     status: "active",
+    cover: { src: "/images/pair-programming.jpg", alt: "Two developers reading code together on a monitor" },
     modules: [
       {
         slug: "py-foundations",
@@ -56,6 +57,7 @@ export const tracks: Track[] = [
       "From your first straight-line model to neural networks and image classifiers — every concept built, run, and tested by you.",
     status: "active",
     requires: ["python-for-ai"],
+    cover: { src: "/images/maize-field.jpg", alt: "A field of young maize under a blue sky" },
     modules: [
       {
         slug: "ml-foundations",
