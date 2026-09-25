@@ -2,6 +2,52 @@ import type { Track } from "./types";
 
 export const tracks: Track[] = [
   {
+    slug: "python-for-ai",
+    name: "Python for AI",
+    shortName: "Python",
+    tagline: "The language every AI system is written in.",
+    description:
+      "Start from zero and finish able to load, clean and analyse a real dataset in Python — the foundation every lab in the AI & ML track builds on.",
+    status: "active",
+    modules: [
+      {
+        slug: "py-foundations",
+        title: "Talking to Python",
+        summary: "Values, variables, and decisions — the building blocks of every program.",
+        labs: ["py-values", "py-decisions"],
+      },
+      {
+        slug: "py-collections",
+        title: "Working with many values",
+        summary: "Lists and loops: how code handles a whole dataset, not one number.",
+        labs: ["py-lists", "py-loops"],
+      },
+      {
+        slug: "py-data",
+        title: "Organising code and data",
+        summary: "Functions, dictionaries and files — the shape of real data work.",
+        labs: ["py-functions", "py-dicts", "py-files"],
+      },
+      {
+        slug: "py-capstone",
+        title: "Project",
+        summary: "Put it all together on a real question with messy data.",
+        labs: ["py-project-market"],
+      },
+      {
+        slug: "py-scientific",
+        title: "Scientific Python",
+        summary: "The libraries data scientists use every day.",
+        labs: [],
+        planned: [
+          { title: "Arrays with NumPy", summary: "Fast maths on whole columns at once." },
+          { title: "DataFrames with pandas", summary: "Load, filter and group tables in a few lines." },
+          { title: "Plotting your data", summary: "See the pattern before you model it." },
+        ],
+      },
+    ],
+  },
+  {
     slug: "ai-ml",
     name: "AI & Machine Learning",
     shortName: "AI & ML",
@@ -9,6 +55,7 @@ export const tracks: Track[] = [
     description:
       "From your first straight-line model to neural networks and image classifiers — every concept built, run, and tested by you.",
     status: "active",
+    requires: ["python-for-ai"],
     modules: [
       {
         slug: "ml-foundations",

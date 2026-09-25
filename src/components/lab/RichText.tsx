@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 
-/** Renders `code` and **bold** inside short lesson copy. Nothing else. */
+/** Renders `code`, **bold** and *italic* inside short lesson copy. Nothing else. */
 export default function RichText({ text }: { text: string }) {
-  const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
+  const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/g);
   return (
     <>
       {parts.map((part, i) => {
@@ -22,6 +22,9 @@ export default function RichText({ text }: { text: string }) {
               {part.slice(2, -2)}
             </strong>
           );
+        }
+        if (/^\*[^*\s][^*]*\*$/.test(part)) {
+          return <em key={i}>{part.slice(1, -1)}</em>;
         }
         return <Fragment key={i}>{part}</Fragment>;
       })}

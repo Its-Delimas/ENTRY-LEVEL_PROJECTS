@@ -135,10 +135,15 @@ print(f"Training on {len(X_train)} farms, testing on {len(X_test)}")
       ],
       why:
         "Slices keep order, so farm 3's rainfall in `X_train` still lines up with farm 3's yield in `y_train`. Keeping inputs and answers paired is what lets a model learn from them.",
-      solution: `X_train = rainfall[:8]
+      solution: `${LOAD}
+print(f"Loaded {len(rainfall)} farms")
+
+X_train = rainfall[:8]
 X_test = rainfall[8:]
 y_train = yield_bags[:8]
-y_test = yield_bags[8:]`,
+y_test = yield_bags[8:]
+
+print(f"Training on {len(X_train)} farms, testing on {len(X_test)}")`,
     },
     {
       id: "train",
@@ -182,7 +187,13 @@ print(f"Trained: yield = {slope:.4f} x rainfall + {intercept:.2f}")
       why:
         "This is ordinary least squares — the formula that finds the line with the smallest squared error. Your sliders were searching for these same two numbers; the formula gets there in one step.",
       tryNext: "Train on all 10 farms instead of 8. How much does the slope change?",
-      solution: FIT,
+      solution: `${LOAD}
+X_train, X_test = rainfall[:8], rainfall[8:]
+y_train, y_test = yield_bags[:8], yield_bags[8:]
+
+${FIT}
+slope, intercept = fit_line(X_train, y_train)
+print(f"Trained: yield = {slope:.4f} x rainfall + {intercept:.2f}")`,
     },
     {
       id: "evaluate",
@@ -218,7 +229,14 @@ slope, intercept = fit_line(X_train, y_train)
       why:
         "Your model predicts yield on farms it never trained on to within a fraction of a bag. That's a real, testable model — the same loop (split, train, evaluate) is how every ML model in this track will work.",
       tryNext: "Print each prediction next to its real value. Which farm is the model most wrong about?",
-      solution: `predictions = []
+      solution: `${LOAD}
+X_train, X_test = rainfall[:8], rainfall[8:]
+y_train, y_test = yield_bags[:8], yield_bags[8:]
+
+${FIT}
+slope, intercept = fit_line(X_train, y_train)
+
+predictions = []
 for x in X_test:
     predictions.append(slope * x + intercept)
 

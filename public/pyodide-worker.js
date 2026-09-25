@@ -8,6 +8,9 @@ let stdoutLines = [];
 // "Did you mean" suggestions), and a snapshot of their variables.
 const HARNESS = `
 import traceback as _tb
+import ast as _ast
+import io as _io
+import contextlib as _ctx
 
 def _nl_preview(v):
     try:
@@ -49,7 +52,31 @@ def _nl_run(code, ns):
             "vars": _nl_snapshot(ns),
         }
 
+def _nl_make_with(source):
+    # Re-runs the learner's code with a top-level variable overridden right
+    # after its first assignment, so checks can test logic on other inputs.
+    def _with(**overrides):
+        tree = _ast.parse(source)
+        inserts = {}
+        for k, v in overrides.items():
+            for node in tree.body:
+                if isinstance(node, _ast.Assign) and any(
+                    isinstance(t, _ast.Name) and t.id == k for t in node.targets
+                ):
+                    inserts.setdefault(node.end_lineno, []).append(k + " = " + repr(v))
+                    break
+        out = []
+        for i, line in enumerate(source.split("\\n"), 1):
+            out.append(line)
+            out.extend(inserts.get(i, []))
+        ns = {}
+        with _ctx.redirect_stdout(_io.StringIO()):
+            exec(compile("\\n".join(out), "main.py", "exec"), ns)
+        return ns
+    return _with
+
 def _nl_check(exprs, ns):
+    ns["_with"] = _nl_make_with(ns.get("_source", ""))
     results = []
     for expr in exprs:
         try:
@@ -114,6 +141,7 @@ self.onmessage = async (event) => {
       const result = runner(code, ns);
       runner.destroy();
       ns.set("_stdout", stdoutLines.join("\n"));
+      ns.set("_source", code);
       lastNamespace = ns;
       if (result) {
         const error = result.toJs({ dict_converter: Object.fromEntries });

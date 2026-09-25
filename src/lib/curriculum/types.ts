@@ -60,7 +60,12 @@ export interface PredictStep extends BaseStep {
 }
 
 export interface CodeCheck {
-  /** A Python expression evaluated in the learner's namespace after a run. `_stdout` holds printed output. */
+  /**
+   * A Python expression evaluated in the learner's namespace after a run.
+   * `_stdout` holds printed output, `_source` the code, and
+   * `_with(name=value)` re-runs the code with that variable changed and
+   * returns the resulting namespace — for testing logic on other inputs.
+   */
   expr: string;
   label: string;
   /** Shown by the mentor when this check fails. */
