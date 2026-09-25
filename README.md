@@ -1,6 +1,6 @@
 # Nurulabs
 
-Affordable, hands-on AI education for African students, structured like a
+Free, hands-on AI education for African students, structured like a
 real programme. Learners enroll in one track, work through its syllabus
 module by module (each ending in a milestone), and finish it before
 starting the next. Every lab mixes short lessons with things to *do*:

@@ -31,9 +31,12 @@ function Mark({ size = 28 }: { size?: number }) {
 
 export default function Logo({
   withWordmark = true,
+  light = false,
   className = "",
 }: {
   withWordmark?: boolean;
+  /** White wordmark, for dark backgrounds. */
+  light?: boolean;
   className?: string;
 }) {
   return (
@@ -44,7 +47,7 @@ export default function Logo({
     >
       <Mark />
       {withWordmark && (
-        <span className="font-display text-lg font-semibold tracking-tight text-ink">
+        <span className={`font-display text-lg font-semibold tracking-tight transition-colors ${light ? "text-white" : "text-ink"}`}>
           Nurulabs
         </span>
       )}

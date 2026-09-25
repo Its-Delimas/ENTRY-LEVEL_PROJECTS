@@ -15,15 +15,28 @@ export default function TrackCatalog() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <p className="eyebrow text-lime-deep">Programmes</p>
-      <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight text-ink">
-        {current ? "Tracks" : "Choose your track"}
-      </h1>
-      <p className="mt-3 max-w-2xl leading-relaxed text-ink/60">
-        Nurulabs works like a programme, not a buffet. You enroll in one track, follow its syllabus
-        milestone by milestone, and finish it before starting the next. New to code? Start with
-        Python for AI — everything else builds on it.
-      </p>
+      <section className="relative isolate overflow-hidden rounded-[28px] bg-ink text-white">
+        <Image
+          src="/images/students-laptops.jpg"
+          alt="Four students sitting together outdoors with laptops"
+          fill
+          priority
+          sizes="(min-width: 1024px) 1024px, 100vw"
+          className="-z-20 object-cover object-[center_30%]"
+        />
+        <div className="absolute inset-0 -z-10 bg-ink/70" />
+        <div className="px-7 py-12 md:px-10 md:py-16">
+          <p className="eyebrow text-lime">Free programmes</p>
+          <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+            {current ? "Tracks" : "Choose your track"}
+          </h1>
+          <p className="mt-4 max-w-2xl leading-relaxed text-white/70">
+            Nurulabs works like a programme, not a buffet. You enroll in one track, follow its syllabus
+            milestone by milestone, and finish it before starting the next. New to code? Start with Python
+            for AI — everything else builds on it. Every track is free.
+          </p>
+        </div>
+      </section>
 
       <div className="mt-10 space-y-5">
         {tracks.map((track, i) => {

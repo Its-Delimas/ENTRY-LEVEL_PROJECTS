@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Bot, Check, X } from "lucide-react";
+import { allLabs } from "@/lib/curriculum/labs";
 
 const rail = [
   { label: "Lesson", state: "done" },
@@ -26,13 +29,34 @@ const fadeUp = {
   }),
 };
 
+const liveLabs = allLabs.length;
+const activities = allLabs.reduce((n, l) => n + l.steps.length, 0);
+
+const stats = [
+  { value: "Free", label: "Every track, every lab. No fees." },
+  { value: String(liveLabs), label: "Hands-on labs live today" },
+  { value: `${activities}+`, label: "Lessons, interactives and exercises" },
+  { value: "0", label: "Installs — Python runs in your browser" },
+];
+
 export default function Hero() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16 md:py-24">
-      <div className="grid gap-14 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:items-center">
+    <section className="relative isolate overflow-hidden bg-ink text-white">
+      <Image
+        src="/images/coder-night.jpg"
+        alt="A developer in headphones writing code on a large monitor"
+        fill
+        priority
+        sizes="100vw"
+        className="-z-20 object-cover object-[70%_center]"
+      />
+      {/* Flat scrim: keeps the photo visible but the text readable. */}
+      <div className="absolute inset-0 -z-10 bg-ink/75 md:bg-ink/70" />
+
+      <div className="mx-auto grid max-w-7xl gap-14 px-6 pt-36 pb-16 md:min-h-[92vh] md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-center md:pt-32">
         <div>
-          <motion.p custom={0} initial="hidden" animate="show" variants={fadeUp} className="eyebrow text-lime-deep">
-            Africa&apos;s hands-on AI academy
+          <motion.p custom={0} initial="hidden" animate="show" variants={fadeUp} className="eyebrow text-lime">
+            Free · Africa&apos;s hands-on AI academy
           </motion.p>
 
           <motion.h1
@@ -40,7 +64,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="mt-4 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink md:text-6xl"
+            className="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl"
           >
             Learn AI by{" "}
             <span className="relative whitespace-nowrap">
@@ -52,40 +76,51 @@ export default function Hero() {
             .
           </motion.h1>
 
-          <motion.p custom={2} initial="hidden" animate="show" variants={fadeUp} className="mt-6 max-w-lg text-lg leading-relaxed text-ink/60">
-            A structured programme that starts at your first line of Python and ends with models you trained
-            yourself. Every lesson is followed by something you <em>do</em> — an interactive, a quiz, real code
-            that runs in your browser — with a mentor that reads your errors with you.
+          <motion.p custom={2} initial="hidden" animate="show" variants={fadeUp} className="mt-7 max-w-xl text-lg leading-relaxed text-white/70">
+            A free, structured programme that starts at your first line of Python and ends with models you
+            trained yourself. Every lesson is followed by something you <em>do</em> — with a mentor that reads your
+            errors with you.
           </motion.p>
 
-          <motion.div custom={3} initial="hidden" animate="show" variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-4">
-            <motion.a
-              href="/tracks"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3.5 text-sm font-semibold text-white"
-            >
-              Choose your track
+          <motion.div custom={3} initial="hidden" animate="show" variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-4">
+            <Link href="/tracks" className="inline-flex items-center gap-2 rounded-md bg-lime px-7 py-4 text-sm font-semibold text-ink">
+              Start learning — it&apos;s free
               <ArrowRight size={16} />
-            </motion.a>
-            <a href="#try" className="rounded-md border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink">
+            </Link>
+            <a href="#try" className="rounded-md border border-white/25 px-7 py-4 text-sm font-semibold text-white hover:border-white/60">
               Try an interactive
             </a>
           </motion.div>
-
-          <motion.p custom={4} initial="hidden" animate="show" variants={fadeUp} className="mt-6 text-sm text-ink/45">
-            No installs. No card. Python runs right in your browser.
-          </motion.p>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] as const }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
+          className="hidden md:block"
         >
           <LabPreview />
         </motion.div>
+      </div>
+
+      <div className="border-t border-white/10 bg-ink/40">
+        <dl className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 md:grid-cols-4">
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 + i * 0.08 }}
+              className="py-7 md:py-8"
+            >
+              <dt className="sr-only">{s.label}</dt>
+              <dd>
+                <span className={`font-display text-3xl font-semibold ${i === 0 ? "text-lime" : "text-white"}`}>{s.value}</span>
+                <span className="mt-1 block text-xs text-white/55">{s.label}</span>
+              </dd>
+            </motion.div>
+          ))}
+        </dl>
       </div>
     </section>
   );
@@ -157,7 +192,7 @@ function LabPreview() {
             </p>
           </motion.div>
         </div>
-        <div className="bg-ink p-5 font-mono text-[12px] leading-6 text-white/85">
+        <div className="bg-ink p-5 font-mono text-[12px] leading-6 whitespace-pre text-white/85">
           <p>
             rain_mm = <span className="text-[#8fd3ff]">18</span>
           </p>

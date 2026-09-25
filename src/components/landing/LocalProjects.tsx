@@ -1,7 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Leaf, Car, Smartphone, CloudRain, MessageSquareText, Images } from "lucide-react";
+
+const mosaic = [
+  { src: "/images/maize-field.jpg", alt: "A field of young maize under a blue sky", caption: "AI & ML Lab 01", sub: "Predict maize yield from rainfall" },
+  { src: "/images/lamu-market.jpg", alt: "A busy covered produce market in Lamu, Kenya", caption: "Python capstone", sub: "Where and when to sell maize" },
+  { src: "/images/nairobi-skyline.jpg", alt: "Nairobi's skyline at golden hour", caption: "On the roadmap", sub: "Forecast Nairobi traffic" },
+];
 
 const projects = [
   {
@@ -38,8 +45,32 @@ const projects = [
 
 export default function LocalProjects() {
   return (
-    <section id="projects" className="bg-cream py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="projects" className="bg-cream pb-24 md:pb-32">
+      <div className="grid grid-cols-1 gap-px bg-ink sm:grid-cols-3">
+        {mosaic.map((m, i) => (
+          <motion.figure
+            key={m.src}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+            className="group relative aspect-[4/3] overflow-hidden sm:aspect-[3/4] lg:aspect-[4/5]"
+          >
+            <Image
+              src={m.src}
+              alt={m.alt}
+              fill
+              sizes="(min-width: 640px) 33vw, 100vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-ink/80 px-6 py-5 text-white">
+              <p className="eyebrow text-lime">{m.caption}</p>
+              <p className="mt-1 font-display text-lg font-semibold">{m.sub}</p>
+            </figcaption>
+          </motion.figure>
+        ))}
+      </div>
+      <div className="mx-auto max-w-6xl px-6 pt-24 md:pt-32">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +78,7 @@ export default function LocalProjects() {
           transition={{ duration: 0.5 }}
           className="eyebrow text-lime-deep"
         >
-          On the roadmap
+          Local data, local problems
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -67,10 +98,10 @@ export default function LocalProjects() {
         >
           The labs live today already use local data — Nakuru farms, Kisumu
           maize prices, Garissa heatwaves. As the AI &amp; ML track grows,
-          this is the direction we&apos;re building in: problems
-          that are actually relevant to Kenyan and African students, not
-          another dataset of iris flowers or Titanic passengers. None of
-          these exist yet — they&apos;re the plan, not the product.
+          these are the projects we&apos;re building next — problems that
+          matter to Kenyan and African students, not another dataset of iris
+          flowers or Titanic passengers. They&apos;re the plan, not the
+          product yet.
         </motion.p>
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">

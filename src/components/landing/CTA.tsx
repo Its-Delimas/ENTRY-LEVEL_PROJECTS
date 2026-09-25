@@ -1,36 +1,36 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 export default function CTA() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <section className="relative isolate overflow-hidden bg-ink text-white">
+      <Image src="/images/nairobi-night.jpg" alt="Nairobi's city centre lit up at night" fill sizes="100vw" className="-z-20 object-cover" />
+      <div className="absolute inset-0 -z-10 bg-ink/70" />
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
-        className="rounded-2xl bg-ink px-8 py-20 text-center text-white md:px-16"
+        className="mx-auto max-w-3xl px-6 py-32 text-center md:py-44"
       >
-        <p className="eyebrow text-lime">Affordable by design</p>
-        <h2 className="mx-auto mt-4 max-w-xl font-display text-3xl font-semibold leading-tight md:text-4xl">
-          A real AI programme, priced for African students.
+        <p className="eyebrow text-lime">Free · No card · No installs</p>
+        <h2 className="mt-5 font-display text-4xl font-semibold leading-tight md:text-6xl">
+          Your first program is five minutes away.
         </h2>
-        <p className="mx-auto mt-5 max-w-lg text-white/60">
-          No card, no signup wall, no installs. Enroll in Python for AI and
-          write your first real program in the next five minutes.
+        <p className="mx-auto mt-6 max-w-lg text-white/70">
+          Enroll in Python for AI, open Lab 01, and run real code before you&apos;ve finished your tea.
         </p>
-        <motion.a
+        <Link
           href="/tracks"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="mt-9 inline-flex items-center gap-2 rounded-md bg-lime px-7 py-3.5 text-sm font-semibold text-ink"
+          className="mt-10 inline-flex items-center gap-2 rounded-md bg-lime px-8 py-4 text-sm font-semibold text-ink"
         >
-          Choose your track
+          Start learning free
           <ArrowRight size={16} />
-        </motion.a>
+        </Link>
       </motion.div>
     </section>
   );
