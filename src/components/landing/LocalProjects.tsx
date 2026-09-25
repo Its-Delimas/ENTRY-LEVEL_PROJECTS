@@ -65,8 +65,9 @@ export default function LocalProjects() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mt-5 max-w-2xl text-ink/55"
         >
-          Mission 01 is real and live today. As the AI &amp; ML track grows
-          past it, this is the direction we&apos;re building in: problems
+          The labs live today already use local data — Nakuru farms, Kisumu
+          maize prices, Garissa heatwaves. As the AI &amp; ML track grows,
+          this is the direction we&apos;re building in: problems
           that are actually relevant to Kenyan and African students, not
           another dataset of iris flowers or Titanic passengers. None of
           these exist yet — they&apos;re the plan, not the product.

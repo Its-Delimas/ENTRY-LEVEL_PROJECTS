@@ -19,7 +19,7 @@ export default function BuiltForAfrica() {
           </h2>
           <p className="mt-5 max-w-md text-ink/60">
             No campus, no cohort start date, no laptop requirements beyond a
-            browser. Open a mission between classes, on a break, or late at
+            browser. Open a lab between classes, on a break, or late at
             night, and pick up exactly where you left off.
           </p>
         </motion.div>
@@ -33,8 +33,8 @@ export default function BuiltForAfrica() {
         >
           <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-ink/10">
             <Image
-              src="/images/study-session.jpg"
-              alt="A student working through a lesson on a laptop, books open alongside"
+              src="/images/students-laptops.jpg"
+              alt="Four students sitting together outdoors with laptops, one taking a selfie"
               fill
               sizes="(min-width: 768px) 480px, 90vw"
               className="object-cover"

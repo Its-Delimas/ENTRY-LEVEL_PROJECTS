@@ -1,48 +1,38 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Bot, Check, X } from "lucide-react";
 
-const checklist = [
-  { label: "Data loading", done: true },
-  { label: "Splitting train/test", done: true },
-  { label: "Training model", done: false },
-  { label: "Evaluating model", done: false },
-];
-
-const stages = [
-  { label: "Learn", state: "done" },
-  { label: "Example", state: "done" },
+const rail = [
+  { label: "Lesson", state: "done" },
+  { label: "Interactive", state: "done" },
+  { label: "Quiz", state: "done" },
   { label: "Practice", state: "current" },
-  { label: "Review", state: "locked" },
+  { label: "Reflect", state: "todo" },
 ] as const;
+
+const checks = [
+  { label: "18 mm gives \"wait\"", ok: true },
+  { label: "40 mm gives \"plant\"", ok: true },
+  { label: "Exactly 25 mm gives \"plant\"", ok: false },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      delay: i * 0.08,
-      duration: 0.55,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
+    transition: { delay: i * 0.08, duration: 0.55, ease: [0.16, 1, 0.3, 1] as const },
   }),
 };
 
 export default function Hero() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <div className="grid gap-14 md:grid-cols-2 md:items-center">
+    <section className="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div className="grid gap-14 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] md:items-center">
         <div>
-          <motion.p
-            custom={0}
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            className="eyebrow text-lime-deep"
-          >
-            Africa&apos;s hands-on tech academy lab
+          <motion.p custom={0} initial="hidden" animate="show" variants={fadeUp} className="eyebrow text-lime-deep">
+            Africa&apos;s hands-on AI academy
           </motion.p>
 
           <motion.h1
@@ -52,67 +42,41 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-4 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink md:text-6xl"
           >
-            Learn machine learning by{" "}
+            Learn AI by{" "}
             <span className="relative whitespace-nowrap">
-              actually building it
-              <svg
-                viewBox="0 0 300 12"
-                className="absolute -bottom-1 left-0 h-3 w-full text-lime"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2 9C60 3 240 3 298 9"
-                  stroke="currentColor"
-                  strokeWidth="7"
-                  strokeLinecap="round"
-                  fill="none"
-                />
+              building it
+              <svg viewBox="0 0 300 12" className="absolute -bottom-1 left-0 h-3 w-full text-lime" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M2 9C60 3 240 3 298 9" stroke="currentColor" strokeWidth="7" strokeLinecap="round" fill="none" />
               </svg>
             </span>
             .
           </motion.h1>
 
-          <motion.p
-            custom={2}
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            className="mt-6 max-w-lg text-lg leading-relaxed text-ink/60"
-          >
-            No 25-minute videos. No multiple-choice quizzes. Nurulabs is a
-            hands-on lab — you write real code, train a real model, and get
-            reviewed on what you actually built. AI &amp; Machine Learning
-            is where we&apos;re starting; more tracks are on the way.
+          <motion.p custom={2} initial="hidden" animate="show" variants={fadeUp} className="mt-6 max-w-lg text-lg leading-relaxed text-ink/60">
+            A structured programme that starts at your first line of Python and ends with models you trained
+            yourself. Every lesson is followed by something you <em>do</em> — an interactive, a quiz, real code
+            that runs in your browser — with a mentor that reads your errors with you.
           </motion.p>
 
-          <motion.div
-            custom={3}
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            className="mt-9 flex flex-wrap items-center gap-4"
-          >
+          <motion.div custom={3} initial="hidden" animate="show" variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-4">
             <motion.a
-              href="/labs/rainfall-yield"
+              href="/tracks"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
               className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3.5 text-sm font-semibold text-white"
             >
-              Try the first mission — free
+              Choose your track
               <ArrowRight size={16} />
             </motion.a>
-            <motion.a
-              href="#how-it-works"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="rounded-md border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink"
-            >
-              See how it works
-            </motion.a>
+            <a href="#try" className="rounded-md border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink">
+              Try an interactive
+            </a>
           </motion.div>
+
+          <motion.p custom={4} initial="hidden" animate="show" variants={fadeUp} className="mt-6 text-sm text-ink/45">
+            No installs. No card. Python runs right in your browser.
+          </motion.p>
         </div>
 
         <motion.div
@@ -120,96 +84,98 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] as const }}
         >
-          <LessonPreviewCard />
+          <LabPreview />
         </motion.div>
       </div>
     </section>
   );
 }
 
-function LessonPreviewCard() {
+/** A faithful, static picture of a real lab step — Lab 02, "Plant or wait?". */
+function LabPreview() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-ink/10 bg-ink">
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-        <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+    <div className="overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-[0_30px_70px_-40px_rgba(0,0,0,0.45)]">
+      <div className="border-b border-ink/10 px-5 py-3">
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-ink/45">Python for AI · Lab 02</p>
+          <p className="font-display text-sm font-semibold text-ink">Making Decisions</p>
         </div>
-        <span className="font-mono text-xs text-white/40">practice.py</span>
-        <span className="eyebrow text-lime">Python</span>
-      </div>
-
-      <div className="flex items-center gap-1 border-b border-white/10 px-4 py-2.5">
-        {stages.map((stage, i) => (
-          <div key={stage.label} className="flex items-center gap-1">
-            {i > 0 && <span className="h-px w-3 bg-white/15" aria-hidden />}
-            <span
-              className={`flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold ${
-                stage.state === "current"
-                  ? "bg-lime text-ink"
-                  : stage.state === "done"
-                    ? "text-lime"
-                    : "text-white/30"
-              }`}
-            >
-              {stage.state === "done" && <Check size={9} strokeWidth={3} />}
-              {stage.label}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-2 divide-x divide-white/10 text-sm">
-        <div className="p-5">
-          <p className="eyebrow text-lime">Mission 01</p>
-          <p className="mt-2 font-display text-base font-semibold text-white">
-            Rainfall &amp; Crop Yield
-          </p>
-          <p className="mt-2 text-white/50">
-            Fill in the TODOs — nothing here is pre-solved.
-          </p>
-          <ul className="mt-5 space-y-2">
-            {checklist.map((item, i) => (
-              <motion.li
-                key={item.label}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + i * 0.15, duration: 0.4 }}
-                className={`flex items-center gap-2 ${
-                  item.done ? "text-white" : "text-white/35"
+        <div className="mt-3 flex gap-1">
+          {rail.map((r) => (
+            <div key={r.label} className="flex-1">
+              <span
+                className={`block h-1.5 rounded-full ${
+                  r.state === "done" ? "bg-lime-deep" : r.state === "current" ? "bg-ink" : "bg-ink/10"
                 }`}
+              />
+              <span className={`mt-1.5 block text-[10px] font-semibold ${r.state === "todo" ? "text-ink/30" : "text-ink/60"}`}>
+                {r.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+        <div className="space-y-4 p-5">
+          <div>
+            <p className="eyebrow text-lime-deep">Practice</p>
+            <p className="mt-1 font-display text-base font-semibold text-ink">Plant or wait?</p>
+          </div>
+          <ul className="space-y-2">
+            {checks.map((c, i) => (
+              <motion.li
+                key={c.label}
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + i * 0.15 }}
+                className="flex items-center gap-2 text-xs text-ink/75"
               >
-                <span className={item.done ? "text-lime" : ""}>
-                  {item.done ? "✓" : "○"}
+                <span
+                  className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${
+                    c.ok ? "bg-lime text-ink" : "bg-[#ffe3e3] text-[#c4262b]"
+                  }`}
+                >
+                  {c.ok ? <Check size={10} strokeWidth={3} /> : <X size={10} strokeWidth={3} />}
                 </span>
-                {item.label}
+                {c.label}
               </motion.li>
             ))}
           </ul>
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2 }}
+            className="rounded-2xl bg-cream p-3.5"
+          >
+            <p className="flex items-center gap-1.5 text-[11px] font-semibold text-lime-deep">
+              <Bot size={12} /> MENTOR
+            </p>
+            <p className="mt-1.5 text-xs leading-relaxed text-ink/75">
+              At exactly 25 mm the farmer should plant. <code className="rounded bg-ink/10 px-1 font-mono">&gt;</code> means
+              more than — you need at least: <code className="rounded bg-ink/10 px-1 font-mono">&gt;=</code>.
+            </p>
+          </motion.div>
         </div>
-        <div className="flex flex-col">
-          <pre className="flex-1 overflow-hidden p-5 font-mono text-xs leading-relaxed">
-            <code>
-              <span className="text-white/50"># TODO: fit a line to the data</span>
-              {"\n"}
-              <span className="text-lime">def</span>
-              <span className="text-white/80"> fit_line(x, y):</span>
-              {"\n"}
-              <span className="text-white/80">    pass </span>
-              <span className="text-white/50"># replace this</span>
-              {"\n\n"}
-              <span className="text-white/50">slope</span>
-              <span className="text-white/80">, </span>
-              <span className="text-white/50">intercept</span>
-              <span className="text-white/80"> = fit_line(X_train, y_train)</span>
-            </code>
-          </pre>
-          <div className="border-t border-white/10 p-3.5">
-            <span className="inline-flex items-center gap-1.5 rounded-md bg-lime px-3.5 py-1.5 text-xs font-semibold text-ink">
-              ▶ Run
-            </span>
-          </div>
+        <div className="bg-ink p-5 font-mono text-[12px] leading-6 text-white/85">
+          <p>
+            rain_mm = <span className="text-[#8fd3ff]">18</span>
+          </p>
+          <p className="mt-2">
+            <span className="text-lime">if</span> rain_mm <span className="rounded bg-[#ff8a8a]/25 px-0.5">&gt;</span>{" "}
+            <span className="text-[#8fd3ff]">25</span>:
+          </p>
+          <p>
+            {"    "}advice = <span className="text-[#f5c07a]">&quot;plant&quot;</span>
+          </p>
+          <p>
+            <span className="text-lime">else</span>:
+          </p>
+          <p>
+            {"    "}advice = <span className="text-[#f5c07a]">&quot;wait&quot;</span>
+          </p>
+          <p className="mt-4 border-t border-white/10 pt-3 text-white/45">Output</p>
+          <p className="text-white/80">Advice: wait</p>
         </div>
       </div>
     </div>

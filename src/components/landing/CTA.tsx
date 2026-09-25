@@ -15,20 +15,20 @@ export default function CTA() {
       >
         <p className="eyebrow text-lime">Affordable by design</p>
         <h2 className="mx-auto mt-4 max-w-xl font-display text-3xl font-semibold leading-tight md:text-4xl">
-          Real hands-on AI training, priced for African students.
+          A real AI programme, priced for African students.
         </h2>
         <p className="mx-auto mt-5 max-w-lg text-white/60">
-          The first mission is free — no card, no signup wall. Write real
-          code and train a real model in the next five minutes.
+          No card, no signup wall, no installs. Enroll in Python for AI and
+          write your first real program in the next five minutes.
         </p>
         <motion.a
-          href="/labs/rainfall-yield"
+          href="/tracks"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
           className="mt-9 inline-flex items-center gap-2 rounded-md bg-lime px-7 py-3.5 text-sm font-semibold text-ink"
         >
-          Start Mission 01
+          Choose your track
           <ArrowRight size={16} />
         </motion.a>
       </motion.div>

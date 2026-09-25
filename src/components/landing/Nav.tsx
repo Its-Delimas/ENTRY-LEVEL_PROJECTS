@@ -6,9 +6,9 @@ import Logo from "./Logo";
 
 const links = [
   { href: "#how-it-works", label: "How it works" },
-  { href: "#missions", label: "Missions" },
-  { href: "#projects", label: "Projects" },
-  { href: "/dashboard", label: "Dashboard" },
+  { href: "#try", label: "Try it" },
+  { href: "#tracks", label: "Tracks" },
+  { href: "/dashboard", label: "My learning" },
 ];
 
 export default function Nav() {
@@ -44,13 +44,13 @@ export default function Nav() {
           ))}
         </nav>
         <motion.a
-          href="/labs/rainfall-yield"
+          href="/tracks"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
           className="rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-paper"
         >
-          Try a mission free
+          Start learning
         </motion.a>
       </div>
     </motion.header>
