@@ -17,11 +17,11 @@ export default function Free() {
     <section id="free" className="grid bg-paper md:grid-cols-2">
       <div className="relative min-h-[380px] md:min-h-[640px]">
         <Image
-          src="/images/coding-by-window.jpg"
-          alt="A woman working on a laptop beside a window overlooking a city street"
+          src="/images/students-laptops.jpg"
+          alt="Four students sitting together outdoors with laptops"
           fill
           sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover"
+          className="object-cover object-[center_30%]"
         />
       </div>
       <div className="flex items-center px-6 py-20 md:px-16 lg:px-20">

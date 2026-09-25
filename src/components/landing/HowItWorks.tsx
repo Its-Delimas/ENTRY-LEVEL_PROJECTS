@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BookOpen, Code2, Eye, FlaskConical, MessageSquareText, Target } from "lucide-react";
+import LabPreview from "./LabPreview";
 
 const steps = [
   { icon: BookOpen, label: "Lesson", body: "A short, plain-language explanation with a worked example. Theory first — but never a wall of text." },
@@ -16,34 +17,46 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="bg-ink py-24 text-white md:py-32">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="eyebrow text-lime"
-        >
-          How every lab works
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="mt-4 max-w-2xl font-display text-3xl font-semibold leading-tight md:text-4xl"
-        >
-          Learn it, play with it, predict it, build it, explain it.
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-5 max-w-2xl text-white/55"
-        >
-          Reading is the glue, not the product. Each lab moves through the same six kinds of activity, so
-          you&apos;re doing something every few minutes — and you always know what comes next.
-        </motion.p>
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5 }}
+              className="eyebrow text-lime"
+            >
+              How every lab works
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="mt-4 max-w-2xl font-display text-3xl font-semibold leading-tight md:text-4xl"
+            >
+              Learn it, play with it, predict it, build it, explain it.
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="mt-5 max-w-2xl text-white/55"
+            >
+              Reading is the glue, not the product. Each lab moves through the same six kinds of activity, so
+              you&apos;re doing something every few minutes — and you always know what comes next.
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+          >
+            <LabPreview />
+          </motion.div>
+        </div>
 
         <ol className="mt-16 grid gap-px overflow-hidden rounded-3xl bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, i) => (
