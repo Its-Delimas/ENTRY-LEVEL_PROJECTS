@@ -10,8 +10,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <Logo />
         <nav className="flex items-center gap-4 text-sm font-medium text-ink/60">
           <Link href="/dashboard">Home</Link>
-          <Link href="/tracks/python-for-ai">Python</Link>
-          <Link href="/tracks/ai-ml">AI &amp; ML</Link>
+          <Link href="/tracks">Tracks</Link>
         </nav>
       </header>
       <Sidebar />

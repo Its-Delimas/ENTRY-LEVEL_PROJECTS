@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Play, X } from "lucide-react";
+import { Check, Eye, Play, X } from "lucide-react";
 import type { PredictStep } from "@/lib/curriculum/types";
 import type { PyodideStatus } from "@/hooks/usePyodideWorker";
 import RichText from "../RichText";
@@ -43,7 +43,11 @@ export default function PredictView({
   return (
     <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-12 md:grid-cols-2 md:py-16">
       <div>
-        <h1 className="font-display text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
+        <div className="flex items-center gap-2 text-lime-deep">
+          <Eye size={16} />
+          <p className="eyebrow">Quick quiz</p>
+        </div>
+        <h1 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
           {step.title}
         </h1>
         <p className="mt-4 text-[16px] leading-relaxed text-ink/70">

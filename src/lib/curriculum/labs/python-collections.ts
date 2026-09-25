@@ -57,6 +57,26 @@ print(len(markets))`,
         "Position 1 is the **second** item, because counting starts at 0 — so `Kongowea`. `len` counts items, not positions, so it's 3.",
     },
     {
+      id: "list-tools",
+      kind: "concept",
+      title: "Lists change — and they know things about themselves",
+      body: [
+        "Lists are **mutable**: you can change them after creating them. `append(x)` adds to the end, `data[2] = 99` replaces an item, and `remove(x)` deletes the first match.",
+        "You can ask a list questions: `len(data)` counts items, `x in data` checks membership, and `max`, `min` and `sum` summarise numbers.",
+        "Slicing **never** changes the original list — it builds a new one. That's why `train = data[:8]` is safe: `data` stays whole.",
+      ],
+      code: `readings = [12, 30, 45]
+readings.append(8)        # [12, 30, 45, 8]
+readings[0] = 14          # [14, 30, 45, 8]
+
+print(len(readings))      # 4
+print(45 in readings)     # True
+print(max(readings))      # 45
+
+first_two = readings[:2]  # new list: [14, 30]`,
+      keyIdea: "Methods like `append` change a list in place; slices and `sorted()` give you a new list and leave the original alone.",
+    },
+    {
       id: "rain-weeks",
       kind: "code",
       title: "Ten weeks of rain",
@@ -206,6 +226,23 @@ print(count)`,
       answer: 0,
       explanation:
         "The loop visits all 4 values, but `count` only goes up when `r > 20` — that's 30 and 45. So `count` ends at 2. A loop plus an `if` is how you count things that match a rule.",
+    },
+    {
+      id: "range",
+      kind: "concept",
+      title: "Looping with positions: range()",
+      body: [
+        "Sometimes you need an item's **position**, not just its value — for example, to pair `predictions[i]` with `actual[i]` from two lists of the same length.",
+        "`range(n)` produces the numbers 0, 1, 2 … up to `n - 1`. So `for i in range(len(data)):` visits every valid position of `data`.",
+        "Common patterns you'll use constantly: an **accumulator** (start at 0, add each item), a **counter** (add 1 when a condition is True), and a **builder** (start with `[]`, append what you keep).",
+      ],
+      code: `predicted = [10, 20, 30]
+actual    = [12, 18, 30]
+
+for i in range(len(actual)):
+    gap = abs(predicted[i] - actual[i])
+    print(f"farm {i}: off by {gap}")`,
+      keyIdea: "`for item in data` gives you values. `for i in range(len(data))` gives you positions — use it when two lists must line up.",
     },
     {
       id: "total-average",

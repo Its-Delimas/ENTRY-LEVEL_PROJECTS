@@ -1,22 +1,22 @@
 "use client";
 
-import { Code2, Eye, FlaskConical, Lightbulb, MessageSquareText, Target } from "lucide-react";
+import { BookOpen, Code2, Eye, FlaskConical, MessageSquareText, Target } from "lucide-react";
 import type { Step } from "@/lib/curriculum/types";
 
 export function stepMeta(step: Step) {
   switch (step.kind) {
     case "concept":
-      return { label: "Concept", icon: Lightbulb };
+      return { label: "Lesson", icon: BookOpen };
     case "experiment":
-      return { label: "Experiment", icon: FlaskConical };
+      return { label: "Interactive", icon: FlaskConical };
     case "predict":
-      return { label: "Predict", icon: Eye };
+      return { label: "Quiz", icon: Eye };
     case "code":
       return step.challenge
         ? { label: "Challenge", icon: Target }
-        : { label: "Code", icon: Code2 };
+        : { label: "Practice", icon: Code2 };
     case "explain":
-      return { label: "Explain", icon: MessageSquareText };
+      return { label: "Reflect", icon: MessageSquareText };
   }
 }
 

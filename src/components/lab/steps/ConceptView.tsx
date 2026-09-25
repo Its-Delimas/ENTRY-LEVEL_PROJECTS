@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Lightbulb } from "lucide-react";
+import { BookOpen, Lightbulb } from "lucide-react";
 import type { ConceptStep } from "@/lib/curriculum/types";
 import RichText from "../RichText";
 import PythonCode from "../PythonCode";
@@ -13,7 +13,11 @@ export default function ConceptView({ step }: { step: ConceptStep }) {
       }`}
     >
       <div>
-        <h1 className="font-display text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
+        <div className="flex items-center gap-2 text-lime-deep">
+          <BookOpen size={16} />
+          <p className="eyebrow">Lesson</p>
+        </div>
+        <h1 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
           {step.title}
         </h1>
         <div className="mt-6 space-y-4">

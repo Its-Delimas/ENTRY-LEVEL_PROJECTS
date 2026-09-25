@@ -55,7 +55,7 @@ export default function ExperimentView({
       <div className="max-w-2xl">
         <div className="flex items-center gap-2 text-lime-deep">
           <FlaskConical size={16} />
-          <p className="eyebrow">Experiment</p>
+          <p className="eyebrow">Interactive</p>
         </div>
         <h1 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
           {step.title}

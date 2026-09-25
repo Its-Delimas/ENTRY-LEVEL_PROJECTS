@@ -58,6 +58,24 @@ print(result)`,
         "`double` **prints** 10, but it never **returns** anything — and a function without `return` gives back `None`. So `result` is `None`. `print` shows a value to a human; `return` hands it back to your code.",
     },
     {
+      id: "scope",
+      kind: "concept",
+      title: "Parameters, arguments, and what stays inside",
+      body: [
+        "In `def to_usd(ksh, rate):`, `ksh` and `rate` are **parameters** — placeholders. When you call `to_usd(5000, 129)`, the values 5000 and 129 are the **arguments** that fill them.",
+        "Variables created inside a function are **local**: they exist only while it runs. That's a feature — functions can't accidentally overwrite your other variables, and the only thing that comes out is what you `return`.",
+        "A good function does **one** job and has a name that says what it returns: `mean`, `to_usd`, `predict_yield`.",
+      ],
+      code: `def mean(values):
+    total = sum(values)      # local to mean()
+    return total / len(values)
+
+avg = mean([2, 4, 6])
+print(avg)      # 4.0
+print(total)    # NameError: total only existed inside mean()`,
+      keyIdea: "Arguments go in through parameters; only the `return` value comes out. Everything else stays inside the function.",
+    },
+    {
       id: "mean",
       kind: "code",
       title: "Write mean()",
@@ -247,6 +265,29 @@ print(len(farm), farm["acres"])`,
       answer: 0,
       explanation:
         "Line 2 updates an existing key (`acres` becomes 3). Line 3 assigns a key that didn't exist, which **adds** it — so there are now 3 keys. Reading a missing key crashes, but assigning one creates it.",
+    },
+    {
+      id: "dict-loops",
+      kind: "concept",
+      title: "Walking through a dictionary",
+      body: [
+        "Looping over a dictionary gives you its **keys**. To get keys and values together, loop over `.items()`.",
+        "`key in farm` checks whether a key exists before you read it — another way to avoid a KeyError.",
+        "Datasets in plain Python are usually a **list of dictionaries**: the list holds the rows, each dictionary is one row, and every row has the same keys — the columns.",
+      ],
+      code: `farm = {"county": "Nakuru", "crop": "maize", "acres": 2.5}
+
+for key, value in farm.items():
+    print(key, "->", value)
+
+print("yield_bags" in farm)   # False — check before reading
+
+farms = [
+    {"county": "Nakuru", "crop": "maize"},
+    {"county": "Kisii", "crop": "tea"},
+]
+print(farms[1]["crop"])        # tea`,
+      keyIdea: "`.items()` gives key–value pairs; `key in d` checks safely. A list of dictionaries is a table: rows in a list, columns as keys.",
     },
     {
       id: "one-farm",
@@ -472,6 +513,25 @@ print(row["maize_ksh"] + "8")`,
       answer: 0,
       explanation:
         "`\"62\"` is text, and so is `\"8\"`, so `+` glues them: `\"628\"`. No crash — just a wrong answer if you meant maths. That's why CSV values need converting.",
+    },
+    {
+      id: "clean-first",
+      kind: "concept",
+      title: "Real data is messy — clean before you compute",
+      body: [
+        "Data from the real world has problems: missing values (an empty `\"\"`), numbers stored as text, extra spaces, inconsistent spelling. Professional data scientists often say most of their time goes on cleaning.",
+        "The rule of thumb: **look at the data first**, then convert and clean it once, right after loading — so everything downstream can trust it.",
+        "When a value is missing, you have choices: skip the row, fill in a default, or stop and investigate. There's no universally right answer — but you should always know which one you chose, and why.",
+      ],
+      code: `row = {"market": " Gikomba ", "maize_ksh": ""}
+
+market = row["market"].strip()     # "Gikomba" — spaces removed
+
+if row["maize_ksh"] == "":
+    print("Missing price — skip this row")
+else:
+    price = float(row["maize_ksh"])`,
+      keyIdea: "Load, look, then clean and convert once. Missing values need a decision — skipping, filling or investigating — not a crash.",
     },
     {
       id: "load",

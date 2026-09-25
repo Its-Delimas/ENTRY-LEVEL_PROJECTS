@@ -17,6 +17,10 @@ export interface LabProgress {
 
 export interface Progress {
   labs: Record<string, LabProgress>;
+  /** The one track the learner is working through right now. */
+  enrolled?: { track: string; at: string };
+  /** Tracks the learner tested out of with a placement check, by slug. */
+  placements?: Record<string, string>;
 }
 
 const STORAGE_KEY = "nurulabs:progress:v2";
@@ -127,6 +131,17 @@ export function saveCode(labSlug: string, stepId: string, code: string) {
       },
     };
   });
+}
+
+export function enroll(trackSlug: string) {
+  update((p) => ({ ...p, enrolled: { track: trackSlug, at: new Date().toISOString() } }));
+}
+
+export function recordPlacement(trackSlug: string) {
+  update((p) => ({
+    ...p,
+    placements: { ...p.placements, [trackSlug]: new Date().toISOString() },
+  }));
 }
 
 export function resetLab(labSlug: string) {

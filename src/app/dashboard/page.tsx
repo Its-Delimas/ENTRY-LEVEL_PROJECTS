@@ -3,61 +3,73 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, ChevronRight, Hammer, Lock, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Flag, Lock, Trophy } from "lucide-react";
+import type { Track } from "@/lib/curriculum/types";
 import AppShell from "@/components/dashboard/AppShell";
 import StreakCalendar from "@/components/dashboard/StreakCalendar";
 import WeekBars from "@/components/dashboard/WeekBars";
-import ProgressBar from "@/components/ui/ProgressBar";
+import TrackCatalog from "@/components/tracks/TrackCatalog";
 import { stepMeta } from "@/components/lab/StepRail";
 import {
-  continueTarget,
+  enrolledTrack,
   isLabDone,
-  isTrackUnlocked,
-  missingPrerequisites,
+  isModuleDone,
+  moduleLabs,
   trackLabs,
   trackStats,
-  tracks,
+  tracksUnlockedBy,
 } from "@/lib/curriculum";
 import { useActivityDates, useProgress, type Progress } from "@/lib/progress";
 
 export default function DashboardPage() {
   const progress = useProgress();
   const activeDates = useActivityDates();
-  const labsDone = progress ? Object.values(progress.labs).filter((l) => l.completedAt).length : 0;
-  const stepsDone = progress ? Object.values(progress.labs).reduce((s, l) => s + l.steps.length, 0) : 0;
-  const isNew = progress !== null && stepsDone === 0 && labsDone === 0;
+  const track = enrolledTrack(progress);
+
+  if (!progress) {
+    return (
+      <AppShell>
+        <div className="mx-auto h-96 max-w-6xl animate-pulse rounded-[28px] bg-ink/5" />
+      </AppShell>
+    );
+  }
+
+  // Not enrolled yet: the dashboard is the place to choose a track.
+  if (!track) {
+    return (
+      <AppShell>
+        <TrackCatalog />
+      </AppShell>
+    );
+  }
+
+  const stats = trackStats(track, progress);
+  const labs = trackLabs(track);
+  const stepsDone = labs.reduce((s, l) => s + (progress.labs[l.slug]?.steps.length ?? 0), 0);
+  const milestonesReached = track.modules.filter((m) => m.milestone && isModuleDone(m, progress)).length;
 
   return (
     <AppShell>
       <div className="mx-auto max-w-6xl">
-        <h1 className="font-display text-3xl font-semibold tracking-tight text-ink">
-          {isNew ? "Karibu to Nurulabs" : "Karibu back"}
+        <p className="eyebrow text-lime-deep">{track.name}</p>
+        <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight text-ink">
+          {stepsDone === 0 ? "Karibu — let's begin" : "Karibu back"}
         </h1>
-        <p className="mt-1 text-sm text-ink/50">
-          {isNew
-            ? "Your lab is ready. Everything runs in your browser — no installs."
-            : "Pick up exactly where you left off."}
-        </p>
 
         <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
           <div className="min-w-0 space-y-8">
-            <ContinueCard progress={progress} />
-            <PathOverview progress={progress} />
-            <SkillMap progress={progress} />
+            {stats.complete ? <TrackComplete track={track} /> : <ContinueCard track={track} progress={progress} />}
+            <MilestonePath track={track} progress={progress} />
+            <SkillMap track={track} progress={progress} />
           </div>
 
           <div className="min-w-0 space-y-6">
             <section className="rounded-3xl bg-ink p-6 text-white">
               <p className="font-display text-base font-semibold">Your progress</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <div className="rounded-2xl bg-white/5 p-4">
-                  <p className="font-display text-2xl font-semibold">{labsDone}</p>
-                  <p className="mt-0.5 text-xs text-white/50">Labs complete</p>
-                </div>
-                <div className="rounded-2xl bg-white/5 p-4">
-                  <p className="font-display text-2xl font-semibold">{stepsDone}</p>
-                  <p className="mt-0.5 text-xs text-white/50">Activities done</p>
-                </div>
+              <div className="mt-4 grid grid-cols-3 gap-2">
+                <Metric value={`${stats.done}/${stats.total}`} label="Labs" />
+                <Metric value={String(milestonesReached)} label="Milestones" />
+                <Metric value={String(stepsDone)} label="Activities" />
               </div>
               <div className="mt-5 rounded-2xl bg-white/5 p-4">
                 <p className="text-xs text-white/50">Days you ran code this week</p>
@@ -76,27 +88,22 @@ export default function DashboardPage() {
   );
 }
 
-function ContinueCard({ progress }: { progress: Progress | null }) {
-  if (!progress) return <div className="h-64 animate-pulse rounded-[28px] bg-ink/5" />;
-  const target = continueTarget(progress);
+function Metric({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="rounded-2xl bg-white/5 p-3">
+      <p className="font-display text-xl font-semibold">{value}</p>
+      <p className="mt-0.5 text-[11px] text-white/50">{label}</p>
+    </div>
+  );
+}
 
-  if (!target) {
-    return (
-      <section className="rounded-[28px] bg-ink p-8 text-white">
-        <Sparkles className="text-lime" />
-        <h2 className="mt-4 font-display text-2xl font-semibold">You&apos;ve finished every live lab.</h2>
-        <p className="mt-2 max-w-md text-sm text-white/55">
-          New labs are being built — NumPy, pandas, and your first classifier are next.
-        </p>
-      </section>
-    );
-  }
-
-  const { track, lab } = target;
+function ContinueCard({ track, progress }: { track: Track; progress: Progress }) {
+  const lab = trackStats(track, progress).next!;
   const done = new Set(progress.labs[lab.slug]?.steps ?? []);
   const started = done.size > 0;
   const nextStep = lab.steps.find((s) => !done.has(s.id)) ?? lab.steps[0];
   const cover = lab.cover ?? track.cover;
+  const mi = track.modules.findIndex((m) => m.labs.includes(lab.slug));
 
   return (
     <motion.section
@@ -107,7 +114,7 @@ function ContinueCard({ progress }: { progress: Progress | null }) {
     >
       <div className="p-7 md:p-8">
         <p className="eyebrow text-lime">
-          {started ? "Continue" : "Up next"} · {track.name}
+          {started ? "Continue" : "Up next"} · Module {mi + 1} · {lab.kind === "project" ? "Project" : `Lab ${lab.number}`}
         </p>
         <h2 className="mt-3 font-display text-3xl font-semibold leading-tight">{lab.title}</h2>
         <p className="mt-2 max-w-md text-sm leading-relaxed text-white/55">{lab.summary}</p>
@@ -154,126 +161,119 @@ function ContinueCard({ progress }: { progress: Progress | null }) {
   );
 }
 
-function PathOverview({ progress }: { progress: Progress | null }) {
+function TrackComplete({ track }: { track: Track }) {
+  const unlocked = tracksUnlockedBy(track).filter((t) => t.status === "active");
   return (
-    <section>
-      <h2 className="font-display text-lg font-semibold text-ink">Your path</h2>
-      <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {tracks.map((track, i) => {
-          const stats = trackStats(track, progress);
-          const unlocked = isTrackUnlocked(track, progress);
-          const soon = track.status === "coming-soon";
-          const missing = missingPrerequisites(track, progress);
-          const card = (
-            <div
-              className={`relative h-full rounded-2xl p-5 transition-colors ${
-                soon
-                  ? "border border-dashed border-ink/15"
-                  : unlocked
-                    ? "bg-white ring-1 ring-ink/10 hover:ring-ink/30"
-                    : "bg-white/60 ring-1 ring-ink/5 hover:ring-ink/20"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-semibold text-ink/35">STEP {i + 1}</span>
-                {soon ? (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-ink/35">
-                    <Hammer size={11} /> Coming soon
-                  </span>
-                ) : stats.complete ? (
-                  <span className="inline-flex items-center gap-1 rounded-md bg-lime-soft px-2 py-0.5 text-[11px] font-semibold text-lime-deep">
-                    <Check size={11} /> Done
-                  </span>
-                ) : !unlocked ? (
-                  <Lock size={14} className="text-ink/30" />
-                ) : null}
-              </div>
-              <p className={`mt-3 font-display text-base font-semibold ${soon ? "text-ink/40" : "text-ink"}`}>
-                {track.name}
-              </p>
-              <p className="mt-1 text-xs leading-relaxed text-ink/45">
-                {soon
-                  ? track.tagline
-                  : !unlocked && missing.length
-                    ? `Unlocks after ${missing[0].name}`
-                    : `${stats.done} of ${stats.total} labs`}
-              </p>
-              {!soon && (
-                <div className="mt-4">
-                  <ProgressBar value={stats.percent} />
-                </div>
-              )}
-              {i < tracks.length - 1 && (
-                <ChevronRight size={16} className="absolute top-1/2 -right-3 z-10 hidden -translate-y-1/2 rounded-full bg-cream text-ink/30 lg:block" />
-              )}
-            </div>
-          );
-          return soon ? (
-            <div key={track.slug}>{card}</div>
-          ) : (
-            <Link key={track.slug} href={`/tracks/${track.slug}`}>
-              {card}
-            </Link>
-          );
-        })}
-      </div>
+    <section className="rounded-[28px] bg-ink p-8 text-white">
+      <Trophy className="text-lime" />
+      <h2 className="mt-4 font-display text-3xl font-semibold">You finished {track.name}.</h2>
+      <p className="mt-2 max-w-md text-sm leading-relaxed text-white/55">
+        Every lab, every milestone. {unlocked.length ? `${unlocked.map((t) => t.name).join(" and ")} is open to you now.` : "New tracks are on the way."}
+      </p>
+      <Link href="/tracks" className="mt-6 inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3 text-sm font-semibold text-ink">
+        Choose your next track
+        <ArrowRight size={16} />
+      </Link>
     </section>
   );
 }
 
-function SkillMap({ progress }: { progress: Progress | null }) {
-  const active = tracks.filter((t) => t.status === "active");
-  return (
-    <section id="skills" className="rounded-3xl border border-ink/10 bg-white p-6 md:p-7">
-      <div className="flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h2 className="font-display text-lg font-semibold text-ink">What you can do</h2>
-          <p className="mt-0.5 text-xs text-ink/50">
-            Skills you&apos;ve proven by passing a lab&apos;s checks — not lessons you&apos;ve clicked through.
-          </p>
-        </div>
-      </div>
+function MilestonePath({ track, progress }: { track: Track; progress: Progress }) {
+  const modules = track.modules.filter((m) => moduleLabs(m).length > 0);
+  const currentIdx = modules.findIndex((m) => !isModuleDone(m, progress));
 
-      <div className="mt-6 space-y-8">
-        {active.map((track) => {
-          const unlocked = isTrackUnlocked(track, progress);
+  return (
+    <section>
+      <div className="flex items-end justify-between">
+        <h2 className="font-display text-lg font-semibold text-ink">Your milestones</h2>
+        <Link href={`/tracks/${track.slug}`} className="text-sm font-semibold text-ink/55 hover:text-ink">
+          Full syllabus →
+        </Link>
+      </div>
+      <ol className="mt-4 space-y-3">
+        {modules.map((m, i) => {
+          const reached = isModuleDone(m, progress);
+          const current = i === currentIdx;
+          const labs = moduleLabs(m);
           return (
-            <div key={track.slug}>
-              <p className="eyebrow flex items-center gap-2 text-ink/45">
-                {!unlocked && <Lock size={11} />}
-                {track.name}
-              </p>
-              <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
-                {trackLabs(track).flatMap((lab) =>
-                  lab.skills.map((skill) => {
-                    const done = isLabDone(progress, lab.slug);
-                    return (
-                      <li key={lab.slug + skill} className="flex items-start gap-2.5 text-sm">
-                        <span
-                          className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full ${
-                            done ? "bg-lime text-ink" : "border border-ink/15 text-ink/25"
-                          }`}
-                        >
-                          {done ? <Check size={11} strokeWidth={3} /> : !unlocked ? <Lock size={9} /> : null}
-                        </span>
-                        <span className={done ? "text-ink" : "text-ink/40"}>{skill}</span>
-                      </li>
-                    );
-                  }),
-                )}
-                {track.modules.flatMap((m) =>
-                  (m.planned ?? []).map((p) => (
-                    <li key={p.title} className="flex items-start gap-2.5 text-sm">
-                      <span className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border border-dashed border-ink/20" />
-                      <span className="text-ink/30">{p.title} <span className="text-[11px]">· coming</span></span>
-                    </li>
-                  )),
-                )}
-              </ul>
-            </div>
+            <li
+              key={m.slug}
+              className={`rounded-2xl p-5 ${
+                current ? "bg-white ring-2 ring-ink" : reached ? "bg-lime-soft/60" : "bg-white/60 ring-1 ring-ink/5"
+              }`}
+            >
+              <div className="flex items-start gap-4">
+                <span
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
+                    reached ? "bg-lime-deep text-white" : current ? "bg-ink text-lime" : "bg-cream text-ink/30"
+                  }`}
+                >
+                  {reached ? <Check size={16} strokeWidth={3} /> : current ? <Flag size={15} /> : <Lock size={14} />}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold text-ink/45">
+                    Module {track.modules.indexOf(m) + 1} · {m.title}
+                  </p>
+                  <p className={`mt-0.5 font-display text-base font-semibold ${reached || current ? "text-ink" : "text-ink/45"}`}>
+                    {m.milestone?.title ?? m.title}
+                  </p>
+                  {current && (
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {labs.map((l) => {
+                        const d = isLabDone(progress, l.slug);
+                        return (
+                          <li
+                            key={l.slug}
+                            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium ${
+                              d ? "bg-lime-soft text-lime-deep" : "bg-cream text-ink/60"
+                            }`}
+                          >
+                            {d && <Check size={11} strokeWidth={3} />}
+                            {l.title}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+                <span className="shrink-0 text-xs font-medium text-ink/40">
+                  {labs.filter((l) => isLabDone(progress, l.slug)).length}/{labs.length}
+                </span>
+              </div>
+            </li>
           );
         })}
-      </div>
+      </ol>
+    </section>
+  );
+}
+
+function SkillMap({ track, progress }: { track: Track; progress: Progress }) {
+  return (
+    <section id="skills" className="rounded-3xl border border-ink/10 bg-white p-6 md:p-7">
+      <h2 className="font-display text-lg font-semibold text-ink">What you can do</h2>
+      <p className="mt-0.5 text-xs text-ink/50">
+        Skills you&apos;ve proven by passing a lab&apos;s checks — not lessons you&apos;ve clicked through.
+      </p>
+      <ul className="mt-5 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+        {trackLabs(track).flatMap((lab) =>
+          lab.skills.map((skill) => {
+            const done = isLabDone(progress, lab.slug);
+            return (
+              <li key={lab.slug + skill} className="flex items-start gap-2.5 text-sm">
+                <span
+                  className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full ${
+                    done ? "bg-lime text-ink" : "border border-ink/15"
+                  }`}
+                >
+                  {done && <Check size={11} strokeWidth={3} />}
+                </span>
+                <span className={done ? "text-ink" : "text-ink/40"}>{skill}</span>
+              </li>
+            );
+          }),
+        )}
+      </ul>
     </section>
   );
 }

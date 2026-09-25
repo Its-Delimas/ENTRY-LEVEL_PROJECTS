@@ -77,7 +77,7 @@ export const pyProjectMarket: Lab = {
   slug: "py-project-market",
   number: "P1",
   title: "Maize Price Tracker",
-  subject: "Project",
+  subject: "Capstone",
   summary:
     "A farmers' cooperative in Kisumu asks: where and when should we sell our maize? Load a year of messy market data, clean it, analyse it, and forecast next month's price.",
   minutes: 45,

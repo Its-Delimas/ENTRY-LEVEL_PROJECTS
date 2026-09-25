@@ -146,6 +146,8 @@ export interface Module {
   slug: string;
   title: string;
   summary: string;
+  /** Reached when every lab in the module is done — what the learner can now do. */
+  milestone?: { title: string; description: string };
   /** Lab slugs, in order. */
   labs: string[];
   /** Labs that are designed but not built yet — shown, never clickable. */
@@ -159,8 +161,20 @@ export interface Track {
   tagline: string;
   description: string;
   status: "active" | "coming-soon";
-  /** Track slugs that must be complete before this one unlocks. */
+  /** Track slugs that must be complete (or placed out of) before this one unlocks. */
   requires?: string[];
+  level: "Beginner" | "Intermediate" | "Advanced";
+  /** Questions that let experienced learners test out of this track. */
+  placement?: PlacementQuestion[];
   cover?: { src: string; alt: string };
   modules: Module[];
+}
+
+export interface PlacementQuestion {
+  prompt: string;
+  code?: string;
+  options: string[];
+  answer: number;
+  /** Which lab teaches this — shown when the answer is wrong. */
+  lab: string;
 }

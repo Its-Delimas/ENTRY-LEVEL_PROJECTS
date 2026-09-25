@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Trophy, Unlock } from "lucide-react";
+import { ArrowRight, Check, Flag, Trophy, Unlock } from "lucide-react";
 import type { Lab } from "@/lib/curriculum/types";
-import { nextLabAfter, trackOfLab, tracks } from "@/lib/curriculum";
+import { isModuleDone, moduleOfLab, nextLabAfter, trackOfLab, tracksUnlockedBy } from "@/lib/curriculum";
+import { getProgress } from "@/lib/progress";
 import Logo from "@/components/landing/Logo";
 
 export default function LabComplete({ lab }: { lab: Lab }) {
   const track = trackOfLab(lab.slug);
   const next = nextLabAfter(lab.slug);
   // Finishing a track's last lab unlocks the tracks that require it.
-  const unlocked = !next && track ? tracks.filter((t) => t.requires?.includes(track.slug)) : [];
+  const unlocked = !next && track ? tracksUnlockedBy(track).filter((t) => t.status === "active") : [];
+  const mod = moduleOfLab(lab.slug);
+  const milestone = mod && isModuleDone(mod.module, getProgress()) ? mod.module.milestone : undefined;
 
   return (
     <div className="flex min-h-screen flex-col bg-ink text-white">
@@ -61,6 +64,22 @@ export default function LabComplete({ lab }: { lab: Lab }) {
           </ul>
         </motion.div>
 
+        {milestone && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+            className="mt-6 flex items-start gap-4 rounded-3xl border border-lime/30 p-6"
+          >
+            <Flag size={22} className="mt-0.5 shrink-0 text-lime" />
+            <div>
+              <p className="eyebrow text-lime">Milestone {mod!.index + 1} reached</p>
+              <p className="mt-1 font-display text-lg font-semibold">{milestone.title}</p>
+              <p className="mt-1 text-sm text-white/60">{milestone.description}</p>
+            </div>
+          </motion.div>
+        )}
+
         {unlocked.map((t) => (
           <motion.div
             key={t.slug}
@@ -96,7 +115,7 @@ export default function LabComplete({ lab }: { lab: Lab }) {
               href={`/tracks/${unlocked[0].slug}`}
               className="inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3.5 text-sm font-semibold text-ink"
             >
-              Start {unlocked[0].name}
+              Enroll in {unlocked[0].name}
               <ArrowRight size={16} />
             </Link>
           ) : (

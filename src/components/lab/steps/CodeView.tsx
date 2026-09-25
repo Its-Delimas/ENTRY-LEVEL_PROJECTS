@@ -95,7 +95,7 @@ export default function CodeView({
       <aside className="min-w-0 border-b border-ink/10 bg-white px-6 py-8 lg:border-r lg:border-b-0">
         <div className="flex items-center gap-2 text-lime-deep">
           <KindIcon size={15} />
-          <p className="eyebrow">{step.challenge ? "Challenge" : "Your turn"}</p>
+          <p className="eyebrow">{step.challenge ? "Challenge" : "Practice"}</p>
         </div>
         <h1 className="mt-2 font-display text-2xl font-semibold leading-tight text-ink">
           {step.title}

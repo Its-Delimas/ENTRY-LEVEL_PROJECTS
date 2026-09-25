@@ -222,6 +222,28 @@ else:
         "31 is also greater than 20 — but Python checks the branches **in order** and stops at the first one that's `True`. Only `hot` is printed. The order of your conditions matters.",
     },
     {
+      id: "combine",
+      kind: "concept",
+      title: "Combining conditions: and, or, not",
+      body: [
+        "Real decisions usually depend on more than one thing. A farmer might plant only if there's enough rain **and** the soil is warm enough.",
+        "`and` is True only when **both** sides are True. `or` is True when **at least one** side is. `not` flips True to False and back.",
+        "Python checks `and`/`or` left to right and stops as soon as the answer is known — so put the cheap or most likely-to-fail check first.",
+        "Indentation is not decoration in Python: the indented lines under an `if` **are** the branch. Four spaces is the convention.",
+      ],
+      code: `rain_mm = 30
+soil_temp = 17
+
+if rain_mm >= 25 and soil_temp >= 15:
+    print("Plant now")
+
+if rain_mm > 80 or soil_temp < 5:
+    print("Warning: risky week")
+
+is_dry = not rain_mm >= 25   # False`,
+      keyIdea: "`and` needs both, `or` needs either, `not` flips. Every condition, however long, still boils down to one True or False.",
+    },
+    {
       id: "plant-or-wait",
       kind: "code",
       title: "Plant or wait?",

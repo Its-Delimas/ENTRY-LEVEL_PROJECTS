@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Lock, X } from "lucide-react";
 import type { Lab } from "@/lib/curriculum/types";
-import { labAccess, trackOfLab } from "@/lib/curriculum";
+import { enrolledTrack, labAccess, trackOfLab, type LabAccess } from "@/lib/curriculum";
 import {
   markLabComplete,
   markStepComplete,
@@ -21,6 +21,7 @@ import PredictView from "./steps/PredictView";
 import CodeView from "./steps/CodeView";
 import ExplainView from "./steps/ExplainView";
 import LabComplete from "./LabComplete";
+import LabOverview from "./LabOverview";
 
 export default function LabPlayer({ lab }: { lab: Lab }) {
   const progress = useProgress();
@@ -31,7 +32,7 @@ export default function LabPlayer({ lab }: { lab: Lab }) {
   }
 
   const access = labAccess(lab.slug, progress);
-  if (!access.open) return <LockedLab lab={lab} access={access} />;
+  if (!access.open) return <LockedLab lab={lab} access={access} progress={progress} />;
 
   return <LabSession lab={lab} progress={progress} />;
 }
@@ -45,6 +46,8 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
   const firstOpen = lab.steps.findIndex((s) => !done.has(s.id));
   const [index, setIndex] = useState(firstOpen === -1 ? 0 : firstOpen);
   const [finished, setFinished] = useState(false);
+  // Open on the lab's syllabus page unless the learner is mid-lab.
+  const [showOverview, setShowOverview] = useState(done.size === 0 || firstOpen === -1);
 
   const python = usePyodideWorker();
   const step = lab.steps[index];
@@ -75,6 +78,18 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
   }
 
   if (finished) return <LabComplete lab={lab} />;
+  if (showOverview) {
+    return (
+      <LabOverview
+        lab={lab}
+        done={done}
+        onStart={() => {
+          setShowOverview(false);
+          window.scrollTo({ top: 0 });
+        }}
+      />
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-cream">
@@ -184,11 +199,14 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
 function LockedLab({
   lab,
   access,
+  progress,
 }: {
   lab: Lab;
-  access: Exclude<ReturnType<typeof labAccess>, { open: true }>;
+  access: Exclude<LabAccess, { open: true }>;
+  progress: Progress;
 }) {
   const track = trackOfLab(lab.slug);
+  const current = enrolledTrack(progress);
   return (
     <div className="flex min-h-screen flex-col bg-cream">
       <header className="border-b border-ink/10 bg-white px-6 py-4">
@@ -199,18 +217,18 @@ function LockedLab({
           <Lock size={22} />
         </span>
         <h1 className="mt-6 font-display text-3xl font-semibold text-ink">{lab.title} is locked</h1>
-        {access.reason === "track" ? (
+        {access.reason === "not-enrolled" ? (
           <>
             <p className="mt-3 text-ink/60">
-              This lab builds directly on{" "}
-              {access.tracks.map((t) => t.name).join(" and ")}. Finish that track first — everything
-              here assumes you can already write Python on your own.
+              {current
+                ? `This lab is part of ${access.track.name}. You're enrolled in ${current.name} — one track at a time, so finish it first.`
+                : `This lab is part of ${access.track.name}. Enroll in a track to start learning.`}
             </p>
             <Link
-              href={`/tracks/${access.tracks[0].slug}`}
+              href={current ? "/dashboard" : `/tracks/${access.track.slug}`}
               className="mt-8 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-white"
             >
-              Go to {access.tracks[0].name}
+              {current ? `Continue ${current.name}` : `See ${access.track.name}`}
               <ArrowRight size={16} />
             </Link>
           </>
@@ -231,7 +249,7 @@ function LockedLab({
         )}
         {track && (
           <Link href={`/tracks/${track.slug}`} className="mt-4 text-sm font-medium text-ink/50 hover:text-ink">
-            Back to {track.name}
+            View the {track.name} syllabus
           </Link>
         )}
       </main>
