@@ -38,6 +38,11 @@ import BoostingSteps from "../widgets/BoostingSteps";
 import EncodingDemo from "../widgets/EncodingDemo";
 import FeatureCrafter from "../widgets/FeatureCrafter";
 import LeakageDetector from "../widgets/LeakageDetector";
+import KMeansStepper from "../widgets/KMeansStepper";
+import PcaProjector from "../widgets/PcaProjector";
+import AnomalyExplorer from "../widgets/AnomalyExplorer";
+import SeasonalDecomposer from "../widgets/SeasonalDecomposer";
+import ForecastPlayground from "../widgets/ForecastPlayground";
 
 const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>> = {
   "variable-boxes": VariableBoxes,
@@ -73,6 +78,11 @@ const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>>
   "encoding-demo": EncodingDemo,
   "feature-crafter": FeatureCrafter,
   "leakage-detector": LeakageDetector,
+  "kmeans-stepper": KMeansStepper,
+  "pca-projector": PcaProjector,
+  "anomaly-explorer": AnomalyExplorer,
+  "seasonal-decomposer": SeasonalDecomposer,
+  "forecast-playground": ForecastPlayground,
 };
 
 /** How much play before the takeaway is revealed. */

@@ -65,7 +65,12 @@ export type WidgetId =
   | "boosting-steps"
   | "encoding-demo"
   | "feature-crafter"
-  | "leakage-detector";
+  | "leakage-detector"
+  | "kmeans-stepper"
+  | "pca-projector"
+  | "anomaly-explorer"
+  | "seasonal-decomposer"
+  | "forecast-playground";
 
 export interface ExperimentStep extends BaseStep {
   kind: "experiment";

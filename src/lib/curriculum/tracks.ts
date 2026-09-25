@@ -238,25 +238,22 @@ export const tracks: Track[] = [
       {
         slug: "ml-unsupervised",
         title: "Unsupervised learning",
-        summary: "Finding structure when there are no labels.",
-        labs: [],
-        planned: [
-          { title: "k-means clustering", summary: "Group customers or farms by behaviour." },
-          { title: "PCA", summary: "Squeeze many columns into a few that matter." },
-          { title: "Anomaly detection", summary: "Spot the transactions that don't fit." },
-          { title: "Capstone: mobile-money fraud", summary: "Flag suspicious transactions in an illustrative dataset." },
-        ],
+        summary: "Finding structure when there are no labels — segments, compressions and anomalies.",
+        labs: ["kmeans", "pca", "anomaly", "fraud-watch"],
+        milestone: {
+          title: "Patterns without answers",
+          description: "You can segment, compress and hunt anomalies in unlabelled data — and ship a fraud review queue.",
+        },
       },
       {
         slug: "ml-timeseries",
         title: "Time series & forecasting",
-        summary: "Predicting what comes next from what came before.",
-        labs: [],
-        planned: [
-          { title: "Trends & seasonality", summary: "Take a series apart to see what drives it." },
-          { title: "Forecasting models", summary: "Lag features, baselines, and honest time-based testing." },
-          { title: "Capstone: market price forecast", summary: "Beat the moving-average baseline." },
-        ],
+        summary: "Predicting what comes next from what came before — honestly.",
+        labs: ["ts-patterns", "forecasting", "price-forecast"],
+        milestone: {
+          title: "Forecasts you can stand behind",
+          description: "You can decompose a series, beat seasonal baselines on held-out time, and deliver a forecast with its uncertainty.",
+        },
       },
       {
         slug: "deep-learning",
