@@ -14,8 +14,8 @@ export default function TrackCatalog() {
   const current = enrolledTrack(progress);
 
   return (
-    <div className="mx-auto max-w-5xl">
-      <section className="relative isolate overflow-hidden rounded-[28px] bg-ink text-white">
+    <div>
+      <section className="relative isolate overflow-hidden rounded-[28px] bg-code text-white">
         <Image
           src="/images/students-laptops.jpg"
           alt="Four students sitting together outdoors with laptops"
@@ -24,7 +24,7 @@ export default function TrackCatalog() {
           sizes="(min-width: 1024px) 1024px, 100vw"
           className="-z-20 object-cover object-[center_30%]"
         />
-        <div className="absolute inset-0 -z-10 bg-ink/70" />
+        <div className="absolute inset-0 -z-10 bg-black/65" />
         <div className="px-7 py-12 md:px-10 md:py-16">
           <p className="eyebrow text-lime">Free programmes</p>
           <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight md:text-5xl">
@@ -53,7 +53,7 @@ export default function TrackCatalog() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.06 }}
               className={`grid overflow-hidden rounded-[28px] md:grid-cols-[280px_minmax(0,1fr)] ${
-                isCurrent ? "bg-ink text-white" : soon ? "border border-dashed border-ink/15" : "bg-white ring-1 ring-ink/10"
+                isCurrent ? "bg-paper ring-2 ring-lime-deep" : soon ? "border border-dashed border-ink/15" : "bg-paper ring-1 ring-ink/10"
               }`}
             >
               <div className={`relative min-h-44 ${soon ? "bg-mist/50" : "bg-mist"}`}>
@@ -65,31 +65,31 @@ export default function TrackCatalog() {
                   </div>
                 )}
                 {isCurrent && (
-                  <span className="absolute top-4 left-4 rounded-md bg-lime px-2.5 py-1 text-xs font-semibold text-ink">
+                  <span className="absolute top-4 left-4 rounded-md bg-lime px-2.5 py-1 text-xs font-semibold text-onlime">
                     Enrolled
                   </span>
                 )}
               </div>
               <div className="p-6 md:p-8">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${isCurrent ? "bg-white/10 text-white/70" : "bg-cream text-ink/55"}`}>
+                  <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold bg-cream text-ink/55`}>
                     {track.level}
                   </span>
                   {track.requires?.length ? (
-                    <span className={`text-xs ${isCurrent ? "text-white/45" : "text-ink/40"}`}>
+                    <span className={`text-xs text-ink/40`}>
                       after {track.requires.map((r) => tracks.find((t) => t.slug === r)?.name).join(", ")}
                     </span>
                   ) : (
-                    <span className={`text-xs ${isCurrent ? "text-white/45" : "text-ink/40"}`}>No experience needed</span>
+                    <span className={`text-xs text-ink/40`}>No experience needed</span>
                   )}
                 </div>
                 <h2 className={`mt-3 font-display text-2xl font-semibold ${soon ? "text-ink/45" : ""}`}>{track.name}</h2>
-                <p className={`mt-2 max-w-xl text-sm leading-relaxed ${isCurrent ? "text-white/60" : soon ? "text-ink/40" : "text-ink/60"}`}>
+                <p className={`mt-2 max-w-xl text-sm leading-relaxed ${soon ? "text-ink/40" : "text-ink/60"}`}>
                   {track.description}
                 </p>
 
                 {!soon && (
-                  <dl className={`mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm ${isCurrent ? "text-white/60" : "text-ink/55"}`}>
+                  <dl className={`mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink/55`}>
                     <div className="inline-flex items-center gap-1.5"><BookOpen size={15} /> {labs.length} lab{labs.length === 1 ? "" : "s"}</div>
                     <div className="inline-flex items-center gap-1.5"><Flag size={15} /> {milestones} milestone{milestones === 1 ? "" : "s"}</div>
                     <div className="inline-flex items-center gap-1.5"><Clock size={15} /> ~{Math.max(1, Math.round(minutes / 60))} hrs hands-on</div>
@@ -99,17 +99,17 @@ export default function TrackCatalog() {
 
                 {isCurrent && (
                   <div className="mt-5 max-w-sm">
-                    <ProgressBar value={stats.percent} dark />
-                    <p className="mt-2 text-xs text-white/50">{stats.done} of {stats.total} labs complete</p>
+                    <ProgressBar value={stats.percent} />
+                    <p className="mt-2 text-xs text-ink/50">{stats.done} of {stats.total} labs complete</p>
                   </div>
                 )}
 
                 <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-                  <EnrollAction track={track} progress={progress} dark={isCurrent} />
+                  <EnrollAction track={track} progress={progress} />
                   {!soon && (
                     <Link
                       href={`/tracks/${track.slug}`}
-                      className={`text-sm font-semibold underline-offset-4 hover:underline ${isCurrent ? "text-white/70" : "text-ink/60"}`}
+                      className={`text-sm font-semibold underline-offset-4 hover:underline text-ink/60`}
                     >
                       View syllabus
                     </Link>

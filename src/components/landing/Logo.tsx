@@ -9,7 +9,8 @@ function Mark({ size = 28 }: { size?: number }) {
       fill="none"
       aria-hidden="true"
     >
-      <rect width="32" height="32" rx="9" fill="var(--color-ink)" />
+      <rect width="32" height="32" rx="9" fill="var(--color-onlime)" />
+      <rect x="0.5" y="0.5" width="31" height="31" rx="8.5" fill="none" stroke="var(--color-ink)" strokeOpacity="0.12" />
       {/* rays */}
       <path
         d="M16 6.5 V9.5 M10.8 8.3 L12.6 10.6 M21.2 8.3 L19.4 10.6"

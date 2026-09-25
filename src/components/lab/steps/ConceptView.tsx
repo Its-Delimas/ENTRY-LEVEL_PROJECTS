@@ -8,11 +8,11 @@ export default function ConceptView({ step }: { step: ConceptStep }) {
   const hasSide = !!(step.code || step.image);
   return (
     <div
-      className={`mx-auto grid w-full gap-10 px-6 py-12 md:py-16 ${
-        hasSide ? "max-w-6xl md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:items-center" : "max-w-2xl"
+      className={`grid w-full gap-10 px-6 md:px-10 xl:px-16 py-12 md:py-16 ${
+        hasSide ? "md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:items-center" : ""
       }`}
     >
-      <div>
+      <div className="max-w-3xl">
         <div className="flex items-center gap-2 text-lime-deep">
           <BookOpen size={16} />
           <p className="eyebrow">Lesson</p>

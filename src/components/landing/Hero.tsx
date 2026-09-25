@@ -27,12 +27,12 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section className="overflow-hidden bg-ink text-white">
+    <section className="overflow-hidden bg-cream pt-[68px] text-ink md:pt-0">
       <div className="grid md:min-h-[88vh] md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        {/* Words on solid ink, so nothing competes with them. */}
-        <div className="order-2 flex items-center px-6 pt-12 pb-16 md:order-1 md:pt-32 md:pr-12 md:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
+        {/* Words on a plain surface, so nothing competes with them. */}
+        <div className="order-2 flex items-center px-6 pt-12 pb-16 md:order-1 md:pt-32 md:pr-12 md:pl-10 xl:pl-16">
           <div className="max-w-xl">
-            <motion.p custom={0} initial="hidden" animate="show" variants={fadeUp} className="eyebrow text-lime">
+            <motion.p custom={0} initial="hidden" animate="show" variants={fadeUp} className="eyebrow text-lime-deep">
               Free · Africa&apos;s hands-on AI academy
             </motion.p>
 
@@ -53,18 +53,18 @@ export default function Hero() {
               .
             </motion.h1>
 
-            <motion.p custom={2} initial="hidden" animate="show" variants={fadeUp} className="mt-7 text-lg leading-relaxed text-white/70">
+            <motion.p custom={2} initial="hidden" animate="show" variants={fadeUp} className="mt-7 text-lg leading-relaxed text-ink/65">
               A free, structured programme that starts at your first line of Python and ends with models you
               trained yourself. Every lesson is followed by something you <em>do</em> — with a mentor that reads
               your errors with you.
             </motion.p>
 
             <motion.div custom={3} initial="hidden" animate="show" variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-4">
-              <Link href="/tracks" className="inline-flex items-center gap-2 rounded-md bg-lime px-7 py-4 text-sm font-semibold text-ink">
+              <Link href="/tracks" className="inline-flex items-center gap-2 rounded-md bg-lime px-7 py-4 text-sm font-semibold text-onlime">
                 Start learning — it&apos;s free
                 <ArrowRight size={16} />
               </Link>
-              <a href="#try" className="rounded-md border border-white/25 px-7 py-4 text-sm font-semibold text-white hover:border-white/60">
+              <a href="#try" className="rounded-md border border-ink/20 px-7 py-4 text-sm font-semibold text-ink hover:border-ink/50">
                 Try an interactive
               </a>
             </motion.div>
@@ -84,8 +84,8 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 bg-ink/40">
-        <dl className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 md:grid-cols-4">
+      <div className="border-t border-ink/10 bg-paper">
+        <dl className="grid grid-cols-2 gap-px px-6 md:px-10 xl:px-16 md:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -96,8 +96,8 @@ export default function Hero() {
             >
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <span className={`font-display text-3xl font-semibold ${i === 0 ? "text-lime" : "text-white"}`}>{s.value}</span>
-                <span className="mt-1 block text-xs text-white/55">{s.label}</span>
+                <span className={`font-display text-3xl font-semibold ${i === 0 ? "text-lime-deep" : "text-ink"}`}>{s.value}</span>
+                <span className="mt-1 block text-xs text-ink/55">{s.label}</span>
               </dd>
             </motion.div>
           ))}

@@ -53,7 +53,7 @@ export default function PythonCode({
   const lines = code.replace(/\n$/, "").split("\n");
   return (
     <pre
-      className={`overflow-x-auto rounded-2xl bg-ink p-5 font-mono text-[13px] leading-relaxed text-white/85 ${className}`}
+      className={`overflow-x-auto rounded-2xl bg-code p-5 font-mono text-[13px] leading-relaxed text-white/85 ${className}`}
     >
       <code>
         {lines.map((line, idx) => (

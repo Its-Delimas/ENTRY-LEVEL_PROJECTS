@@ -18,7 +18,7 @@ export default function DictLookup({ onInteract }: { onInteract: () => void }) {
 
   return (
     <div className="grid gap-8 md:grid-cols-2">
-      <div className="rounded-3xl bg-ink p-5 font-mono text-[13px] leading-7 text-white/85">
+      <div className="rounded-3xl bg-code p-5 font-mono text-[13px] leading-7 text-white/85">
         <span className="text-white/90">farm</span> = {"{"}
         {Object.entries(farm).map(([k, v]) => (
           <button
@@ -50,7 +50,7 @@ export default function DictLookup({ onInteract }: { onInteract: () => void }) {
                 setKey(e.target.value);
                 onInteract();
               }}
-              className="min-w-0 flex-1 rounded-lg bg-white px-2 py-1.5 text-ink outline-none ring-1 ring-ink/10 focus:ring-ink/40"
+              className="min-w-0 flex-1 rounded-lg bg-paper px-2 py-1.5 text-ink outline-none ring-1 ring-ink/10 focus:ring-ink/40"
             />
             <span className="pr-2 text-ink/60">{safe ? '", "unknown")' : '"]'}</span>
           </div>
@@ -61,7 +61,7 @@ export default function DictLookup({ onInteract }: { onInteract: () => void }) {
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           className={`rounded-2xl p-5 font-mono text-sm ${
-            found || safe ? "bg-lime-soft text-ink" : "bg-[#fff1f1] text-[#a1262a]"
+            found || safe ? "bg-lime-soft text-ink" : "bg-danger-soft text-danger"
           }`}
         >
           {found ? farm[key] : safe ? '"unknown"' : `KeyError: '${key}'`}
@@ -69,7 +69,7 @@ export default function DictLookup({ onInteract }: { onInteract: () => void }) {
             <p className="mt-3 font-sans text-xs leading-relaxed text-ink/60">
               Keys that exist:{" "}
               {Object.keys(farm).map((k) => (
-                <code key={k} className="mr-1 rounded bg-white px-1.5 py-0.5 font-mono text-ink">
+                <code key={k} className="mr-1 rounded bg-paper px-1.5 py-0.5 font-mono text-ink">
                   {k}
                 </code>
               ))}

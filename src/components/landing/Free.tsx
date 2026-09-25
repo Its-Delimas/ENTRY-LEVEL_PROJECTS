@@ -14,7 +14,7 @@ const points = [
 /** Half-bleed photo beside the promise that the platform is free. */
 export default function Free() {
   return (
-    <section id="free" className="grid bg-paper md:grid-cols-2">
+    <section id="free" className="grid scroll-mt-20 bg-paper md:grid-cols-2">
       <div className="relative min-h-[380px] md:min-h-[640px]">
         <Image
           src="/images/students-laptops.jpg"
@@ -46,7 +46,7 @@ export default function Free() {
                 transition={{ delay: 0.1 + i * 0.08 }}
                 className="flex gap-4"
               >
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime text-ink">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime text-onlime">
                   <Check size={13} strokeWidth={3} />
                 </span>
                 <div>

@@ -24,13 +24,13 @@ export default function WeekBars({ activeDates }: { activeDates: Set<string> }) 
             animate={{ height: day.active ? 48 : 8 }}
             transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
             className={`w-full max-w-[14px] rounded-full ${
-              day.active ? "bg-lime" : "bg-white/15"
+              day.active ? "bg-lime" : "bg-ink/10"
             }`}
             title={day.active ? `${day.key} — active` : day.key}
           />
           <span
             className={`text-[10px] font-semibold ${
-              day.isToday ? "text-white" : "text-white/40"
+              day.isToday ? "text-ink" : "text-ink/40"
             }`}
           >
             {day.label}

@@ -31,7 +31,7 @@ export default function ListExplorer({ onInteract }: { onInteract: () => void })
               onInteract();
             }}
             className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition-colors ${
-              mode === m ? "bg-white text-ink shadow-sm" : "text-ink/50"
+              mode === m ? "bg-paper text-ink shadow-sm" : "text-ink/50"
             }`}
           >
             {m === "index" ? "One item" : "A slice"}
@@ -45,11 +45,10 @@ export default function ListExplorer({ onInteract }: { onInteract: () => void })
             <div key={m} className="flex w-28 flex-col items-center gap-2">
               <span className="font-mono text-xs font-semibold text-ink/60">{i}</span>
               <motion.div
-                animate={{
-                  y: selected(i) ? -6 : 0,
-                  backgroundColor: selected(i) ? "var(--color-lime)" : "var(--color-paper)",
-                }}
-                className="flex h-16 w-full items-center justify-center rounded-2xl font-mono text-sm text-ink ring-1 ring-ink/10"
+                animate={{ y: selected(i) ? -6 : 0 }}
+                className={`flex h-16 w-full items-center justify-center rounded-2xl font-mono text-sm ring-1 ring-ink/10 transition-colors ${
+                  selected(i) ? "bg-lime text-onlime" : "bg-paper text-ink"
+                }`}
               >
                 &quot;{m}&quot;
               </motion.div>
@@ -103,7 +102,7 @@ export default function ListExplorer({ onInteract }: { onInteract: () => void })
             </>
           )}
         </div>
-        <div className="rounded-3xl bg-ink p-5 font-mono text-sm">
+        <div className="rounded-3xl bg-code p-5 font-mono text-sm">
           <p className="text-white/85">
             {mode === "index" ? `markets[${index}]` : `markets[${start}:${end}]`}
           </p>

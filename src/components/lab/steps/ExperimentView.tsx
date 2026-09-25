@@ -51,8 +51,8 @@ export default function ExperimentView({
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-12 md:py-14">
-      <div className="max-w-2xl">
+    <div className="w-full px-6 md:px-10 xl:px-16 py-12 md:py-14">
+      <div className="max-w-3xl">
         <div className="flex items-center gap-2 text-lime-deep">
           <FlaskConical size={16} />
           <p className="eyebrow">Interactive</p>
@@ -65,7 +65,7 @@ export default function ExperimentView({
         </p>
       </div>
 
-      <div className="mt-10 rounded-[28px] bg-white p-5 ring-1 ring-ink/10 md:p-8">
+      <div className="mt-10 rounded-[28px] bg-paper p-5 ring-1 ring-ink/10 md:p-8">
         <Widget onInteract={onInteract} />
       </div>
 
@@ -74,12 +74,12 @@ export default function ExperimentView({
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex gap-3 rounded-2xl bg-ink p-5 text-white"
+            className="flex gap-3 rounded-2xl bg-lime-soft p-5 text-ink ring-1 ring-lime-deep/20"
           >
-            <Eye size={18} className="mt-0.5 shrink-0 text-lime" />
+            <Eye size={18} className="mt-0.5 shrink-0 text-lime-deep" />
             <div>
-              <p className="eyebrow text-lime">What you just saw</p>
-              <p className="mt-2 text-[15px] leading-relaxed text-white/80">
+              <p className="eyebrow text-lime-deep">What you just saw</p>
+              <p className="mt-2 text-[15px] leading-relaxed text-ink/80">
                 <RichText text={step.observe} />
               </p>
             </div>

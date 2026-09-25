@@ -50,7 +50,7 @@ export default function LineFit({
 
   return (
     <div className={`grid gap-8 ${compact ? "" : "md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]"} md:items-center`}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-3xl bg-white ring-1 ring-ink/10" role="img" aria-label="Scatter plot of rainfall against maize yield with an adjustable line">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded-3xl bg-paper ring-1 ring-ink/10" role="img" aria-label="Scatter plot of rainfall against maize yield with an adjustable line">
         {[0, 100, 200, 300].map((x) => (
           <g key={x}>
             <line x1={sx(x)} x2={sx(x)} y1={sy(0)} y2={sy(Y_MAX)} stroke="var(--color-ink)" strokeOpacity="0.06" />
@@ -79,13 +79,14 @@ export default function LineFit({
 
         <motion.line
           x1={sx(0)} x2={sx(X_MAX)}
+          initial={{ y1: sy(intercept), y2: sy(slope * X_MAX + intercept) }}
           animate={{ y1: sy(intercept), y2: sy(slope * X_MAX + intercept) }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           stroke="var(--color-lime-deep)" strokeWidth="3" strokeLinecap="round"
         />
 
         {FARMS.map(([x, y]) => (
-          <circle key={x} cx={sx(x)} cy={sy(y)} r="5.5" fill="var(--color-ink)" stroke="white" strokeWidth="2" />
+          <circle key={x} cx={sx(x)} cy={sy(y)} r="5.5" fill="var(--color-ink)" stroke="var(--color-paper)" strokeWidth="2" />
         ))}
       </svg>
 
@@ -115,23 +116,23 @@ export default function LineFit({
           }}
         />
 
-        <div className="rounded-2xl bg-ink p-5 text-white">
-          <p className="font-mono text-xs text-white/50">
+        <div className="rounded-2xl bg-paper p-5 text-ink ring-1 ring-ink/10">
+          <p className="font-mono text-xs text-ink/50">
             yield = {slope.toFixed(3)} × rainfall + {intercept.toFixed(1)}
           </p>
           <div className="mt-4 flex items-end justify-between">
             <div>
-              <p className="text-xs text-white/50">Average error (MAE)</p>
+              <p className="text-xs text-ink/50">Average error (MAE)</p>
               <p className="font-display text-3xl font-semibold">
                 {mae.toFixed(2)}
-                <span className="ml-1 text-sm font-normal text-white/40">bags</span>
+                <span className="ml-1 text-sm font-normal text-ink/40">bags</span>
               </p>
             </div>
-            <div className="h-2 w-28 overflow-hidden rounded-full bg-white/10">
+            <div className="h-2 w-28 overflow-hidden rounded-full bg-ink/10">
               <motion.div className="h-full rounded-full bg-lime" animate={{ width: `${quality * 100}%` }} />
             </div>
           </div>
-          <p className="mt-3 text-xs text-white/45">
+          <p className="mt-3 text-xs text-ink/45">
             The red lines are the errors — the gap between the line and each real farm.
           </p>
         </div>

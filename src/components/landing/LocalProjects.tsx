@@ -46,7 +46,7 @@ const projects = [
 export default function LocalProjects() {
   return (
     <section id="projects" className="bg-cream pb-24 md:pb-32">
-      <div className="grid grid-cols-1 gap-px bg-ink sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-px bg-cream sm:grid-cols-3">
         {mosaic.map((m, i) => (
           <motion.figure
             key={m.src}
@@ -63,14 +63,14 @@ export default function LocalProjects() {
               sizes="(min-width: 640px) 33vw, 100vw"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <figcaption className="absolute inset-x-0 bottom-0 bg-ink/80 px-6 py-5 text-white">
+            <figcaption className="absolute inset-x-0 bottom-0 bg-black/70 px-6 py-5 text-white">
               <p className="eyebrow text-lime">{m.caption}</p>
               <p className="mt-1 font-display text-lg font-semibold">{m.sub}</p>
             </figcaption>
           </motion.figure>
         ))}
       </div>
-      <div className="mx-auto max-w-6xl px-6 pt-24 md:pt-32">
+      <div className="px-6 md:px-10 xl:px-16 pt-24 md:pt-32">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -112,13 +112,13 @@ export default function LocalProjects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: (i % 3) * 0.08 }}
-              className="bg-white/60 p-6"
+              className="bg-paper p-6"
             >
               <div className="flex items-center justify-between">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-ink/50">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-paper text-ink/50">
                   <project.icon size={18} />
                 </div>
-                <span className="rounded-md bg-white px-2 py-0.5 text-[11px] font-semibold text-ink/40">
+                <span className="rounded-md bg-paper px-2 py-0.5 text-[11px] font-semibold text-ink/40">
                   Planned
                 </span>
               </div>

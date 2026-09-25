@@ -47,7 +47,8 @@ export default function ExplainView({
     : undefined;
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
+    <div className="w-full px-6 md:px-10 xl:px-16 py-12 md:py-16">
+      <div className="max-w-4xl">
       <div className="flex items-center gap-2 text-lime-deep">
         <MessageSquareText size={16} />
         <p className="eyebrow">In your own words</p>
@@ -64,7 +65,7 @@ export default function ExplainView({
         onChange={(e) => setText(e.target.value)}
         rows={5}
         placeholder="Write it like you're explaining it to a friend who missed class…"
-        className="mt-6 w-full resize-y rounded-2xl border border-ink/15 bg-white p-5 text-[15px] leading-relaxed text-ink placeholder:text-ink/35 focus:border-ink focus:outline-none"
+        className="mt-6 w-full resize-y rounded-2xl border border-ink/15 bg-paper p-5 text-[15px] leading-relaxed text-ink placeholder:text-ink/35 focus:border-ink focus:outline-none"
       />
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs text-ink/45">
@@ -74,7 +75,7 @@ export default function ExplainView({
           type="button"
           onClick={submit}
           disabled={tooShort}
-          className="rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-30"
+          className="rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-paper disabled:opacity-30"
         >
           {submitted ? "Check again" : "Check my explanation"}
         </button>
@@ -85,7 +86,7 @@ export default function ExplainView({
           key={tries}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-8 rounded-3xl bg-white p-6 ring-1 ring-ink/10"
+          className="mt-8 rounded-3xl bg-paper p-6 ring-1 ring-ink/10"
         >
           <p className="font-display text-lg font-semibold text-ink">
             {coveredCount === step.ideas.length
@@ -121,14 +122,15 @@ export default function ExplainView({
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 rounded-3xl bg-ink p-6 text-white"
+          className="mt-4 rounded-3xl bg-lime-soft p-6 text-ink ring-1 ring-lime-deep/20"
         >
-          <p className="eyebrow text-lime">One way to say it</p>
-          <p className="mt-3 text-[15px] leading-relaxed text-white/80">
+          <p className="eyebrow text-lime-deep">One way to say it</p>
+          <p className="mt-3 text-[15px] leading-relaxed text-ink/80">
             <RichText text={step.modelAnswer} />
           </p>
         </motion.div>
       )}
+      </div>
     </div>
   );
 }

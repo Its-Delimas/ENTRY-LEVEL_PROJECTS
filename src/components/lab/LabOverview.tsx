@@ -25,7 +25,7 @@ export default function LabOverview({
 
   return (
     <div className="flex min-h-screen flex-col bg-cream">
-      <header className="flex items-center justify-between border-b border-ink/10 bg-white px-4 py-3 md:px-6">
+      <header className="flex items-center justify-between border-b border-ink/10 bg-paper px-6 md:px-10 xl:px-16 py-3">
         <div className="flex items-center gap-4">
           <Logo withWordmark={false} />
           {track && (
@@ -40,7 +40,7 @@ export default function LabOverview({
         </div>
       </header>
 
-      <main className="mx-auto grid w-full max-w-6xl flex-1 gap-10 px-6 py-10 md:grid-cols-[minmax(0,1fr)_380px] md:py-14">
+      <main className="grid w-full flex-1 gap-10 px-6 md:px-10 xl:px-16 py-10 md:grid-cols-[minmax(0,1fr)_400px] md:py-14">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <p className="eyebrow text-lime-deep">
             {mod ? `Module ${mod.index + 1} · ${mod.module.title}` : track?.name}
@@ -65,7 +65,7 @@ export default function LabOverview({
             <ul className="mt-4 space-y-2.5">
               {lab.skills.map((s) => (
                 <li key={s} className="flex items-start gap-3 text-[15px] text-ink/80">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-lime text-ink">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-lime text-onlime">
                     <Check size={12} strokeWidth={3} />
                   </span>
                   {s}
@@ -76,7 +76,7 @@ export default function LabOverview({
 
           <section className="mt-10">
             <h2 className="font-display text-lg font-semibold text-ink">Lab outline</h2>
-            <ol className="mt-4 overflow-hidden rounded-2xl bg-white ring-1 ring-ink/10">
+            <ol className="mt-4 overflow-hidden rounded-2xl bg-paper ring-1 ring-ink/10">
               {lab.steps.map((step, i) => {
                 const meta = stepMeta(step);
                 const isDone = done.has(step.id);
@@ -85,7 +85,7 @@ export default function LabOverview({
                     <span className="w-5 font-mono text-xs text-ink/35">{i + 1}</span>
                     <span
                       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                        isDone ? "bg-lime text-ink" : "bg-cream text-ink/55"
+                        isDone ? "bg-lime text-onlime" : "bg-cream text-ink/55"
                       }`}
                     >
                       {isDone ? <Check size={14} strokeWidth={3} /> : <meta.icon size={14} />}
@@ -107,23 +107,23 @@ export default function LabOverview({
           transition={{ delay: 0.1 }}
           className="md:sticky md:top-8 md:self-start"
         >
-          <div className="overflow-hidden rounded-3xl bg-ink text-white">
+          <div className="overflow-hidden rounded-3xl bg-paper text-ink ring-1 ring-ink/10">
             {lab.cover && (
               <div className="relative aspect-[16/10]">
                 <Image src={lab.cover.src} alt={lab.cover.alt} fill sizes="380px" className="object-cover" />
               </div>
             )}
             <div className="p-6">
-              <p className="text-sm leading-relaxed text-white/60">
-                Every lab runs the same loop: short <span className="text-white">lessons</span>, an{" "}
-                <span className="text-white">interactive</span> to build intuition, a quick{" "}
-                <span className="text-white">quiz</span>, then real Python you write and run — and finally you{" "}
-                <span className="text-white">reflect</span> in your own words.
+              <p className="text-sm leading-relaxed text-ink/60">
+                Every lab runs the same loop: short <span className="font-semibold text-ink">lessons</span>, an{" "}
+                <span className="font-semibold text-ink">interactive</span> to build intuition, a quick{" "}
+                <span className="font-semibold text-ink">quiz</span>, then real Python you write and run — and finally you{" "}
+                <span className="font-semibold text-ink">reflect</span> in your own words.
               </p>
               <button
                 type="button"
                 onClick={onStart}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-lime px-6 py-3.5 text-sm font-semibold text-ink"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-lime px-6 py-3.5 text-sm font-semibold text-onlime"
               >
                 {started ? `Resume — ${done.size}/${lab.steps.length} done` : "Start lab"}
                 <ArrowRight size={16} />
@@ -132,7 +132,7 @@ export default function LabOverview({
           </div>
 
           {mod?.module.milestone && (
-            <div className="mt-4 flex gap-3 rounded-2xl bg-white p-5 ring-1 ring-ink/10">
+            <div className="mt-4 flex gap-3 rounded-2xl bg-paper p-5 ring-1 ring-ink/10">
               <Flag size={18} className="mt-0.5 shrink-0 text-lime-deep" />
               <div>
                 <p className="text-xs font-semibold text-ink/45">Counts toward milestone</p>

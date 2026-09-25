@@ -15,8 +15,8 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-ink py-24 text-white md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="how-it-works" className="scroll-mt-20 py-24 text-ink md:py-32">
+      <div className="px-6 md:px-10 xl:px-16">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center">
           <div>
             <motion.p
@@ -24,7 +24,7 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5 }}
-              className="eyebrow text-lime"
+              className="eyebrow text-lime-deep"
             >
               How every lab works
             </motion.p>
@@ -42,7 +42,7 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-5 max-w-2xl text-white/55"
+              className="mt-5 max-w-2xl text-ink/60"
             >
               Reading is the glue, not the product. Each lab moves through the same six kinds of activity, so
               you&apos;re doing something every few minutes — and you always know what comes next.
@@ -58,7 +58,7 @@ export default function HowItWorks() {
           </motion.div>
         </div>
 
-        <ol className="mt-16 grid gap-px overflow-hidden rounded-3xl bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+        <ol className="mt-16 grid gap-px overflow-hidden rounded-3xl bg-ink/10 ring-1 ring-ink/10 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, i) => (
             <motion.li
               key={step.label}
@@ -66,16 +66,16 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: (i % 3) * 0.08 }}
-              className="bg-ink p-7"
+              className="bg-paper p-7"
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-lime text-ink">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-lime text-onlime">
                   <step.icon size={18} />
                 </span>
-                <span className="font-mono text-xs text-white/35">0{i + 1}</span>
+                <span className="font-mono text-xs text-ink/35">0{i + 1}</span>
               </div>
               <h3 className="mt-5 font-display text-lg font-semibold">{step.label}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/55">{step.body}</p>
+              <p className="mt-2 text-sm leading-relaxed text-ink/60">{step.body}</p>
             </motion.li>
           ))}
         </ol>

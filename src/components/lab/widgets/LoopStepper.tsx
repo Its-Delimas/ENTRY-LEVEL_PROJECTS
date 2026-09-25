@@ -50,7 +50,7 @@ export default function LoopStepper({ onInteract }: { onInteract: () => void }) 
   return (
     <div className="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
       <div>
-        <div className="overflow-hidden rounded-3xl bg-ink">
+        <div className="overflow-hidden rounded-3xl bg-code">
           <pre className="p-5 font-mono text-[13px] leading-7 text-white/85">
             {code.map((c, i) => (
               <span
@@ -68,7 +68,7 @@ export default function LoopStepper({ onInteract }: { onInteract: () => void }) 
               type="button"
               onClick={step}
               disabled={finished}
-              className="inline-flex items-center gap-1.5 rounded-md bg-lime px-3.5 py-1.5 text-xs font-semibold text-ink disabled:opacity-30"
+              className="inline-flex items-center gap-1.5 rounded-md bg-lime px-3.5 py-1.5 text-xs font-semibold text-onlime disabled:opacity-30"
             >
               <StepForward size={13} />
               Next line
@@ -111,23 +111,21 @@ export default function LoopStepper({ onInteract }: { onInteract: () => void }) 
           {prices.map((p, i) => (
             <motion.div
               key={i}
-              animate={{
-                y: tick.i === i ? -6 : 0,
-                backgroundColor:
-                  tick.i === i ? "var(--color-lime)" : tick.i > i ? "var(--color-mist)" : "var(--color-paper)",
-              }}
-              className="flex h-14 flex-1 items-center justify-center rounded-xl font-mono text-sm text-ink ring-1 ring-ink/10"
+              animate={{ y: tick.i === i ? -6 : 0 }}
+              className={`flex h-14 flex-1 items-center justify-center rounded-xl font-mono text-sm ring-1 ring-ink/10 transition-colors ${
+                tick.i === i ? "bg-lime text-onlime" : tick.i > i ? "bg-mist text-ink" : "bg-paper text-ink"
+              }`}
             >
               {p}
             </motion.div>
           ))}
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-2xl bg-white p-4 ring-1 ring-ink/10">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-ink/10">
             <p className="font-mono text-xs text-ink/50">price</p>
             <p className="mt-1 font-mono text-2xl text-ink">{price ?? "—"}</p>
           </div>
-          <div className="rounded-2xl bg-white p-4 ring-1 ring-ink/10">
+          <div className="rounded-2xl bg-paper p-4 ring-1 ring-ink/10">
             <p className="font-mono text-xs text-ink/50">total</p>
             <motion.p key={tick.total} initial={{ scale: 1.15 }} animate={{ scale: 1 }} className="mt-1 origin-left font-mono text-2xl text-ink">
               {tick.total}

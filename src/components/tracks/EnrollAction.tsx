@@ -16,21 +16,17 @@ import { enroll, type Progress } from "@/lib/progress";
 export default function EnrollAction({
   track,
   progress,
-  dark = false,
 }: {
   track: Track;
   progress: Progress | null;
-  dark?: boolean;
 }) {
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
   if (!progress) return <div className="h-12" />;
 
   const state = enrollment(track, progress);
-  const primary = `inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold ${
-    dark ? "bg-lime text-ink" : "bg-ink text-white"
-  }`;
-  const muted = `text-sm ${dark ? "text-white/55" : "text-ink/55"}`;
+  const primary = `inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold bg-ink text-paper`;
+  const muted = `text-sm text-ink/55`;
 
   if (state.can) {
     if (!confirming) {
@@ -42,8 +38,8 @@ export default function EnrollAction({
       );
     }
     return (
-      <div className={`max-w-md rounded-2xl p-4 ${dark ? "bg-white/10" : "bg-cream"}`}>
-        <p className={`text-sm leading-relaxed ${dark ? "text-white/80" : "text-ink/75"}`}>
+      <div className={`max-w-md rounded-2xl p-4 bg-cream`}>
+        <p className={`text-sm leading-relaxed text-ink/75`}>
           You&apos;ll focus on <span className="font-semibold">{track.name}</span> until you finish it —
           one track at a time, so every lab builds on the last.
         </p>
@@ -61,7 +57,7 @@ export default function EnrollAction({
           <button
             type="button"
             onClick={() => setConfirming(false)}
-            className={`rounded-md px-4 py-3 text-sm font-semibold ${dark ? "text-white/60" : "text-ink/60"}`}
+            className={`rounded-md px-4 py-3 text-sm font-semibold text-ink/60`}
           >
             Not yet
           </button>
@@ -74,7 +70,7 @@ export default function EnrollAction({
     case "enrolled": {
       const stats = trackStats(track, progress);
       return stats.complete ? (
-        <p className={`inline-flex items-center gap-2 font-semibold ${dark ? "text-lime" : "text-lime-deep"}`}>
+        <p className={`inline-flex items-center gap-2 font-semibold text-lime-deep`}>
           <Check size={16} /> Completed
         </p>
       ) : (
@@ -107,9 +103,7 @@ export default function EnrollAction({
             <p>
               <Link
                 href={`/placement/${req.slug}`}
-                className={`inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 hover:underline ${
-                  dark ? "text-lime" : "text-ink"
-                }`}
+                className={`inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 hover:underline text-ink`}
               >
                 Already know {req.shortName}? Take the placement check
                 <ArrowRight size={14} />

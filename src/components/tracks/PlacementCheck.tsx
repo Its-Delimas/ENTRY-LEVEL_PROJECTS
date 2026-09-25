@@ -60,8 +60,8 @@ export default function PlacementCheck({ track }: { track: Track }) {
   if (phase === "intro") {
     const already = passedPlacement(track, progress);
     return (
-      <div className="mx-auto max-w-2xl py-6">
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-lime">
+      <div className="max-w-3xl py-6">
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lime text-onlime">
           <ClipboardCheck size={22} />
         </span>
         <p className="eyebrow mt-6 text-lime-deep">Placement check</p>
@@ -87,7 +87,7 @@ export default function PlacementCheck({ track }: { track: Track }) {
           <button
             type="button"
             onClick={() => setPhase("quiz")}
-            className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-white"
+            className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-paper"
           >
             Start the check
             <ArrowRight size={16} />
@@ -103,7 +103,7 @@ export default function PlacementCheck({ track }: { track: Track }) {
   if (phase === "quiz") {
     const q = questions[current];
     return (
-      <div className="mx-auto max-w-2xl py-6">
+      <div className="max-w-3xl py-6">
         <div className="flex items-center justify-between text-sm text-ink/50">
           <span>
             Question {current + 1} of {questions.length}
@@ -124,7 +124,7 @@ export default function PlacementCheck({ track }: { track: Track }) {
                 <button
                   type="button"
                   onClick={() => answer(oi)}
-                  className="w-full rounded-2xl border border-ink/10 bg-white px-5 py-4 text-left font-mono text-sm whitespace-pre-wrap text-ink transition-colors hover:border-ink/50"
+                  className="w-full rounded-2xl border border-ink/10 bg-paper px-5 py-4 text-left font-mono text-sm whitespace-pre-wrap text-ink transition-colors hover:border-ink/50"
                 >
                   {q.options[oi]}
                 </button>
@@ -138,7 +138,7 @@ export default function PlacementCheck({ track }: { track: Track }) {
 
   const unlockedTrack = unlocks[0];
   return (
-    <div className="mx-auto max-w-2xl py-6">
+    <div className="max-w-3xl py-6">
       <p className="eyebrow text-lime-deep">Placement result</p>
       <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight text-ink">
         {score} / {questions.length} — {passed ? "you've placed out." : "not quite yet."}
@@ -160,10 +160,10 @@ export default function PlacementCheck({ track }: { track: Track }) {
           const ok = answers[i] === q.answer;
           const lab = getLab(q.lab);
           return (
-            <li key={i} className="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-ink/10">
+            <li key={i} className="flex items-start gap-3 rounded-2xl bg-paper p-4 ring-1 ring-ink/10">
               <span
                 className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
-                  ok ? "bg-lime text-ink" : "bg-[#ffe3e3] text-[#c4262b]"
+                  ok ? "bg-lime text-onlime" : "bg-danger-soft text-danger"
                 }`}
               >
                 {ok ? <Check size={12} strokeWidth={3} /> : <X size={12} strokeWidth={3} />}
@@ -188,7 +188,7 @@ export default function PlacementCheck({ track }: { track: Track }) {
         {!passed && (
           <Link
             href={`/tracks/${track.slug}`}
-            className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-white"
+            className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-paper"
           >
             See the {track.name} syllabus
             <ArrowRight size={16} />

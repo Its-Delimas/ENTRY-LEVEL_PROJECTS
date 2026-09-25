@@ -92,7 +92,7 @@ export default function CodeView({
   return (
     <div className="grid w-full min-w-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
       {/* Brief, checks, mentor */}
-      <aside className="min-w-0 border-b border-ink/10 bg-white px-6 py-8 lg:border-r lg:border-b-0">
+      <aside className="min-w-0 border-b border-ink/10 bg-paper px-6 py-8 lg:border-r lg:border-b-0">
         <div className="flex items-center gap-2 text-lime-deep">
           <KindIcon size={15} />
           <p className="eyebrow">{step.challenge ? "Challenge" : "Practice"}</p>
@@ -129,9 +129,9 @@ export default function CodeView({
                   <span
                     className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
                       state === "pass"
-                        ? "bg-lime text-ink"
+                        ? "bg-lime text-onlime"
                         : state === "fail"
-                          ? "bg-[#ffe3e3] text-[#c4262b]"
+                          ? "bg-danger-soft text-danger"
                           : "text-ink/25"
                     }`}
                   >
@@ -234,7 +234,7 @@ export default function CodeView({
 
       {/* Editor + output */}
       <div className="flex min-h-[560px] min-w-0 flex-col bg-cream p-4 lg:sticky lg:top-[57px] lg:self-start lg:h-[calc(100vh-57px-65px)] lg:p-6">
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-ink shadow-[0_24px_60px_-30px_rgba(0,0,0,0.55)]">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-code ring-1 ring-ink/10 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.55)]">
           <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
             <div className="flex items-center gap-3">
               <span className="font-mono text-xs text-white/50">main.py</span>
@@ -259,7 +259,7 @@ export default function CodeView({
                 type="button"
                 onClick={handleRun}
                 disabled={python.status !== "ready" || python.running}
-                className="inline-flex items-center gap-1.5 rounded-md bg-lime px-4 py-1.5 text-xs font-semibold text-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
+                className="inline-flex items-center gap-1.5 rounded-md bg-lime px-4 py-1.5 text-xs font-semibold text-onlime transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
               >
                 <Play size={11} fill="currentColor" />
                 {python.running ? "Running…" : python.status === "loading" ? "Loading Python…" : "Run"}
@@ -272,7 +272,7 @@ export default function CodeView({
           </div>
 
           <div className="h-[40%] min-h-40 overflow-y-auto border-t border-white/10">
-            <div className="sticky top-0 flex items-center justify-between bg-ink px-4 py-2">
+            <div className="sticky top-0 flex items-center justify-between bg-code px-4 py-2">
               <span className="eyebrow text-lime">Output</span>
               {python.status === "error" && (
                 <span className="text-xs text-red-300">

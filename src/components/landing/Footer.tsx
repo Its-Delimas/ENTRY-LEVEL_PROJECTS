@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const columns = [
   {
@@ -24,21 +25,21 @@ const columns = [
 
 export default function Footer() {
   return (
-    <footer className="bg-ink text-white">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="border-t border-ink/10 bg-paper text-ink">
+      <div className="grid gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:px-10 xl:px-16">
         <div>
-          <Logo light />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/55">
+          <Logo />
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/55">
             Africa&apos;s hands-on AI academy. Free to learn, starting with Python for AI.
           </p>
         </div>
         {columns.map((col) => (
           <div key={col.title}>
-            <p className="eyebrow text-white/35">{col.title}</p>
+            <p className="eyebrow text-ink/40">{col.title}</p>
             <ul className="mt-4 space-y-2.5">
               {col.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-white/70 transition-colors hover:text-lime">
+                  <Link href={l.href} className="text-sm text-ink/65 transition-colors hover:text-ink">
                     {l.label}
                   </Link>
                 </li>
@@ -47,10 +48,11 @@ export default function Footer() {
           </div>
         ))}
       </div>
-      <div className="border-t border-white/10">
-        <p className="mx-auto max-w-7xl px-6 py-6 text-xs text-white/35">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 px-6 py-5 md:px-10 xl:px-16">
+        <p className="text-xs text-ink/40">
           Photography from Unsplash — credits in <code className="font-mono">public/images/CREDITS.md</code>.
         </p>
+        <ThemeToggle />
       </div>
     </footer>
   );

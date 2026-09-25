@@ -41,7 +41,7 @@ export default function PredictView({
   }
 
   return (
-    <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-12 md:grid-cols-2 md:py-16">
+    <div className="grid w-full gap-10 px-6 md:px-10 xl:px-16 py-12 md:grid-cols-2 md:py-16">
       <div>
         <div className="flex items-center gap-2 text-lime-deep">
           <Eye size={16} />
@@ -79,17 +79,17 @@ export default function PredictView({
                   disabled={answered}
                   className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-5 py-4 text-left font-mono text-sm transition-colors ${
                     state === "idle"
-                      ? "border-ink/10 bg-white hover:border-ink/40"
+                      ? "border-ink/10 bg-paper hover:border-ink/40"
                       : state === "answer"
                         ? "border-lime-deep/30 bg-lime-soft text-ink"
                         : state === "wrong"
-                          ? "border-[#e5484d]/30 bg-[#fff1f1] text-ink"
+                          ? "border-danger/30 bg-danger-soft text-ink"
                           : "border-ink/5 bg-white/60 text-ink/35"
                   }`}
                 >
                   <span className="whitespace-pre-wrap">{opt}</span>
                   {state === "answer" && <Check size={16} className="shrink-0 text-lime-deep" />}
-                  {state === "wrong" && <X size={16} className="shrink-0 text-[#c4262b]" />}
+                  {state === "wrong" && <X size={16} className="shrink-0 text-danger" />}
                 </button>
               </li>
             );
@@ -102,7 +102,7 @@ export default function PredictView({
             animate={{ opacity: 1, y: 0 }}
             className="mt-6 space-y-4"
           >
-            <div className="rounded-2xl bg-white p-5 ring-1 ring-ink/10">
+            <div className="rounded-2xl bg-paper p-5 ring-1 ring-ink/10">
               <p className="font-display text-base font-semibold text-ink">
                 {correct ? "You called it." : "Not quite — and that's useful."}
               </p>
@@ -111,14 +111,14 @@ export default function PredictView({
               </p>
             </div>
 
-            <div className="overflow-hidden rounded-2xl bg-ink">
+            <div className="overflow-hidden rounded-2xl bg-code">
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
                 <span className="eyebrow text-lime">Check it for real</span>
                 <button
                   type="button"
                   onClick={runIt}
                   disabled={python.status !== "ready" || python.running}
-                  className="inline-flex items-center gap-1.5 rounded-md bg-lime px-3.5 py-1.5 text-xs font-semibold text-ink disabled:opacity-30"
+                  className="inline-flex items-center gap-1.5 rounded-md bg-lime px-3.5 py-1.5 text-xs font-semibold text-onlime disabled:opacity-30"
                 >
                   <Play size={11} fill="currentColor" />
                   {python.status === "loading" ? "Loading Python…" : "Run it"}

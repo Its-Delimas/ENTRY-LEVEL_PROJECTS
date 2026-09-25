@@ -46,7 +46,7 @@ export default function CsvRows({ onInteract }: { onInteract: () => void }) {
           <p className="eyebrow text-ink/40">The same data as a table</p>
           <div className="mt-3 overflow-hidden rounded-3xl ring-1 ring-ink/10">
             <table className="w-full text-left text-sm">
-              <thead className="bg-ink text-white">
+              <thead className="bg-code text-white">
                 <tr>
                   {header.map((h) => (
                     <th key={h} className="px-4 py-2.5 font-mono text-xs font-semibold">
@@ -61,7 +61,7 @@ export default function CsvRows({ onInteract }: { onInteract: () => void }) {
                     key={r[0]}
                     onMouseEnter={() => pick(i)}
                     onClick={() => pick(i)}
-                    className={`cursor-default border-t border-ink/5 ${i === active ? "bg-lime/40" : "bg-white"}`}
+                    className={`cursor-default border-t border-ink/5 ${i === active ? "bg-lime/40" : "bg-paper"}`}
                   >
                     {r.map((c, j) => (
                       <td key={j} className="px-4 py-2.5 text-ink/80">
@@ -76,7 +76,7 @@ export default function CsvRows({ onInteract }: { onInteract: () => void }) {
         </div>
       </div>
 
-      <div className="rounded-3xl bg-ink p-5">
+      <div className="rounded-3xl bg-code p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="eyebrow text-lime">What Python gets for this row</p>
           <label className="flex items-center gap-2 text-xs text-white/70">

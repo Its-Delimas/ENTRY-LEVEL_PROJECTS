@@ -54,7 +54,7 @@ export default function DecisionThreshold({ onInteract }: { onInteract: () => vo
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             className={`rounded-lg px-2.5 py-1 font-mono text-sm font-semibold ${
-              condition ? "bg-lime text-ink" : "bg-ink text-white"
+              condition ? "bg-lime text-onlime" : "bg-code text-white"
             }`}
           >
             {condition ? "True" : "False"}
@@ -62,7 +62,7 @@ export default function DecisionThreshold({ onInteract }: { onInteract: () => vo
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-3xl bg-ink">
+      <div className="overflow-hidden rounded-3xl bg-code">
         <pre className="p-5 font-mono text-[13px] leading-7 text-white/85">
           {line(true, <><span className="text-white/90">rain_mm</span> = <span className="text-[#8fd3ff]">{rain}</span></>)}
           {line(true, <><span className="text-lime">if</span> rain_mm &gt;= <span className="text-[#8fd3ff]">{threshold}</span>:</>)}

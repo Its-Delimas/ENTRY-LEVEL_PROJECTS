@@ -10,8 +10,8 @@ export default function Path() {
   const [python, ai, ...soon] = tracks;
 
   return (
-    <section id="tracks" className="py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="tracks" className="scroll-mt-20 bg-paper py-24 md:py-32">
+      <div className="px-6 md:px-10 xl:px-16">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -52,12 +52,12 @@ export default function Path() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ delay: i * 0.1 }}
-                className="flex flex-col overflow-hidden rounded-[28px] bg-white ring-1 ring-ink/10"
+                className="flex flex-col overflow-hidden rounded-[28px] bg-cream ring-1 ring-ink/10"
               >
                 {track.cover && (
                   <div className="relative aspect-[16/8]">
                     <Image src={track.cover.src} alt={track.cover.alt} fill sizes="(min-width: 768px) 560px, 100vw" className="object-cover" />
-                    <span className="absolute top-4 left-4 rounded-md bg-ink px-2.5 py-1 font-mono text-xs font-semibold text-lime">
+                    <span className="absolute top-4 left-4 rounded-md bg-lime px-2.5 py-1 font-mono text-xs font-semibold text-onlime">
                       STEP {i + 1}
                     </span>
                   </div>
@@ -72,7 +72,7 @@ export default function Path() {
                   <ol className="mt-6 space-y-2.5">
                     {milestones.map((m, mi) => (
                       <li key={m.slug} className="flex items-start gap-3 text-sm">
-                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cream font-mono text-[10px] font-semibold text-ink/55">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-paper font-mono text-[10px] font-semibold text-ink/55">
                           {mi + 1}
                         </span>
                         <span className="text-ink/75">
@@ -84,7 +84,7 @@ export default function Path() {
                   </ol>
                   <div className="mt-auto pt-7">
                     {i === 0 ? (
-                      <Link href="/tracks" className="inline-flex items-center gap-2 rounded-md bg-ink px-5 py-3 text-sm font-semibold text-white">
+                      <Link href="/tracks" className="inline-flex items-center gap-2 rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper">
                         Start here — no experience needed
                         <ArrowRight size={15} />
                       </Link>

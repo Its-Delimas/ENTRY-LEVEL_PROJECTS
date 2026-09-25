@@ -38,13 +38,13 @@ export default function FunctionMachine({ onInteract }: { onInteract: () => void
       </div>
 
       <div className="flex flex-col items-stretch gap-3 md:flex-row md:items-center">
-        <div className="rounded-2xl bg-white p-4 text-center ring-1 ring-ink/10 md:w-40">
+        <div className="rounded-2xl bg-paper p-4 text-center ring-1 ring-ink/10 md:w-40">
           <p className="eyebrow text-ink/40">In</p>
           <p className="mt-1 font-mono text-lg text-ink">{ksh.toLocaleString()}</p>
           <p className="font-mono text-xs text-ink/40">{rate}</p>
         </div>
         <ArrowRight className="mx-auto shrink-0 rotate-90 text-ink/30 md:rotate-0" />
-        <div className="flex-1 rounded-3xl bg-ink p-5">
+        <div className="flex-1 rounded-3xl bg-code p-5">
           <pre className="font-mono text-[13px] leading-6 text-white/85">
             <span className="text-lime">def</span> to_usd(ksh, rate):{"\n"}
             {"    "}usd = ksh / rate{"\n"}

@@ -32,15 +32,15 @@ export default function TrackView({ track }: { track: Track }) {
   const nextStarted = next && progress?.labs[next.slug]?.steps.length;
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div>
       {/* Hero */}
-      <section className="grid overflow-hidden rounded-[28px] bg-ink text-white md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+      <section className="grid overflow-hidden rounded-[28px] bg-paper text-ink ring-1 ring-ink/10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <div className="p-7 md:p-10">
-          <p className="eyebrow text-lime">
+          <p className="eyebrow text-lime-deep">
             {isEnrolled ? "Your track" : "Track syllabus"} · {track.level}
           </p>
           <h1 className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight">{track.name}</h1>
-          <p className="mt-4 max-w-md leading-relaxed text-white/60">{track.description}</p>
+          <p className="mt-4 max-w-xl leading-relaxed text-ink/60">{track.description}</p>
 
           <dl className="mt-7 flex flex-wrap gap-x-8 gap-y-3 text-sm">
             <Stat label="Labs" value={String(stats.total)} />
@@ -51,7 +51,7 @@ export default function TrackView({ track }: { track: Track }) {
 
           {workable && (
             <div className="mt-6 max-w-sm">
-              <ProgressBar value={stats.percent} dark />
+              <ProgressBar value={stats.percent} />
             </div>
           )}
 
@@ -59,13 +59,13 @@ export default function TrackView({ track }: { track: Track }) {
             {workable && next ? (
               <Link
                 href={`/labs/${next.slug}`}
-                className="inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3 text-sm font-semibold text-ink"
+                className="inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3 text-sm font-semibold text-onlime"
               >
                 {nextStarted ? "Continue" : stats.done === 0 ? "Start" : "Next"}: {next.title}
                 <ArrowRight size={16} />
               </Link>
             ) : (
-              <EnrollAction track={track} progress={progress} dark />
+              <EnrollAction track={track} progress={progress} />
             )}
           </div>
         </div>
@@ -86,12 +86,12 @@ export default function TrackView({ track }: { track: Track }) {
               return (
                 <li
                   key={m.slug}
-                  className={`rounded-2xl p-4 ${reached ? "bg-lime-soft ring-1 ring-lime-deep/15" : "bg-white ring-1 ring-ink/10"}`}
+                  className={`rounded-2xl p-4 ${reached ? "bg-lime-soft ring-1 ring-lime-deep/15" : "bg-paper ring-1 ring-ink/10"}`}
                 >
                   <div className="flex items-center gap-2">
                     <span
                       className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-semibold ${
-                        reached ? "bg-lime-deep text-white" : "bg-cream text-ink/50"
+                        reached ? "bg-lime-deep text-paper" : "bg-cream text-ink/50"
                       }`}
                     >
                       {reached ? <Check size={12} strokeWidth={3} /> : i + 1}
@@ -114,7 +114,7 @@ export default function TrackView({ track }: { track: Track }) {
             const labs = moduleLabs(mod);
             const reached = isModuleDone(mod, progress);
             return (
-              <div key={mod.slug} className="overflow-hidden rounded-3xl bg-white ring-1 ring-ink/10">
+              <div key={mod.slug} className="overflow-hidden rounded-3xl bg-paper ring-1 ring-ink/10">
                 <div className="flex items-start justify-between gap-4 border-b border-ink/5 px-6 py-5">
                   <div>
                     <p className="eyebrow text-ink/40">Module {mi + 1}</p>
@@ -169,7 +169,7 @@ export default function TrackView({ track }: { track: Track }) {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-white/40">{label}</dt>
+      <dt className="text-ink/45">{label}</dt>
       <dd className="mt-0.5 font-display text-xl font-semibold">{value}</dd>
     </div>
   );
@@ -197,7 +197,7 @@ function LabRow({
       <div className="flex items-center gap-4 px-6 py-4">
         <span
           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-semibold ${
-            done ? "bg-lime-deep text-white" : isNext ? "bg-ink text-lime" : canOpen ? "bg-cream text-ink/60" : "bg-cream text-ink/30"
+            done ? "bg-lime-deep text-paper" : isNext ? "bg-lime text-onlime" : canOpen ? "bg-cream text-ink/60" : "bg-cream text-ink/30"
           }`}
         >
           {done ? <Check size={14} strokeWidth={3} /> : !canOpen ? <Lock size={12} /> : isProject ? <Flag size={13} /> : lab.number}
@@ -249,7 +249,7 @@ function LabRow({
               {canOpen && (
                 <Link
                   href={`/labs/${lab.slug}`}
-                  className="mt-5 inline-flex items-center gap-2 rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white"
+                  className="mt-5 inline-flex items-center gap-2 rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-paper"
                 >
                   <BookOpen size={15} />
                   {done ? "Review lab" : doneSteps.size ? "Continue lab" : "Open lab"}

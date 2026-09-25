@@ -20,7 +20,7 @@ const checks = [
 /** A faithful, static picture of a real lab step — Lab 02, "Plant or wait?". */
 export default function LabPreview() {
   return (
-    <div className="overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-[0_30px_70px_-40px_rgba(0,0,0,0.45)]">
+    <div className="overflow-hidden rounded-3xl border border-ink/10 bg-paper shadow-[0_30px_70px_-40px_rgba(0,0,0,0.45)]">
       <div className="border-b border-ink/10 px-5 py-3">
         <div className="flex items-center justify-between">
           <p className="text-xs text-ink/45">Python for AI · Lab 02</p>
@@ -59,7 +59,7 @@ export default function LabPreview() {
               >
                 <span
                   className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${
-                    c.ok ? "bg-lime text-ink" : "bg-[#ffe3e3] text-[#c4262b]"
+                    c.ok ? "bg-lime text-onlime" : "bg-danger-soft text-danger"
                   }`}
                 >
                   {c.ok ? <Check size={10} strokeWidth={3} /> : <X size={10} strokeWidth={3} />}
@@ -83,7 +83,7 @@ export default function LabPreview() {
             </p>
           </motion.div>
         </div>
-        <div className="bg-ink p-5 font-mono text-[12px] leading-6 whitespace-pre text-white/85">
+        <div className="bg-code p-5 font-mono text-[12px] leading-6 whitespace-pre text-white/85">
           <p>
             rain_mm = <span className="text-[#8fd3ff]">18</span>
           </p>

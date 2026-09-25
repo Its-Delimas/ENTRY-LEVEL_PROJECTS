@@ -12,7 +12,7 @@ const links = [
   { href: "/dashboard", label: "My learning" },
 ];
 
-/** Ink over the dark hero, then paper once you scroll into the light sections. */
+/** Sticky site nav; gains a surface and border once you scroll. */
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -29,18 +29,18 @@ export default function Nav() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "nav-scrolled" : "border-b border-white/10 bg-ink"
+        scrolled ? "nav-scrolled" : "border-b border-transparent bg-cream"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Logo light={!scrolled} />
+      <div className="flex items-center justify-between px-6 md:px-10 xl:px-16 py-4">
+        <Logo />
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={`text-sm font-medium transition-colors ${
-                scrolled ? "text-ink/65 hover:text-ink" : "text-white/75 hover:text-white"
+                "text-ink/65 hover:text-ink"
               }`}
             >
               {link.label}
@@ -50,7 +50,7 @@ export default function Nav() {
         <Link
           href="/tracks"
           className={`rounded-md px-5 py-2.5 text-sm font-semibold transition-colors ${
-            scrolled ? "bg-ink text-paper" : "bg-lime text-ink"
+            "bg-ink text-paper"
           }`}
         >
           Start free

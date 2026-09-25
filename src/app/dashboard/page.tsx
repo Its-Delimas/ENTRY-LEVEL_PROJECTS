@@ -29,7 +29,7 @@ export default function DashboardPage() {
   if (!progress) {
     return (
       <AppShell>
-        <div className="mx-auto h-96 max-w-6xl animate-pulse rounded-[28px] bg-ink/5" />
+        <div className="h-96 animate-pulse rounded-[28px] bg-ink/5" />
       </AppShell>
     );
   }
@@ -50,7 +50,7 @@ export default function DashboardPage() {
 
   return (
     <AppShell>
-      <div className="mx-auto max-w-6xl">
+      <div>
         <p className="eyebrow text-lime-deep">{track.name}</p>
         <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight text-ink">
           {stepsDone === 0 ? "Karibu — let's begin" : "Karibu back"}
@@ -64,21 +64,21 @@ export default function DashboardPage() {
           </div>
 
           <div className="min-w-0 space-y-6">
-            <section className="rounded-3xl bg-ink p-6 text-white">
+            <section className="rounded-3xl bg-paper p-6 text-ink ring-1 ring-ink/10">
               <p className="font-display text-base font-semibold">Your progress</p>
               <div className="mt-4 grid grid-cols-3 gap-2">
                 <Metric value={`${stats.done}/${stats.total}`} label="Labs" />
                 <Metric value={String(milestonesReached)} label="Milestones" />
                 <Metric value={String(stepsDone)} label="Activities" />
               </div>
-              <div className="mt-5 rounded-2xl bg-white/5 p-4">
-                <p className="text-xs text-white/50">Days you ran code this week</p>
+              <div className="mt-5 rounded-2xl bg-cream p-4">
+                <p className="text-xs text-ink/50">Days you ran code this week</p>
                 <div className="mt-3">
                   <WeekBars activeDates={activeDates} />
                 </div>
               </div>
             </section>
-            <section className="rounded-3xl border border-ink/10 bg-white p-6">
+            <section className="rounded-3xl border border-ink/10 bg-paper p-6">
               <StreakCalendar activeDates={activeDates} />
             </section>
           </div>
@@ -90,9 +90,9 @@ export default function DashboardPage() {
 
 function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-2xl bg-white/5 p-3">
+    <div className="rounded-2xl bg-cream p-3">
       <p className="font-display text-xl font-semibold">{value}</p>
-      <p className="mt-0.5 text-[11px] text-white/50">{label}</p>
+      <p className="mt-0.5 text-[11px] text-ink/50">{label}</p>
     </div>
   );
 }
@@ -110,14 +110,14 @@ function ContinueCard({ track, progress }: { track: Track; progress: Progress })
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="grid overflow-hidden rounded-[28px] bg-ink text-white md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
+      className="grid overflow-hidden rounded-[28px] bg-paper text-ink ring-1 ring-ink/10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
     >
       <div className="p-7 md:p-8">
-        <p className="eyebrow text-lime">
+        <p className="eyebrow text-lime-deep">
           {started ? "Continue" : "Up next"} · Module {mi + 1} · {lab.kind === "project" ? "Project" : `Lab ${lab.number}`}
         </p>
         <h2 className="mt-3 font-display text-3xl font-semibold leading-tight">{lab.title}</h2>
-        <p className="mt-2 max-w-md text-sm leading-relaxed text-white/55">{lab.summary}</p>
+        <p className="mt-2 max-w-md text-sm leading-relaxed text-ink/60">{lab.summary}</p>
 
         <div className="mt-6 flex gap-1.5">
           {lab.steps.map((s) => {
@@ -129,7 +129,7 @@ function ContinueCard({ track, progress }: { track: Track; progress: Progress })
                 key={s.id}
                 title={`${meta.label}: ${s.title}`}
                 className={`flex h-8 flex-1 items-center justify-center rounded-lg ${
-                  isDone ? "bg-lime text-ink" : isNext ? "bg-white text-ink" : "bg-white/10 text-white/40"
+                  isDone ? "bg-lime text-onlime" : isNext ? "bg-ink text-paper" : "bg-cream text-ink/35"
                 }`}
               >
                 <meta.icon size={13} />
@@ -137,16 +137,16 @@ function ContinueCard({ track, progress }: { track: Track; progress: Progress })
             );
           })}
         </div>
-        <p className="mt-3 text-xs text-white/50">
+        <p className="mt-3 text-xs text-ink/50">
           {started ? "Next up: " : "Starts with: "}
-          <span className="text-white/80">
+          <span className="text-ink/80">
             {stepMeta(nextStep).label} — {nextStep.title}
           </span>
         </p>
 
         <Link
           href={`/labs/${lab.slug}`}
-          className="mt-7 inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3 text-sm font-semibold text-ink"
+          className="mt-7 inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3 text-sm font-semibold text-onlime"
         >
           {started ? "Resume lab" : lab.kind === "project" ? "Start project" : `Start lab ${lab.number}`}
           <ArrowRight size={16} />
@@ -164,13 +164,13 @@ function ContinueCard({ track, progress }: { track: Track; progress: Progress })
 function TrackComplete({ track }: { track: Track }) {
   const unlocked = tracksUnlockedBy(track).filter((t) => t.status === "active");
   return (
-    <section className="rounded-[28px] bg-ink p-8 text-white">
-      <Trophy className="text-lime" />
+    <section className="rounded-[28px] bg-paper p-8 text-ink ring-1 ring-ink/10">
+      <Trophy className="text-lime-deep" />
       <h2 className="mt-4 font-display text-3xl font-semibold">You finished {track.name}.</h2>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-white/55">
+      <p className="mt-2 max-w-md text-sm leading-relaxed text-ink/60">
         Every lab, every milestone. {unlocked.length ? `${unlocked.map((t) => t.name).join(" and ")} is open to you now.` : "New tracks are on the way."}
       </p>
-      <Link href="/tracks" className="mt-6 inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3 text-sm font-semibold text-ink">
+      <Link href="/tracks" className="mt-6 inline-flex items-center gap-2 rounded-md bg-lime px-6 py-3 text-sm font-semibold text-onlime">
         Choose your next track
         <ArrowRight size={16} />
       </Link>
@@ -199,13 +199,13 @@ function MilestonePath({ track, progress }: { track: Track; progress: Progress }
             <li
               key={m.slug}
               className={`rounded-2xl p-5 ${
-                current ? "bg-white ring-2 ring-ink" : reached ? "bg-lime-soft/60" : "bg-white/60 ring-1 ring-ink/5"
+                current ? "bg-paper ring-2 ring-ink" : reached ? "bg-lime-soft" : "bg-paper/60 ring-1 ring-ink/5"
               }`}
             >
               <div className="flex items-start gap-4">
                 <span
                   className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
-                    reached ? "bg-lime-deep text-white" : current ? "bg-ink text-lime" : "bg-cream text-ink/30"
+                    reached ? "bg-lime-deep text-paper" : current ? "bg-lime text-onlime" : "bg-cream text-ink/30"
                   }`}
                 >
                   {reached ? <Check size={16} strokeWidth={3} /> : current ? <Flag size={15} /> : <Lock size={14} />}
@@ -250,7 +250,7 @@ function MilestonePath({ track, progress }: { track: Track; progress: Progress }
 
 function SkillMap({ track, progress }: { track: Track; progress: Progress }) {
   return (
-    <section id="skills" className="rounded-3xl border border-ink/10 bg-white p-6 md:p-7">
+    <section id="skills" className="rounded-3xl border border-ink/10 bg-paper p-6 md:p-7">
       <h2 className="font-display text-lg font-semibold text-ink">What you can do</h2>
       <p className="mt-0.5 text-xs text-ink/50">
         Skills you&apos;ve proven by passing a lab&apos;s checks — not lessons you&apos;ve clicked through.
@@ -263,7 +263,7 @@ function SkillMap({ track, progress }: { track: Track; progress: Progress }) {
               <li key={lab.slug + skill} className="flex items-start gap-2.5 text-sm">
                 <span
                   className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full ${
-                    done ? "bg-lime text-ink" : "border border-ink/15"
+                    done ? "bg-lime text-onlime" : "border border-ink/15"
                   }`}
                 >
                   {done && <Check size={11} strokeWidth={3} />}

@@ -65,7 +65,7 @@ export default function VariableBoxes({ onInteract }: { onInteract: () => void }
             e.preventDefault();
             store();
           }}
-          className="mt-3 flex items-center gap-2 rounded-2xl bg-ink p-3 font-mono text-sm"
+          className="mt-3 flex items-center gap-2 rounded-2xl bg-code p-3 font-mono text-sm"
         >
           <input
             value={name}
@@ -80,7 +80,7 @@ export default function VariableBoxes({ onInteract }: { onInteract: () => void }
             aria-label="Value"
             className="min-w-0 flex-1 rounded-lg bg-white/10 px-3 py-2 text-white outline-none focus:ring-1 focus:ring-lime"
           />
-          <button type="submit" className="rounded-lg bg-lime px-3 py-2 font-sans text-xs font-semibold text-ink">
+          <button type="submit" className="rounded-lg bg-lime px-3 py-2 font-sans text-xs font-semibold text-onlime">
             Run
           </button>
         </form>
@@ -97,7 +97,7 @@ export default function VariableBoxes({ onInteract }: { onInteract: () => void }
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className={`mt-4 rounded-xl p-3.5 font-mono text-xs leading-relaxed ${
-                message.includes("Error") ? "bg-[#fff1f1] text-[#a1262a]" : "bg-cream text-ink/70"
+                message.includes("Error") ? "bg-danger-soft text-danger" : "bg-cream text-ink/70"
               }`}
             >
               {message}
@@ -117,7 +117,7 @@ export default function VariableBoxes({ onInteract }: { onInteract: () => void }
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="rounded-2xl bg-white p-4 shadow-[0_1px_0_rgba(0,0,0,0.04)] ring-1 ring-ink/10"
+                className="rounded-2xl bg-paper p-4 shadow-[0_1px_0_rgba(0,0,0,0.04)] ring-1 ring-ink/10"
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="truncate font-mono text-xs font-semibold text-ink">{k}</span>

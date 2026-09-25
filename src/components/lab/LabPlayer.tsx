@@ -93,7 +93,7 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-cream">
-      <header className="sticky top-0 z-40 border-b border-ink/10 bg-white">
+      <header className="sticky top-0 z-40 border-b border-ink/10 bg-paper">
         <div className="flex items-center gap-4 px-4 py-2.5 md:px-6">
           <Logo withWordmark={false} />
           <div className="min-w-0 flex-1">
@@ -153,7 +153,7 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
         </AnimatePresence>
       </main>
 
-      <footer className="sticky bottom-0 z-30 border-t border-ink/10 bg-white">
+      <footer className="sticky bottom-0 z-30 border-t border-ink/10 bg-paper">
         <div className="flex items-center justify-between gap-4 px-4 py-3 md:px-6">
           <button
             type="button"
@@ -184,7 +184,7 @@ function LabSession({ lab, progress }: { lab: Lab; progress: Progress }) {
               type="button"
               onClick={next}
               disabled={!canContinue}
-              className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-2.5 text-sm font-semibold text-white transition-opacity disabled:opacity-25"
+              className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-2.5 text-sm font-semibold text-paper transition-opacity disabled:opacity-25"
             >
               {isLast ? "Finish lab" : "Continue"}
               <ArrowRight size={16} />
@@ -209,11 +209,11 @@ function LockedLab({
   const current = enrolledTrack(progress);
   return (
     <div className="flex min-h-screen flex-col bg-cream">
-      <header className="border-b border-ink/10 bg-white px-6 py-4">
+      <header className="border-b border-ink/10 bg-paper px-6 py-4">
         <Logo />
       </header>
-      <main className="mx-auto flex max-w-lg flex-1 flex-col items-center justify-center px-6 py-20 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-ink text-lime">
+      <main className="flex w-full flex-1 flex-col items-start justify-center px-6 md:px-10 xl:px-16 py-20">
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-lime text-onlime">
           <Lock size={22} />
         </span>
         <h1 className="mt-6 font-display text-3xl font-semibold text-ink">{lab.title} is locked</h1>
@@ -226,7 +226,7 @@ function LockedLab({
             </p>
             <Link
               href={current ? "/dashboard" : `/tracks/${access.track.slug}`}
-              className="mt-8 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-white"
+              className="mt-8 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-paper"
             >
               {current ? `Continue ${current.name}` : `See ${access.track.name}`}
               <ArrowRight size={16} />
@@ -240,7 +240,7 @@ function LockedLab({
             </p>
             <Link
               href={`/labs/${access.first.slug}`}
-              className="mt-8 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-white"
+              className="mt-8 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-paper"
             >
               Open {access.first.title}
               <ArrowRight size={16} />
