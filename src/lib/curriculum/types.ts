@@ -1,0 +1,214 @@
+/**
+ * The Nurulabs curriculum model.
+ *
+ * A Track is a path (e.g. "Python for AI"), made of Modules, made of Labs.
+ * A Lab is a sequence of Steps, and each step is an *activity*, not a page
+ * of reading: the text is glue between things the learner does.
+ *
+ *   concept    → a short idea, a few sentences, usually with a code sample
+ *   experiment → an interactive widget the learner plays with
+ *   predict    → "what will this code do?" before they run it
+ *   code       → write and run real Python, checked against the namespace
+ *   explain    → put the idea into their own words, checked for key ideas
+ */
+
+export type StepKind = "concept" | "experiment" | "predict" | "code" | "explain";
+
+interface BaseStep {
+  id: string;
+  kind: StepKind;
+  title: string;
+}
+
+export interface ConceptStep extends BaseStep {
+  kind: "concept";
+  /** Short paragraphs. Inline `code` in backticks is rendered as code. */
+  body: string[];
+  /** Optional read-only code sample shown beside the idea. */
+  code?: string;
+  /** One sentence the learner should walk away with. */
+  keyIdea?: string;
+  /** Optional photo under /public/images. */
+  image?: { src: string; alt: string };
+}
+
+export type WidgetId =
+  | "variable-boxes"
+  | "decision-threshold"
+  | "list-explorer"
+  | "loop-stepper"
+  | "function-machine"
+  | "dict-lookup"
+  | "csv-rows"
+  | "line-fit"
+  | "string-methods"
+  | "comprehension-builder"
+  | "try-except"
+  | "json-explorer"
+  | "class-blueprint"
+  | "bug-hunt"
+  | "array-ops"
+  | "dataframe-ops"
+  | "chart-chooser"
+  | "correlation-explorer"
+  | "vector-dot"
+  | "distribution-explorer"
+  | "bayes-grid"
+  | "gradient-descent"
+  | "training-loop"
+  | "overfit-poly"
+  | "kfold"
+  | "sigmoid-boundary"
+  | "threshold-matrix"
+  | "knn-classifier"
+  | "tree-builder"
+  | "boosting-steps"
+  | "encoding-demo"
+  | "feature-crafter"
+  | "leakage-detector"
+  | "kmeans-stepper"
+  | "pca-projector"
+  | "anomaly-explorer"
+  | "seasonal-decomposer"
+  | "forecast-playground";
+
+export interface ExperimentStep extends BaseStep {
+  kind: "experiment";
+  prompt: string;
+  widget: WidgetId;
+  /** The takeaway, revealed once the learner has played with the widget. */
+  observe: string;
+}
+
+export interface PredictStep extends BaseStep {
+  kind: "predict";
+  prompt: string;
+  code: string;
+  options: string[];
+  answer: number;
+  explanation: string;
+}
+
+export interface CodeCheck {
+  /**
+   * A Python expression evaluated in the learner's namespace after a run.
+   * `_stdout` holds printed output, `_source` the code, and
+   * `_with(name=value)` re-runs the code with that variable changed and
+   * returns the resulting namespace — for testing logic on other inputs.
+   * `_charts` lists each matplotlib chart drawn: title, xlabel, ylabel,
+   * and counts of lines, bars and scatter points.
+   */
+  expr: string;
+  label: string;
+  /** Shown by the mentor when this check fails. */
+  failHint: string;
+}
+
+export interface ErrorHint {
+  /** Regex source (case-insensitive) matched against "ErrorType: message". */
+  pattern: string;
+  hint: string;
+}
+
+export interface CodeStep extends BaseStep {
+  kind: "code";
+  /** Challenges state only the objective — no step-by-step instructions. */
+  challenge?: boolean;
+  brief: string;
+  instructions?: string[];
+  starterCode: string;
+  checks: CodeCheck[];
+  /** Progressive hints, from gentle to specific. */
+  hints: string[];
+  errorHints?: ErrorHint[];
+  /** Why it worked — shown on success. */
+  why: string;
+  /** A small follow-up nudge to keep experimenting after success. */
+  tryNext?: string;
+  /** A working solution, only offered after repeated failed attempts. */
+  solution?: string;
+}
+
+export interface ExplainIdea {
+  label: string;
+  /** Regex sources (case-insensitive); any match counts the idea as covered. */
+  patterns: string[];
+  /** A question that nudges toward this idea when it's missing. */
+  nudge: string;
+}
+
+export interface ExplainStep extends BaseStep {
+  kind: "explain";
+  prompt: string;
+  ideas: ExplainIdea[];
+  modelAnswer: string;
+}
+
+export type Step =
+  | ConceptStep
+  | ExperimentStep
+  | PredictStep
+  | CodeStep
+  | ExplainStep;
+
+export interface Lab {
+  slug: string;
+  /** Display number within its track, e.g. "03". */
+  number: string;
+  title: string;
+  subject: string;
+  summary: string;
+  minutes: number;
+  kind: "lab" | "project";
+  /** Optional photo under /public/images, for cards and headers. */
+  cover?: { src: string; alt: string };
+  /** What the learner can do after finishing — powers the skill map. */
+  skills: string[];
+  /** Files written into the Python sandbox before every run. */
+  files?: Record<string, string>;
+  /** Pyodide packages this lab needs (e.g. "numpy", "pandas", "matplotlib"). Loaded on demand. */
+  packages?: string[];
+  steps: Step[];
+}
+
+export interface PlannedLab {
+  title: string;
+  summary: string;
+}
+
+export interface Module {
+  slug: string;
+  title: string;
+  summary: string;
+  /** Reached when every lab in the module is done — what the learner can now do. */
+  milestone?: { title: string; description: string };
+  /** Lab slugs, in order. */
+  labs: string[];
+  /** Labs that are designed but not built yet — shown, never clickable. */
+  planned?: PlannedLab[];
+}
+
+export interface Track {
+  slug: string;
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  status: "active" | "coming-soon";
+  /** Track slugs that must be complete (or placed out of) before this one unlocks. */
+  requires?: string[];
+  level: "Beginner" | "Intermediate" | "Advanced";
+  /** Questions that let experienced learners test out of this track. */
+  placement?: PlacementQuestion[];
+  cover?: { src: string; alt: string };
+  modules: Module[];
+}
+
+export interface PlacementQuestion {
+  prompt: string;
+  code?: string;
+  options: string[];
+  answer: number;
+  /** Which lab teaches this — shown when the answer is wrong. */
+  lab: string;
+}

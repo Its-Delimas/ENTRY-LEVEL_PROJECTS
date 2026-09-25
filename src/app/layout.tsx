@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { themeInitScript } from "@/components/ui/ThemeToggle";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -21,9 +22,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nurulabs — Africa's Hands-On Tech Academy Lab",
+  title: "Nurulabs — Learn AI by building it",
   description:
-    "A hands-on academy lab for African students, starting with AI & Machine Learning: write real code, train real models, and get reviewed by a mentor that hints instead of answering.",
+    "A structured, hands-on AI programme for African students: start with Python for AI, then train real models — lessons, interactives, and real code in your browser, with a mentor that hints instead of answering.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -31,8 +32,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} h-full`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-paper font-sans text-ink antialiased">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-full flex flex-col bg-cream font-sans text-ink antialiased">
         {children}
       </body>
     </html>

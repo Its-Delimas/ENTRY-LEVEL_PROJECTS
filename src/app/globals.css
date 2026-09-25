@@ -1,7 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  /* Premium palette — 60% paper/white, 30% ink/black, 10% lime accent */
+  /*
+   * Theme tokens. Components use these names only, so every page follows
+   * one theme: light by default, dark when <html data-theme="dark">.
+   *   ink    — foreground text and primary buttons
+   *   paper  — cards and raised surfaces
+   *   cream  — page background
+   *   mist   — subtle fills
+   *   code   — code editors and output panels (dark in both themes)
+   *   onlime — text on the lime accent (dark in both themes)
+   */
   --color-ink: #0b0b0c;
   --color-paper: #ffffff;
   --color-cream: #f6f6f2;
@@ -9,9 +18,27 @@
   --color-lime: #d7ff3d;
   --color-lime-deep: #55710a;
   --color-lime-soft: #eefccb;
+  --color-danger: #c4262b;
+  --color-danger-soft: #fff1f1;
+  --color-code: #0f0f11;
+  --color-onlime: #0b0b0c;
 
-  --background: var(--color-paper);
+  --background: var(--color-cream);
   --foreground: var(--color-ink);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --color-ink: #ecece6;
+  --color-paper: #151517;
+  --color-cream: #0b0b0c;
+  --color-mist: #26262a;
+  --color-lime-deep: #b9e23a;
+  --color-lime-soft: #1d2609;
+  --color-danger: #ff8f8f;
+  --color-danger-soft: #331517;
+  --color-code: #1c1c20;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -22,6 +49,10 @@
   --color-lime: var(--color-lime);
   --color-lime-deep: var(--color-lime-deep);
   --color-lime-soft: var(--color-lime-soft);
+  --color-danger: var(--color-danger);
+  --color-danger-soft: var(--color-danger-soft);
+  --color-code: var(--color-code);
+  --color-onlime: var(--color-onlime);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -47,11 +78,47 @@ body {
 
 ::selection {
   background: var(--color-lime);
-  color: var(--color-ink);
+  color: var(--color-onlime);
 }
 
 /* Sticky nav surface once scrolled — solid, not a frosted/blurred effect */
 .nav-scrolled {
   background: var(--color-paper);
   border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+}
+
+/* Range sliders used by lab experiments: ink track filled with lime up to the thumb */
+.nl-range {
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--color-ink) 0 var(--pct),
+    color-mix(in srgb, var(--color-ink) 12%, transparent) var(--pct) 100%
+  );
+  cursor: pointer;
+}
+.nl-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--color-lime);
+  border: 3px solid var(--color-ink);
+  transition: transform 0.15s;
+}
+.nl-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--color-lime);
+  border: 3px solid var(--color-ink);
+}
+.nl-range:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+.nl-range:focus-visible {
+  outline: 2px solid var(--color-lime-deep);
+  outline-offset: 6px;
 }

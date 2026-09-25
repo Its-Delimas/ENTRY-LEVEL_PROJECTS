@@ -1,10 +1,11 @@
 import Nav from "@/components/landing/Nav";
 import Hero from "@/components/landing/Hero";
 import HowItWorks from "@/components/landing/HowItWorks";
-import Missions from "@/components/landing/Missions";
-import TracksDashboard from "@/components/landing/TracksDashboard";
+import TryIt from "@/components/landing/TryIt";
+import Path from "@/components/landing/Path";
 import LocalProjects from "@/components/landing/LocalProjects";
-import BuiltForAfrica from "@/components/landing/BuiltForAfrica";
+import Free from "@/components/landing/Free";
+import PhotoBand from "@/components/landing/PhotoBand";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/landing/Footer";
 
@@ -14,11 +15,12 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
+        <TryIt />
         <HowItWorks />
-        <Missions />
-        <TracksDashboard />
+        <PhotoBand />
+        <Path />
         <LocalProjects />
-        <BuiltForAfrica />
+        <Free />
         <CTA />
       </main>
       <Footer />

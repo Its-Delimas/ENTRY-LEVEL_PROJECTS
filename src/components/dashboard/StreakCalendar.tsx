@@ -110,7 +110,7 @@ export default function StreakCalendar({
                 title={active ? `${key} — active` : key}
                 className={`flex h-8 w-8 items-center justify-center rounded-lg text-xs font-medium ${
                   active
-                    ? "bg-lime font-semibold text-ink"
+                    ? "bg-lime font-semibold text-onlime"
                     : isToday
                       ? "ring-1 ring-ink text-ink"
                       : isFuture
