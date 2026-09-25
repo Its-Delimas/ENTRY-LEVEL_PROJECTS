@@ -57,7 +57,15 @@ export type WidgetId =
   | "gradient-descent"
   | "training-loop"
   | "overfit-poly"
-  | "kfold";
+  | "kfold"
+  | "sigmoid-boundary"
+  | "threshold-matrix"
+  | "knn-classifier"
+  | "tree-builder"
+  | "boosting-steps"
+  | "encoding-demo"
+  | "feature-crafter"
+  | "leakage-detector";
 
 export interface ExperimentStep extends BaseStep {
   kind: "experiment";

@@ -8,6 +8,8 @@ import { aiMlLabs } from "./ai-ml";
 import { scientificLabs } from "./ai-scientific";
 import { mathsLabs } from "./ai-maths";
 import { learningLabs } from "./ai-learning";
+import { supervisedLabs } from "./ai-supervised";
+import { featureLabs } from "./ai-features";
 
 export const pythonLabs: Lab[] = [
   pyValues,
@@ -26,4 +28,4 @@ export const pythonLabs: Lab[] = [
   pyProjectMarket,
 ];
 
-export const allLabs: Lab[] = [...pythonLabs, ...scientificLabs, ...mathsLabs, ...aiMlLabs, ...learningLabs];
+export const allLabs: Lab[] = [...pythonLabs, ...scientificLabs, ...mathsLabs, ...aiMlLabs, ...learningLabs, ...supervisedLabs, ...featureLabs];

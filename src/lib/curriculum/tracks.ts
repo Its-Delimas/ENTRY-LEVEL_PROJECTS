@@ -218,27 +218,22 @@ export const tracks: Track[] = [
       {
         slug: "ml-supervised",
         title: "Supervised learning",
-        summary: "The workhorse models for predicting numbers and categories.",
-        labs: [],
-        planned: [
-          { title: "Logistic regression", summary: "Your first classifier: healthy or diseased crops." },
-          { title: "Decision trees & random forests", summary: "Models that ask a series of questions." },
-          { title: "Gradient boosting", summary: "XGBoost: the model that wins on tabular data." },
-          { title: "k-nearest neighbours", summary: "Predict from the most similar examples." },
-          { title: "Measuring classifiers", summary: "Confusion matrices, precision, recall, ROC and imbalanced data." },
-          { title: "Capstone: crop disease risk", summary: "Build and defend a classifier end to end." },
-        ],
+        summary: "The workhorse models for predicting categories — and how to measure them honestly.",
+        labs: ["logistic", "clf-metrics", "knn", "trees", "boosting", "crop-early-warning"],
+        milestone: {
+          title: "A classifier you can defend",
+          description: "You can build, compare and tune classifiers, choose thresholds from real costs, and ship a capstone early-warning model.",
+        },
       },
       {
         slug: "ml-features",
         title: "Features & pipelines",
         summary: "Turning raw columns into inputs a model can learn from — without cheating.",
-        labs: [],
-        planned: [
-          { title: "Encoding & scaling", summary: "Categories to numbers, and why scale matters." },
-          { title: "Feature engineering", summary: "Creating the inputs that make models work." },
-          { title: "Data leakage & pipelines", summary: "The bug that makes models look perfect — and scikit-learn pipelines that prevent it." },
-        ],
+        labs: ["encoding-scaling", "feature-engineering", "leakage-pipelines"],
+        milestone: {
+          title: "Production-ready preprocessing",
+          description: "You can encode, scale and engineer features, spot leakage, and wrap it all in a pipeline that takes raw data.",
+        },
       },
       {
         slug: "ml-unsupervised",

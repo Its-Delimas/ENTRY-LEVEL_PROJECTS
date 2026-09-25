@@ -30,6 +30,14 @@ import GradientDescent from "../widgets/GradientDescent";
 import TrainingLoop from "../widgets/TrainingLoop";
 import OverfitPoly from "../widgets/OverfitPoly";
 import KFold from "../widgets/KFold";
+import SigmoidBoundary from "../widgets/SigmoidBoundary";
+import ThresholdMatrix from "../widgets/ThresholdMatrix";
+import KnnClassifier from "../widgets/KnnClassifier";
+import TreeBuilder from "../widgets/TreeBuilder";
+import BoostingSteps from "../widgets/BoostingSteps";
+import EncodingDemo from "../widgets/EncodingDemo";
+import FeatureCrafter from "../widgets/FeatureCrafter";
+import LeakageDetector from "../widgets/LeakageDetector";
 
 const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>> = {
   "variable-boxes": VariableBoxes,
@@ -57,6 +65,14 @@ const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>>
   "training-loop": TrainingLoop,
   "overfit-poly": OverfitPoly,
   kfold: KFold,
+  "sigmoid-boundary": SigmoidBoundary,
+  "threshold-matrix": ThresholdMatrix,
+  "knn-classifier": KnnClassifier,
+  "tree-builder": TreeBuilder,
+  "boosting-steps": BoostingSteps,
+  "encoding-demo": EncodingDemo,
+  "feature-crafter": FeatureCrafter,
+  "leakage-detector": LeakageDetector,
 };
 
 /** How much play before the takeaway is revealed. */

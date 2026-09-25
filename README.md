@@ -12,7 +12,7 @@ reflection in their own words.
 | Track | Level | Status |
 | --- | --- | --- |
 | Python for AI | Beginner | 13 labs + capstone project, live (complete) |
-| AI & Machine Learning | Intermediate | Requires Python for AI (or its placement check); modules 1–3 live (Scientific Python, Maths for ML, How models learn: 12 labs), 7 more modules planned |
+| AI & Machine Learning | Intermediate | Requires Python for AI (or its placement check); modules 1–5 live (20 labs + a capstone), 5 more modules planned |
 | Data Science, Data Engineering | — | Planned |
 
 Experienced learners can take the Python placement check
