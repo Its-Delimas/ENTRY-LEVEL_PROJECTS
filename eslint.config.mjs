@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Vendored third-party Pyodide runtime, not our source.
     "public/pyodide/**",
+    // Compiled curriculum used by the lab validator.
+    ".labs-build/**",
     "public/pyodide-worker.js",
   ]),
 ]);

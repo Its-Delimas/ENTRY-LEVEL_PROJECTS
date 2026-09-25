@@ -70,7 +70,17 @@ export type WidgetId =
   | "pca-projector"
   | "anomaly-explorer"
   | "seasonal-decomposer"
-  | "forecast-playground";
+  | "forecast-playground"
+  | "neuron-playground"
+  | "backprop-flow"
+  | "nn-playground"
+  | "conv-filter"
+  | "tokenizer-explorer"
+  | "tfidf-explorer"
+  | "word-weights"
+  | "embedding-map"
+  | "attention-heatmap"
+  | "temperature-sampler";
 
 export interface ExperimentStep extends BaseStep {
   kind: "experiment";

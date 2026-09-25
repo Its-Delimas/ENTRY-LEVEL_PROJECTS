@@ -43,6 +43,16 @@ import PcaProjector from "../widgets/PcaProjector";
 import AnomalyExplorer from "../widgets/AnomalyExplorer";
 import SeasonalDecomposer from "../widgets/SeasonalDecomposer";
 import ForecastPlayground from "../widgets/ForecastPlayground";
+import NeuronPlayground from "../widgets/NeuronPlayground";
+import BackpropFlow from "../widgets/BackpropFlow";
+import NNPlayground from "../widgets/NNPlayground";
+import ConvFilter from "../widgets/ConvFilter";
+import TokenizerExplorer from "../widgets/TokenizerExplorer";
+import TfidfExplorer from "../widgets/TfidfExplorer";
+import WordWeights from "../widgets/WordWeights";
+import EmbeddingMap from "../widgets/EmbeddingMap";
+import AttentionHeatmap from "../widgets/AttentionHeatmap";
+import TemperatureSampler from "../widgets/TemperatureSampler";
 
 const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>> = {
   "variable-boxes": VariableBoxes,
@@ -83,6 +93,16 @@ const widgets: Record<WidgetId, React.ComponentType<{ onInteract: () => void }>>
   "anomaly-explorer": AnomalyExplorer,
   "seasonal-decomposer": SeasonalDecomposer,
   "forecast-playground": ForecastPlayground,
+  "neuron-playground": NeuronPlayground,
+  "backprop-flow": BackpropFlow,
+  "nn-playground": NNPlayground,
+  "conv-filter": ConvFilter,
+  "tokenizer-explorer": TokenizerExplorer,
+  "tfidf-explorer": TfidfExplorer,
+  "word-weights": WordWeights,
+  "embedding-map": EmbeddingMap,
+  "attention-heatmap": AttentionHeatmap,
+  "temperature-sampler": TemperatureSampler,
 };
 
 /** How much play before the takeaway is revealed. */

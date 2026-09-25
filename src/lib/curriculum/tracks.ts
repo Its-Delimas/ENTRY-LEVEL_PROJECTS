@@ -259,28 +259,21 @@ export const tracks: Track[] = [
         slug: "deep-learning",
         title: "Neural networks",
         summary: "From a single neuron to image classifiers — built from scratch so nothing is magic.",
-        labs: [],
-        planned: [
-          { title: "The perceptron", summary: "One artificial neuron, built in NumPy." },
-          { title: "Backpropagation", summary: "How a network learns from its mistakes." },
-          { title: "Multi-layer networks", summary: "Activations, losses and optimisers." },
-          { title: "Convolutions & images", summary: "How computers see edges, shapes and objects." },
-          { title: "Capstone: local image classifier", summary: "Train a classifier on images you chose." },
-        ],
+        labs: ["perceptron", "backprop", "mlp", "convolutions", "digit-reader"],
+        milestone: {
+          title: "Neural networks, demystified",
+          description: "You've written backpropagation from scratch, trained networks that beat linear models, built a convolution by hand, and shipped a digit reader with a human-review workflow.",
+        },
       },
       {
         slug: "ml-nlp",
         title: "Language & LLMs",
         summary: "How machines read — from word counts to transformers and today's large language models.",
-        labs: [],
-        planned: [
-          { title: "Text as data", summary: "Tokenising and cleaning English and Swahili text." },
-          { title: "Bag-of-words & TF-IDF", summary: "Turning words into numbers." },
-          { title: "Sentiment classification", summary: "Is this review positive or negative?" },
-          { title: "Embeddings", summary: "Words as points in space." },
-          { title: "Attention & transformers", summary: "The idea behind modern language models." },
-          { title: "How LLMs work", summary: "Next-token prediction, temperature, hallucination — and prompting and retrieval (RAG)." },
-        ],
+        labs: ["text-data", "bag-of-words", "sentiment", "embeddings", "attention", "llms", "feedback-assistant"],
+        milestone: {
+          title: "You know how machines read",
+          description: "From tokens to TF-IDF, sentiment models, embeddings and attention — and you can explain how an LLM generates text, why it hallucinates, and how retrieval grounds it.",
+        },
       },
       {
         slug: "ml-responsible",

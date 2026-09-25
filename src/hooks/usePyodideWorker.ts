@@ -48,11 +48,11 @@ interface WorkerMessage {
 }
 
 /** Code that runs longer than this is almost always an infinite loop. */
-const RUN_TIMEOUT_MS = 8000;
+const RUN_TIMEOUT_MS = 20000;
 
 const TIMEOUT_ERROR: PyError = {
   type: "TimeoutError",
-  summary: "TimeoutError: your code ran for more than 8 seconds and was stopped",
+  summary: "TimeoutError: your code ran for more than 20 seconds and was stopped",
   traceback: "",
   line: null,
   vars: [],

@@ -190,7 +190,7 @@ export const pyToolkit: Lab = {
       title: "Loop until something is true",
       body: [
         "A `for` loop runs once per item. A `while` loop runs **as long as a condition stays True** — useful when you don't know in advance how many repeats you need.",
-        "Every `while` loop needs something inside it that moves it toward stopping. Forget that and you get an infinite loop (Nurulabs stops those after 8 seconds).",
+        "Every `while` loop needs something inside it that moves it toward stopping. Forget that and you get an infinite loop (Nurulabs stops those after 20 seconds).",
       ],
       code: `savings = 0
 weeks = 0
